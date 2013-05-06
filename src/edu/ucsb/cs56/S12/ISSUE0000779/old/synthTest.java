@@ -1,4 +1,4 @@
-package edu.ucsb.cs56.S12.ISSUE0000779;
+package edu.ucsb.cs56.S12.ISSUE0000779.old;
 
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;

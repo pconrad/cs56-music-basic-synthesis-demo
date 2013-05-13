@@ -20,10 +20,10 @@
 
 
 
-   <property name="csil.junit.path" value="/cs/faculty/pconrad/public_html/cs56/lib/junit-4.8.2.jar" />
+   <property name="csil.junit.path" value="lib/junit-4.8.2.jar" />
   <property name="local.junit.path" value="lib/junit-4.8.2.jar" />
 
-  <property name="csil.junit.URL" value="http://www.cs.ucsb.edu/~pconrad/cs56/lib/junit-4.8.2.jar" />
+  <property name="csil.junit.URL" value="lib/junit-4.8.2.jar" />
 
   <target name="junit.available">
     <available property="csil.junit.available" file="${csil.junit.path}"/>
@@ -54,7 +54,7 @@
     <!-- <java classname="${mainClass}" classpath="build">
 	 <classpath>
 	 <pathelement location="build"/>
-	 <pathelement location="/cs/faculty/pconrad/public_html/cs56/lib/junit-4.8.2.jar"/>
+	 <pathelement location="lib/junit-4.8.2.jar"/>
 	 </classpath>
 	 </java>-->
     <echo>To run: java -cp build  ${mainClass} </echo>
@@ -74,7 +74,7 @@
     
     <junit haltonerror="no" haltonfailure="no">
       <classpath>
-	<pathelement location="/cs/faculty/pconrad/public_html/cs56/lib/junit-4.8.2.jar"/>
+	<pathelement location="lib/junit-4.8.2.jar"/>
 	<pathelement location="build" />
       </classpath>
       
@@ -95,7 +95,7 @@
     <javadoc  destdir="javadoc" author="true" version="true" use="true" >
       <fileset dir="src" includes="**/*.java"/>
       <classpath>
-	<pathelement location="/cs/faculty/pconrad/public_html/cs56/lib/junit-4.8.2.jar"/>
+	<pathelement location="lib/junit-4.8.2.jar"/>
       </classpath>
     </javadoc>
     

@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project default="compile">
   
-  <!-- build.xml for Mantis issue
-       name: P.Conrad for CS56, S12 -->
+  <!-- build.xml for music.basic_synthesis_demo
+       name: Chris Atanasian and Marc Lindsay for CS56, S13 -->
   
   <property environment="env"/> <!-- load the environment variables -->
   <property name="webRoot" value="${env.HOME}/public_html/" />
   <property name="webBaseUrl" value="http://www.cs.ucsb.edu/~${env.USER}/" />
   
-  <property name="course" value="cs56" />
-  <property name="quarter" value="S12" />
-  <property name="issueNum" value="0000779" />
-  <property name="mainClass" value="edu.ucsb.cs56.S12.ISSUE${issueNum}.ADSREnvelopedContinuousSound" />
+  <property name="categoryName" value="music" />
+  <property name="repoName" value="basic_synthesis_demo" />
+  <property name="mainClass" value="edu.ucsb.cs56.projects.${categoryName}.${repoName}.ADSREnvelopedContinuousSound" />
   <property name="projectName" value="${course}_${quarter}_${issueNum}" />
   <property name="projectPath" value="${course}/${quarter}/issues/${issueNum}" />
   <property name="javadocDest" value="${webRoot}/${projectPath}/javadoc" />

@@ -35,7 +35,7 @@
 
   <target name="compile">
     <mkdir dir="build"/>
-    <javac srcdir="src" destdir="build" debuglevel="lines,source" includeantruntime="false">
+    <javac srcdir="src" destdir="build" debuglevel="lines,source" includeantruntime="true">
         <classpath>
             <pathelement location="build"/>
             <pathelement location="lib/junit-4.8.2.jar"/>
@@ -73,7 +73,7 @@
        <batchtest fork="yes">
           <fileset dir="src">
             <!-- this will pick up every class with a name ending in Test -->
-            <include name="*Test.java"/>
+            <include name="**/*Test.java"/>
           </fileset>
        </batchtest>
 
@@ -81,6 +81,7 @@
        
     </junit>
   </target> 
+
   <target name="javadoc" depends="compile">
     
     <delete dir="javadoc" quiet="true" />

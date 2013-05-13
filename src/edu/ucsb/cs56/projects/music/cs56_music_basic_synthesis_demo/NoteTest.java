@@ -75,31 +75,63 @@ public class NoteTest {
     }
 
     /** Test case for Note.setFrequency()
+		Test for valid input
         @see Note
     */
     @Test
-	public void test_setFrequency() {
+	public void test_setFrequencyValid() {
         note.setFrequency(3);
 	    assertEquals(3,note.getFrequency());
     }
 
     /** Test case for Note.setDuration()
+		Test for valid input
         @see Note
     */
     @Test
-	public void test_setDuration() {
+	public void test_setDurationValid() {
         note.setDuration(3);
 	    assertEquals(3,note.getDuration());
     }
    
     /** Test case for Note.setVolume()
+		Test for valid input
         @see Note
     */
     @Test
-	public void test_setVolume() {
+	public void test_setVolumeValid() {
         note.setVolume(0.4);
 	    assertEquals(0.4,note.getVolume(), 0.01);
     }
+
+
+ /** Test case for Note.setFrequency()
+		Test for non valid input
+        @see Note
+    */
+    @Test (expected = IllegalArgumentException.class)
+	public void test_setFrequencyNonValid() {
+        		note.setFrequency(-3);
+    }
+
+    /** Test case for Note.setDuration()
+		Test for nonvalid input
+        @see Note
+    */
+    @Test (expected = IllegalArgumentException.class)
+	public void test_setDurationNonValid() {
+        note.setDuration(0);
+    }
+   
+    /** Test case for Note.setVolume()
+		Test for non-valid input
+        @see Note
+    */
+    @Test  (expected = IllegalArgumentException.class)
+	public void test_setVolumeNonValid() {
+        note.setVolume(12);
+    }
+
 
 
     /** Test case for Note.toString()

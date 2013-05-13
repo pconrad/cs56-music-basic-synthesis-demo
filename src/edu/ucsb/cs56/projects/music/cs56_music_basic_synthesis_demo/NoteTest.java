@@ -31,8 +31,8 @@ public class NoteTest {
 
 	Note n = new Note();
 	assertEquals(0,n.getFrequency());
-	assertEquals(0,n.getDuration());
-    assertEquals(0, n.getVolume());
+	assertEquals(1,n.getDuration());
+    assertEquals(0, n.getVolume(), 0.01);
 
     }
 
@@ -44,8 +44,8 @@ public class NoteTest {
 
 	Note n = new Note(1,3,0.2);
 	assertEquals(1,n.getFrequency());
-	assertEquals(2,n.getDuration());
-    assertEquals(0.2, n.getVolume());
+	assertEquals(3,n.getDuration());
+    assertEquals(0.2, n.getVolume(), 0.01);
 
     }
 
@@ -71,7 +71,7 @@ public class NoteTest {
     */
     @Test
 	public void test_getVolume() {
-	    assertEquals(0.2, note.getVolume(), 0.01);
+	    assertEquals(0.1, note.getVolume(), 0.01);
     }
 
     /** Test case for Note.setFrequency()
@@ -139,7 +139,7 @@ public class NoteTest {
     */    
     @Test
     public void test_toString(){
-        assertEquals("Frequency:1, Duration:2, Volume:0.1",note.toString());
+        assertEquals("Frequency:1, Duration:1/2 beats, Volume:0.1",note.toString());
     }
 
     /** Test case for Note.equals()

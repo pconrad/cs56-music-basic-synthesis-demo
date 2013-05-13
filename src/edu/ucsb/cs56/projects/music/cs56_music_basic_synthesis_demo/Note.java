@@ -21,7 +21,9 @@ public class Note{
      */
     public Note()
     {
-        //stub
+        this.frequency = 0;
+		this.duration = 1;
+		this.volume= 0;
     }
 
     /**
@@ -32,7 +34,13 @@ public class Note{
      */
     public Note(int frequency, int duration, double volume)
     {
-		//stub
+		if( frequency < 0 || duration<= 0 || volume < 0 || volume > 1)
+			throw new IllegalArgumentException("Invalid Input");
+		else{
+			this.frequency = frequency;
+			this.duration = duration;
+			this.volume = volume;
+		}
     }
 
 
@@ -42,9 +50,8 @@ public class Note{
      * @return the Frequency of the Note
      */
     public int getFrequency()
-    {
-		//stub
-        return -42;
+    {	
+        return this.frequency;
     }
 
     /**
@@ -54,8 +61,7 @@ public class Note{
      */
     public int getDuration()
     {
-		//stub
-        return -42;
+        return this.duration;
     }
 
     /**
@@ -65,8 +71,7 @@ public class Note{
      */
     public double getVolume()
     {
-		//stub
-        return -42.1;
+        return this.volume;
     }
 
     /**
@@ -76,7 +81,10 @@ public class Note{
      */
     public void setFrequency(int frequency)
     {
-        //stub
+        if( frequency < 0)
+			throw new IllegalArgumentException("Frequency must be greater than or equal to 0");
+		else
+			this.frequency = frequency;
     }
 
     /**
@@ -86,7 +94,10 @@ public class Note{
      */
     public void setDuration(int duration)
     {
-        //stub
+        if( duration <= 0)
+			throw new IllegalArgumentException("Duration must be greater than 0");
+		else
+			this.duration = duration;
     }
 
     /**
@@ -96,7 +107,10 @@ public class Note{
      */
     public void setVolume(double volume)
     {
-       //stub
+       if( volume < 0 || volume > 1)
+			throw new IllegalArgumentException("Volume must be between 0 and 1 inclusive");
+		else
+			this.volume = volume;
     }
 
     /** format Note as String, in an expression like:
@@ -106,7 +120,7 @@ public class Note{
      */
     public String toString()
     {
-        return "stub";
+        return "Frequency:"+ this.frequency + ", Duration:1/"+this.duration+ " beats, Volume:" + this.volume;
     }
 
     /**

@@ -17,6 +17,7 @@ public class NoteTest {
 
 
     private Note note;
+	private double tol = 0.01;
 
     @Before
     public void initNote() {
@@ -30,9 +31,9 @@ public class NoteTest {
 	public void test_NoArgConstructor() {
 
 	Note n = new Note();
-	assertEquals(0,n.getFrequency());
-	assertEquals(1,n.getDuration());
-    assertEquals(0, n.getVolume(), 0.01);
+	assertEquals(0,n.getFrequency(), tol);
+	assertEquals(1,n.getDuration(), tol);
+    assertEquals(0, n.getVolume(), tol);
 
     }
 
@@ -43,9 +44,9 @@ public class NoteTest {
 	public void test_ThreeArgConstructor() {
 
 	Note n = new Note(1,3,0.2);
-	assertEquals(1,n.getFrequency());
-	assertEquals(3,n.getDuration());
-    assertEquals(0.2, n.getVolume(), 0.01);
+	assertEquals(1,n.getFrequency(), tol);
+	assertEquals(3,n.getDuration(), tol);
+    assertEquals(0.2, n.getVolume(), tol);
 
     }
 
@@ -55,7 +56,7 @@ public class NoteTest {
     */
     @Test
 	public void test_getFrequency() {
-	    assertEquals(1,note.getFrequency());
+	    assertEquals(1,note.getFrequency(), tol);
     }
 
     /** Test case for Note.getDuration()
@@ -63,7 +64,7 @@ public class NoteTest {
     */
     @Test
 	public void test_getDuration() {
-	    assertEquals(2,note.getDuration());
+	    assertEquals(2,note.getDuration(), tol);
     }
    
     /** Test case for Note.getVolume()
@@ -71,7 +72,7 @@ public class NoteTest {
     */
     @Test
 	public void test_getVolume() {
-	    assertEquals(0.1, note.getVolume(), 0.01);
+	    assertEquals(0.1, note.getVolume(), tol);
     }
 
     /** Test case for Note.setFrequency()
@@ -81,7 +82,7 @@ public class NoteTest {
     @Test
 	public void test_setFrequencyValid() {
         note.setFrequency(3);
-	    assertEquals(3,note.getFrequency());
+	    assertEquals(3,note.getFrequency(), tol);
     }
 
     /** Test case for Note.setDuration()
@@ -91,7 +92,7 @@ public class NoteTest {
     @Test
 	public void test_setDurationValid() {
         note.setDuration(3);
-	    assertEquals(3,note.getDuration());
+	    assertEquals(3,note.getDuration(), tol);
     }
    
     /** Test case for Note.setVolume()
@@ -101,7 +102,7 @@ public class NoteTest {
     @Test
 	public void test_setVolumeValid() {
         note.setVolume(0.4);
-	    assertEquals(0.4,note.getVolume(), 0.01);
+	    assertEquals(0.4,note.getVolume(), tol);
     }
 
 
@@ -139,7 +140,7 @@ public class NoteTest {
     */    
     @Test
     public void test_toString(){
-        assertEquals("Frequency:1, Duration:1/2 beats, Volume:0.1",note.toString());
+        assertEquals("Frequency:1.0, Duration:1/2.0 beats, Volume:0.1",note.toString());
     }
 
     /** Test case for Note.equals()

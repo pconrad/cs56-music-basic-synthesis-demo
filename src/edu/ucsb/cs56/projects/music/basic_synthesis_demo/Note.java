@@ -10,8 +10,8 @@ package edu.ucsb.cs56.projects.music.basic_synthesis_demo;
 
 public class Note{
 
-    private int frequency;
-    private int duration;
+    private double frequency;
+    private double duration;
     private double volume;
 
 
@@ -32,7 +32,7 @@ public class Note{
      * @param duration
      * @param volume
      */
-    public Note(int frequency, int duration, double volume)
+    public Note(double frequency, double duration, double volume)
     {
 		if( frequency < 0 || duration<= 0 || volume < 0 || volume > 1)
 			throw new IllegalArgumentException("Invalid Input");
@@ -49,7 +49,7 @@ public class Note{
      * 
      * @return the Frequency of the Note
      */
-    public int getFrequency()
+    public double getFrequency()
     {	
         return this.frequency;
     }
@@ -59,7 +59,7 @@ public class Note{
      * 
      * @return the duration of the Note
      */
-    public int getDuration()
+    public double getDuration()
     {
         return this.duration;
     }
@@ -79,7 +79,7 @@ public class Note{
      * 
      * @param frequency the new frequency of the Note
      */
-    public void setFrequency(int frequency)
+    public void setFrequency(double frequency)
     {
         if( frequency < 0)
 			throw new IllegalArgumentException("Frequency must be greater than or equal to 0");
@@ -92,7 +92,7 @@ public class Note{
      * 
      * @param duration the new duration of the Note
      */
-    public void setDuration(int duration)
+    public void setDuration(double duration)
     {
         if( duration <= 0)
 			throw new IllegalArgumentException("Duration must be greater than 0");
@@ -134,8 +134,8 @@ public class Note{
 	    if (! (o instanceof Note) )
 	        return false;
 	    Note other = (Note) o;
-	    return (other.getFrequency()==this.getFrequency() &
-	            other.getDuration()==this.getDuration() &
+	    return (Math.abs(other.getFrequency() - this.getFrequency()) < tol &
+	            Math.abs(other.getDuration() - this.getDuration()) < tol &
                 Math.abs(other.getVolume() - this.getVolume()) < tol ); 
     }  
 

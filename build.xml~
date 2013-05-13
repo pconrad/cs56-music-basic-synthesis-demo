@@ -62,25 +62,25 @@
     <delete dir="temp" quiet="true" />
   </target>
   
-	<target name="test" depends="compile">
-
+  <target name="test" depends="compile">
+    
     <junit haltonerror="no" haltonfailure="no">
-       <classpath>
-         <pathelement location="lib/junit-4.8.2.jar"/>
-         <pathelement location="build"/>
-       </classpath>
-
-       <batchtest fork="yes">
-          <fileset dir="src">
-            <!-- this will pick up every class with a name ending in Test -->
-            <include name="*Test.java"/>
-          </fileset>
-       </batchtest>
-
-        <formatter type="plain" usefile="false" /> 
-       
+      <classpath>
+	<pathelement location="/cs/faculty/pconrad/public_html/cs56/lib/junit-4.8.2.jar"/>
+	<pathelement location="build" />
+      </classpath>
+      
+      <batchtest fork="yes">
+	<fileset dir="src">
+	  <!-- this will pick up every class with a name ending in Test -->
+	  <include name="**/*Test.java"/>
+	</fileset>
+      </batchtest>
+      
+      <formatter type="plain" usefile="false" />
+      
     </junit>
-  </target> 
+  </target>
   <target name="javadoc" depends="compile">
     
     <delete dir="javadoc" quiet="true" />

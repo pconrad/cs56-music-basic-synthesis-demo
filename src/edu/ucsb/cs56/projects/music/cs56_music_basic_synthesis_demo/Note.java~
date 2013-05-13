@@ -122,7 +122,7 @@ public class Note{
 	    Note other = (Note) o;
 	    return (other.getFrequency().equals(this.getFrequency()) &
 	            other.getDuration().equals(this.getDuration()) &
-                Math.abs(other.getVolume() - this.getVolume()) < tol )); 
+                Math.abs(other.getVolume() - this.getVolume()) < tol ); 
     }  
 
 

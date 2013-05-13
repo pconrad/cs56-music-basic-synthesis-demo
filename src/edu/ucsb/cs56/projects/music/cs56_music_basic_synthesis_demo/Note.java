@@ -120,9 +120,9 @@ public class Note{
 	    if (! (o instanceof Note) )
 	        return false;
 	    Note other = (Note) o;
-	    return (other.getFrequency().equals(this.getFrequency()) &
-	            other.getDuration().equals(this.getDuration()) &
-                Math.abs(other.getVolume() - this.getVolume()) < tol )); 
+	    return (other.getFrequency()==this.getFrequency() &
+	            other.getDuration()==this.getDuration() &
+                Math.abs(other.getVolume() - this.getVolume()) < tol ); 
     }  
 
 

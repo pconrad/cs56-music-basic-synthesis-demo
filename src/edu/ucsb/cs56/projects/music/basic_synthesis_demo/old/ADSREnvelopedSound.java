@@ -1,4 +1,4 @@
-package edu.ucsb.cs56.projects.music.basic_synthesizer_demo.old;
+package edu.ucsb.cs56.projects.music.basic_synthesis_demo.old;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.SourceDataLine;
@@ -181,7 +181,7 @@ public class ADSREnvelopedSound{
 		}
 	}
 	
-	
+
 	/**
 	 * writes the attack/decay data to the audioData byte array
 	 */

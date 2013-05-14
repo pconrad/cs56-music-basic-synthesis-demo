@@ -14,8 +14,8 @@
   <property name="mainClass" value="edu.ucsb.cs56.projects.${categoryName}.${repoName}.ADSREnvelopedContinuousSound" />
   <property name="projectName" value="${course}_projects__${categoryName}_${repoName}" />
   <property name="projectPath" value="${course}/projects/${categoryName}/${repoName}" />
-  <property name="javadocDest" value="${webRoot}/${projectPath}/javadoc" />
-  <property name="javadocURL" value="${webBaseUrl}/${projectPath}/javadoc" />
+  <property name="javadocDest" value="${webRoot}/cs56/13S/${env.USER}/${course}-${categoryName}-${repoName}" />
+  <property name="javadocURL" value="${webBaseUrl}/cs56/13S/${env.USER}/${course}-${categoryName}-${repoName}" />
   
 
 

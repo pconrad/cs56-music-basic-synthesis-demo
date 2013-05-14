@@ -4,11 +4,10 @@ import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.SourceDataLine;
 
-/*
- Starts a thread which will load the attack/decay routine,
- then block loading the sustain
-routine until interrupted at which point it willl load the release 
-routine.
+/**
+  Starts a thread which will load the attack/decay routine,
+  then block loading the sustain routine until interrupted at which point
+  it will load the release routine.
 */
 
 public class AudioLoader implements Runnable {    
@@ -16,12 +15,13 @@ public class AudioLoader implements Runnable {
     ADSREnvelopedSound loader;
     Thread owner;
 
-    public AudioLoader(SourceDataLine audioFeed, ADSREnvelopedSound loader) {	            loadMe=audioFeed;
-       	    this.loader=loader; 	
+    public AudioLoader(SourceDataLine audioFeed, ADSREnvelopedSound loader) {
+	loadMe=audioFeed;
+       	this.loader=loader; 	
     }
 
     public void run() {
-	try{
+	try {
 	    loader.loadAttackDecay(loadMe);		
 	    while(true) {
 		loader.loadSustain(loadMe);

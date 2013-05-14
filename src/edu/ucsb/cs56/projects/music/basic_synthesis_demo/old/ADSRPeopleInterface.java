@@ -32,39 +32,46 @@ public class ADSRPeopleInterface{
 	/**
 	 * asks for user input and generates a note
 	 */
-	public static ADSREnvelopedSound makeNote(Scanner s){
-		while(true){
+	public static ADSREnvelopedSound makeNote(Scanner s) {
+		while(true) {
 	    try{
 
-		    System.out.println("Enter an attack volume between 0 and 1, values will be chopped at 0 and 1");
+		    System.out.print("Enter an attack volume between 0 and 1,");
+			 System.out.print(" values will be chopped at 0 and 1");
 		    double atkAmplitude= s.nextDouble();
 		    atkAmplitude=((atkAmplitude>1)?1:((atkAmplitude<0)?0: atkAmplitude));		    
-		    System.out.println("Enter a sustain volume between 0 and 1, values will be chopped at 0 and 1");
+		    System.out.print("Enter a sustain volume between 0 and 1,");
+ 			 System.out.print(" values will be chopped at 0 and 1");
 		    double sustAmplitude= s.nextDouble();
 		    sustAmplitude=((sustAmplitude>1)?1:((sustAmplitude<0)?0: sustAmplitude));
-		    System.out.println("Enter an attack time between 0 and inf, values will be chopped at 0");
+		    System.out.print("Enter an attack time between 0 and inf,"); 
+			 System.out.print(" values will be chopped at 0");
 		    double atkT= s.nextDouble();
 		    atkT=(atkT<0)?0:atkT;
-		    System.out.println("Enter a decay time between 0 and inf, values will be chopped at 0");
+	 	    System.out.print("Enter a decay time between 0 and inf,");
+			 System.out.print(" values will be chopped at 0");
 		    double decayT= s.nextDouble();
 		    decayT=(decayT<0)?0:decayT;
-		    System.out.println("Enter a release time between 0 and inf, values will be chopped at 0");
+		    System.out.print("Enter a release time between 0 and inf,");
+			 System.out.print(" values will be chopped at 0");
 		    double releaseT= s.nextDouble();
 		    releaseT=(releaseT<0)?0:releaseT;
-		    System.out.println("Enter a Frequency between 0 and 30000, though values above ~4000 are extremely irritating.");
+		    System.out.print("Enter a Frequency between 0 and 30000, though");
+			 System.out.print(" values above ~4000 are extremely irritating.");
 		    double freq = s.nextDouble();
 		    freq=((freq>30000)?30000:((freq<0)?0: freq));
-			return new ADSREnvelopedSound(freq,atkAmplitude,sustAmplitude,atkT,decayT,releaseT,44100);
+			return new ADSREnvelopedSound(freq,atkAmplitude,sustAmplitude,
+													atkT,decayT,releaseT,44100);
 		}
-	     catch (java.util.InputMismatchException ex){
-		System.out.println("Enter real numbers please");
-	} 
+	   catch (java.util.InputMismatchException ex) {
+			System.out.println("Enter real numbers please");
+		} 
 	}
 }
 	/**
 	 * executes the program
-	 */
-	public static void main(String[] args){
+	*/
+	public static void main(String[] args) {
 		Scanner s = new Scanner(System.in);
 		AudioFormat f= new AudioFormat(44100,8,1,true,true);
 		try{
@@ -73,7 +80,7 @@ public class ADSRPeopleInterface{
 			d.start();
 			String exitToken;
 			boolean morenote=true;
-				while(morenote){
+				while(morenote) {
 				d.flush();
 				Thread dr= new Thread(new AudioDrain(d));
 				Thread t = new Thread(new AudioLoader(d,makeNote(s)));
@@ -81,7 +88,7 @@ public class ADSRPeopleInterface{
 				//Thread.sleep(10);
 				dr.start();
 				System.out.println("Enter any key to exit");
-				while(!s.hasNext()){}
+				while(!s.hasNext()) {}
 				t.interrupt();
 				s.next();
 				System.out.println("good job! make another? y/n");
@@ -89,9 +96,10 @@ public class ADSRPeopleInterface{
 				if (exitToken.equals("n"))
 					morenote=false;
 			}
-		}catch (Exception ex){
+		}catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
 //play a .5 c .3 a .5
 }
+

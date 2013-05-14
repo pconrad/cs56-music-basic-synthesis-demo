@@ -128,8 +128,9 @@ public class ADSREnvelopedSound{
 	
 	private void generateAttackDecayWave(){
 		audioData = new byte[ADsamples];
-		int atkTime=(int)(this.attackTime*this.sampleRate);  //number of samples in attack
-		//int decTime=(int)ADTime*this.sampleRate-atkTime; //(int)(this.decayTime*this.sampleRate);   //number of samples in decay
+		int atkTime=(int)(this.attackTime*this.sampleRate);
+		//int decTime=(int)ADTime*this.sampleRate-atkTime; the attack of the sample
+		//(int)(this.decayTime*this.sampleRate); number of samples in decay
 		double deltaAmp=this.amplitude/(double)atkTime;      //the rate of growth of amplitude per sample
 		double amplitude=0;
 		double t=0;

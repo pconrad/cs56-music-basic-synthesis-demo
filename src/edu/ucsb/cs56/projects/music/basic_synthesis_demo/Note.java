@@ -114,7 +114,7 @@ public class Note{
     }
 
     /** format Note as String, in an expression like:
-     * 
+     *  "Frequency:1.0, Duration:1/2.0 beats, Volume:0.1"
      *  
      *  @return formatted Note
      */

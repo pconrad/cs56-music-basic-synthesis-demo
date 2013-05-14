@@ -12,6 +12,7 @@ public class ADSREnvelopedContinuousSound extends EnvelopedSound{
     private final boolean DEBUG=false;
     private double amplitude;
     private ADSREnvelope adsr;
+
  
    /**
        @param double frequency the frequency to play at
@@ -28,6 +29,7 @@ public class ADSREnvelopedContinuousSound extends EnvelopedSound{
 	    super(frequency,adsr.getADSREnvelope(),sampleRate,l);
 	    this.adsr = adsr;
 	    generateEnvelope();
+
     }
     public double getAmplitude(){
 	    return amplitude;
@@ -39,6 +41,7 @@ public class ADSREnvelopedContinuousSound extends EnvelopedSound{
     public String toString(){
         return super.toString()+" Amplitude: "+this.getAmplitude()+ adsr;
     }
+
 
 
 
@@ -66,6 +69,10 @@ public class ADSREnvelopedContinuousSound extends EnvelopedSound{
 	    }
     }
 
+
+
+
+
     /**
      * executes the program
      */
@@ -75,10 +82,15 @@ public class ADSREnvelopedContinuousSound extends EnvelopedSound{
 	        System.exit(1);
 	    }
 
+		double freq = Double.parseDouble(args[0]);
+		double amp = Double.parseDouble(args[1]);
+
 	    AudioFormat f= new AudioFormat(44100,8,1,true,true);
 	    try{
 	        //Create a new audioLine which goes to the system, the audio format specifys all the features of the line.
 	        SourceDataLine d = AudioSystem.getSourceDataLine(f);
+
+			System.out.printf("Buffer Size = %d \n", d.getBufferSize());
             ADSREnvelope a = new ADSREnvelope(Double.parseDouble(args[2]),
 						            Double.parseDouble(args[3]),
 						            Double.parseDouble(args[4]),
@@ -86,17 +98,35 @@ public class ADSREnvelopedContinuousSound extends EnvelopedSound{
 		                            Double.parseDouble(args[6]));
 
 	        ADSREnvelopedContinuousSound env =
-		    new ADSREnvelopedContinuousSound(Double.parseDouble(args[0]),
-						     Double.parseDouble(args[1]),
+		    new ADSREnvelopedContinuousSound(freq,
+						     amp,
 						     a,
 						     44100,
 						     d);
-	        d.open(f);
+	        d.open(f, 44100*2);
 	        d.start();
 	        env.load();
+
+
+
+			for(int i=0; i<=12; i++){
+				freq = freq * Math.pow(2, 1/12.0);
+				ADSREnvelopedContinuousSound env2 =
+		    			new ADSREnvelopedContinuousSound(freq,
+						     amp,
+						     a,
+						     44100,
+						     d);
+				env2.load();
+				System.out.printf("Freq = %f \n", freq);
+
+			}
+
 	        d.drain();
 	    }catch (Exception ex){
 	        ex.printStackTrace();
 	    }
     }
+	
+
 }

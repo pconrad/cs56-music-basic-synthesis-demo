@@ -42,7 +42,24 @@ public class Melody extends ArrayList<Note>{
 
 	}
 	
+	/**
+		main method that will play the melody
+		takes in command line arguments to create ADSREnvelope
 
+	*/
+	public static void main(String[] args){
+
+		if(args.length!=5){
+	        System.out.println("attack, decay, sustain amp, sustain time, release");
+	        System.exit(1);
+	    }
+
+		ADSREnvelope a = new ADSREnvelope(Double.parseDouble(args[2]),
+						            Double.parseDouble(args[3]),
+						            Double.parseDouble(args[4]),
+						            Double.parseDouble(args[5]),
+		                            Double.parseDouble(args[6]));
+	}
 	
 
 

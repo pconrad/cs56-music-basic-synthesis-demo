@@ -1,5 +1,7 @@
 package edu.ucsb.cs56.projects.music.basic_synthesis_demo;
-
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.SourceDataLine;
 import java.util.ArrayList;
 
 /**
@@ -22,22 +24,37 @@ public class Melody extends ArrayList<Note>{
 
 	/**
 	* void method to play the melody
-	* @param e the ADSREnvelopedContinuousSound that is used to play the note
+	* @param e the ADSREnvelope that is used to play the note
 	* @param m the melody to be played
 	*/
-	public void play(ADSREnvelopedContinuousSound e, Melody m)
+	public void play(ADSREnvelope a, Melody m)
 	{
 
-		//create a new Audioformat
-		//Create a new audioLine which goes to the system, the audio format specifys all the features of the line.
+		double freq, amp;
 
+		AudioFormat f= new AudioFormat(44100,8,1,true,true);
+
+		try{
+			SourceDataLine d = AudioSystem.getSourceDataLine(f);
+
+			d.open(f, 44100*2);
+		    d.start();
 		
-		//loop through every note in the melody
+			for(Note n: m)
+			{
+					freq = n.getFrequency();
+					amp = n.getVolume();
+					ADSREnvelopedContinuousSound env =
+							new ADSREnvelopedContinuousSound(freq, amp, a, 44100, d);
+					env.load();
+					System.out.printf("Freq = %f \n", freq);
 
-			// in each one, set the amplitude of the ADSREnvelopedContinuousSound by scaling my the vol of the note
+			}
 
-			//open, start, load, and drain?
-
+			d.drain();
+		}catch(Exception ex){
+			ex.printStackTrace();
+		}
 	}
 	
 	/**
@@ -51,11 +68,24 @@ public class Melody extends ArrayList<Note>{
 	        System.exit(1);
 	    }
 
-		ADSREnvelope a = new ADSREnvelope(Double.parseDouble(args[2]),
-						            Double.parseDouble(args[3]),
-						            Double.parseDouble(args[4]),
-						            Double.parseDouble(args[5]),
-		                            Double.parseDouble(args[6]));
+
+		double attackTime = Double.parseDouble(args[0]);
+		double decayTime = Double.parseDouble(args[1]);
+		double sustainAmplitude = Double.parseDouble(args[2]);
+		double releaseTime = Double.parseDouble(args[3]);
+		double sustainTime = Double.parseDouble(args[4]);
+
+		ADSREnvelope a = new ADSREnvelope(attackTime,
+						            		  decayTime,
+						           		  sustainAmplitude,
+						            		  releaseTime,
+		                            		  sustainTime);
+
+		
+		Melody m = new Melody();
+		m.add(new Note(220.0, 1, 0.9));
+		m.add(new Note(330.0, 1, 0.9));
+		m.play(a, m);
 	}
 	
 

@@ -7,8 +7,8 @@
        name: Bronwyn Perry-Huston for CS56, S13 -->
   
   <property environment="env"/> <!-- load the environment variables -->
-  <property name="webRoot" value="${env.HOME}/public_html/" />
-  <property name="webBaseUrl" value="http://www.cs.ucsb.edu/~${env.USER}/" />
+  <property name="webRoot" value="${env.HOME}/public_html" />
+  <property name="webBaseUrl" value="http://www.cs.ucsb.edu/~${env.USER}"/>
   
   <property name="course" value="cs56" />
   <property name="quarter" value="13S" />
@@ -17,21 +17,11 @@
   <property name="mainClass" value="edu.ucsb.cs56.projects.music.cs56_music_basic_synthesis_demo.ADSREnvelopedContinuousSound" />
   <property name="projectName" value="${course}_${quarter}_${project}" />
   <property name="projectPath" value="${course}/${project}/music/${repo_name}" />
-  <property name="javadocDest" value="${webRoot}/cs56/13S/${env.HOME}/${repo_name}/javadoc" />
-  <property name="javadocURL" value="${webBaseUrl}/public_html/cs56/13S/${env.HOME}/${repo_name}/javadoc" />
+  <property name="javadocDest" value="${webRoot}/${course}/13S/${env.USER}/${repo_name}/javadoc" />
+  <property name="javadocURL" value="${webBaseUrl}/${course}/13S/${env.USER}/${repo_name}/javadoc" />
   
 
 
-
-   <property name="csil.junit.path" value="/cs/faculty/pconrad/public_html/cs56/lib/junit-4.8.2.jar" />
-  <property name="local.junit.path" value="lib/junit-4.8.2.jar" />
-
-  <property name="csil.junit.URL" value="http://www.cs.ucsb.edu/~pconrad/cs56/lib/junit-4.8.2.jar" />
-
-  <target name="junit.available">
-    <available property="csil.junit.available" file="${csil.junit.path}"/>
-    <available property="local.junit.available" file="${local.junit.path}"/>
-  </target>
 
   <target name="compile">
     <mkdir dir="build"/>

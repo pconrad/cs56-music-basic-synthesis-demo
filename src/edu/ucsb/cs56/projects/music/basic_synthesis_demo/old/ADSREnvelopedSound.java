@@ -4,9 +4,11 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.SourceDataLine;
 
 /**
-	A bit of code which generates an adsr envolope wrapped frequency. 
-	The code first creates a linear climb based on a time ammount specifice in  attackTime, 
-	followed by an exponential decay, at which point it will maintain the sustain volume.
+   A bit of code which generates an adsr envolope wrapped frequency. 
+   The code first creates a linear climb
+   based on a time amount specified in attackTime, 
+   followed by an exponential decay, at which point
+   it will maintain the sustain volume.
 */
 
 public class ADSREnvelopedSound{
@@ -26,11 +28,11 @@ public class ADSREnvelopedSound{
 	private int Rsamples;//release samples
 	
 	private byte [] audioData; //stores attack+decay data;
-	//
 	private byte [] sustainData;
 	private byte [] releaseData;
 	double testSample=0;
 	double testTime=0;
+
 	/**
 	@param double frequency the frequency to play at
 	@param double amplitude the maximum volume;
@@ -40,26 +42,24 @@ public class ADSREnvelopedSound{
 	@param double releaseTime amount of time to release over
 	@param int sampleRate the number of samples per second
 	*/
-	public ADSREnvelopedSound(	
-			
-								double frequency,
-								double amplitude,
-								double sustainAmplitude,
-								double attackTime,
-								double decayTime,
-								double releaseTime,
-								int sampleRate){
-		this.frequency=frequency;
-		this.amplitude=amplitude;
-		this.sustainAmplitude=sustainAmplitude;
-		this.attackTime=attackTime;
-		this.decayTime=decayTime;
-		this.releaseTime=releaseTime;
-		//this.line=line;
-		this.sampleRate=sampleRate;
-		this.ADTime=attackTime+decayTime;
+	public ADSREnvelopedSound(double frequency,
+				  double amplitude,
+				  double sustainAmplitude,
+				  double attackTime,
+				  double decayTime,
+				  double releaseTime,
+				  int sampleRate) {
+		this.frequency = frequency;
+		this.amplitude = amplitude;
+		this.sustainAmplitude = sustainAmplitude;
+		this.attackTime = attackTime;
+		this.decayTime = decayTime;
 		this.releaseTime = releaseTime;
-		this.STime=.4;//set the duration of a sustain to .4 seconds;
+		//this.line=line;
+		this.sampleRate = sampleRate;
+		this.ADTime = attackTime + decayTime;
+		this.releaseTime = releaseTime;
+		this.STime = .4; // set the duration of a sustain to .4 seconds
 		unclipADTime();
 		unclipSTime();
 		unclipRTime();
@@ -71,44 +71,48 @@ public class ADSREnvelopedSound{
 	}
 
 	/**
-	 * find the amplitude of a specific sample within the audio array
-	 * @return the amplitude value of a sample in the audio array at any given time. this is mostly for purposes
-	 * @param double time  The second value for which you would like to recieve the sample
-	 */
-	public byte wavValAtTime(double time){
-
-		double samptime=time*sampleRate;
+	   find the amplitude of a specific sample within the audio array
+	   @return the amplitude value of a sample in the audio array
+	   at any given time
+	   @param double time the second value for which you would
+	   like to recieve the sample
+	*/
+	public byte wavValAtTime(double time) {
+		double samptime = time * sampleRate;
 		int index = (int) samptime;
 		return audioData[index];
 	}
+
 	/**
-	 * find the total time of attack, decay, and release (without sustain)
-	 * 
-	 * @return total ammount of time with no sustain
+	   find the total time of attack, decay, and release (without sustain)
+	   @return total amount of time with no sustain
 	 */
-	public double totalTime(){
-		return ADTime+releaseTime;
+	public double totalTime() {
+		return ADTime + releaseTime;
 	}
 	/**
-	 * Prevents clipping by making sure that the sin wave finishes before switching from attack/decay to sustain.
-	 * this will create a SLIGHT latency, but is a necessary evil to prevent clipping.
+	   Prevents clipping by making sure that the sin wave finishes
+	   before switching from attack/decay to sustain.
+	   This will create SLIGHT latency,
+	   but is a necessary evil to prevent clipping.
 	 */
-	private void unclipADTime(){
-
-		this.ADsamples = (int)(this.ADTime*this.sampleRate);
-		this.ADTime = this.ADsamples/(double)this.sampleRate;
-		while(Math.abs(Math.sin(2*Math.PI*frequency*this.ADTime))>=0.0001){
-			this.ADTime+=1/(double)this.sampleRate;
+	private void unclipADTime() {
+		this.ADsamples = (int)(this.ADTime * this.sampleRate);
+		this.ADTime = this.ADsamples / (double)this.sampleRate;
+		while (Math.abs(Math.sin(2*Math.PI*frequency*this.ADTime))>=0.0001) {
+			this.ADTime += 1 / (double)this.sampleRate;
 			this.ADsamples++;
-			this.decayTime+=1/(double)this.sampleRate;
+			this.decayTime += 1 / (double)this.sampleRate;
 		}
 	}
-	/**
-	 * Prevents clipping by making sure that the sin wave finishes before switching from sustain to release.
-	 * this will create a SLIGHT latency, but is a necessary evil to prevent clipping.
-	 */
-	private void unclipSTime(){
 
+	/**
+	   Prevents clipping by making sure that the sin wave
+	   finishes before switching from sustain to release.
+	   This will create SLIGHT latency,
+	   but is a necessary evil to prevent clipping.
+	*/
+	private void unclipSTime() {
 		this.Ssamples = (int)(this.STime*this.sampleRate);
 		this.STime = this.Ssamples/(double)this.sampleRate;
 		while(Math.abs(Math.sin(2*Math.PI*frequency*this.STime))>=0.0001){

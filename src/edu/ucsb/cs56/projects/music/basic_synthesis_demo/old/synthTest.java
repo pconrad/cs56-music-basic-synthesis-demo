@@ -3,11 +3,11 @@ package edu.ucsb.cs56.projects.music.basic_synthesis_demo.old;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
-/*
-A test class for Synth.java
-@author Daniel Imberman and Scott Cesar
-@version 2012.16.05
-@see Synth
+/**
+   A test class for Synth.java
+   @author Daniel Imberman and Scott Cesar
+   @version 2012.16.05
+   @see Synth
 */
 
 public class synthTest {

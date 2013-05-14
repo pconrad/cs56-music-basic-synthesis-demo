@@ -39,7 +39,7 @@ public class ADSREnvelope{
      * @return the entire envelope
      */
     public double getADSREnvelope(){
-        return this.attackTime+this.decayTime+this.sustainAmplitude+this.releaseTime+this.sustainTime;
+        return this.attackTime+this.decayTime+this.releaseTime+this.sustainTime;
     }
 
 	/**

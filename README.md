@@ -9,11 +9,17 @@ A basic demo of some simple synthesis starting with sine waves
 The parameters are: frequency, amplitude, attack, decay, sustain amplitude, sustain time, release.
 
 frequency: The frequency to play at. (0 - 1000)
+
 amplitude: The maximum volume. (0 - 1.0)
+
 attack: The number of seconds to attack for. (0 - 1.0)
+
 decay: The amount of time to decay/sustain. (0 - 1.0)
+
 sustain amplitude: The sustained volume. (0 - 1.0)
+
 sustain time: The time to sustain for. (0 - 1.0)
+
 release: The amount of time to release over. (0 - 1.0)
 
 # Gui Example run

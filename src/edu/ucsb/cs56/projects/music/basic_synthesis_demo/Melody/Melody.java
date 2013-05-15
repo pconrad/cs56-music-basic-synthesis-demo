@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 public class Melody extends ArrayList<Note>{
 
+	private boolean debug = false;
 
 	/**
     * no-arg constructor returns an empty melody 

@@ -6,10 +6,12 @@ import javax.sound.sampled.SourceDataLine;
 import java.util.Scanner;
 import java.util.HashMap;
 /**
- This is the main UI. It will ask the user for a series of parameters to place into the ADSR, 
- and then produce said note until user prompts the note to release. this will be released by a GUI at a later time.
-
+ This is the main UI. It will ask the user for a series of parameters
+ to place into the ADSR, 
+ and then produce said note until user prompts the note to release.
+ This will be released by a GUI at a later time.
  */
+
 /*
 get use input, dispatch a thread to run it;
 Use a pool?
@@ -34,8 +36,7 @@ public class ADSRPeopleInterface{
 	 */
 	public static ADSREnvelopedSound makeNote(Scanner s) {
 		while(true) {
-	    try{
-
+	    try {
 		    System.out.print("Enter an attack volume between 0 and 1,");
 			 System.out.print(" values will be chopped at 0 and 1");
 		    double atkAmplitude= s.nextDouble();
@@ -75,28 +76,28 @@ public class ADSRPeopleInterface{
 		Scanner s = new Scanner(System.in);
 		AudioFormat f= new AudioFormat(44100,8,1,true,true);
 		try{
-			SourceDataLine d = AudioSystem.getSourceDataLine(f);
-			d.open(f);
-			d.start();
-			String exitToken;
-			boolean morenote=true;
-				while(morenote) {
-				d.flush();
-				Thread dr= new Thread(new AudioDrain(d));
-				Thread t = new Thread(new AudioLoader(d,makeNote(s)));
-				t.start();
-				//Thread.sleep(10);
-				dr.start();
-				System.out.println("Enter any key to exit");
-				while(!s.hasNext()) {}
-				t.interrupt();
-				s.next();
-				System.out.println("good job! make another? y/n");
-				while(!(exitToken=s.next()).equals("y")&&!exitToken.equals("n"));
-				if (exitToken.equals("n"))
-					morenote=false;
+		    SourceDataLine d = AudioSystem.getSourceDataLine(f);
+		    d.open(f);
+		    d.start();
+		    String exitToken;
+		    boolean morenote=true;
+		    while(morenote) {
+			d.flush();
+			Thread dr= new Thread(new AudioDrain(d));
+			Thread t = new Thread(new AudioLoader(d,makeNote(s)));
+			t.start();
+			//Thread.sleep(10);
+			dr.start();
+			System.out.println("Enter any key to exit");
+			while(!s.hasNext()) {}
+			t.interrupt();
+			s.next();
+			System.out.println("good job! make another? y/n");
+			while(!(exitToken=s.next()).equals("y")&&!exitToken.equals("n"));
+			if (exitToken.equals("n"))
+			    morenote=false;
 			}
-		}catch (Exception ex) {
+		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}

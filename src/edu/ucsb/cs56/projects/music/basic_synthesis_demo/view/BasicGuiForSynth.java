@@ -54,21 +54,71 @@ public class BasicGuiForSynth {
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    
 	    JTextField field_freq = 
-		new JTextField("Enter\nfrequency\n(0 - 1000)");
+		new JTextField("220");
 	    JTextField field_amp = 
-		new JTextField("Enter the amplitude (0 - 1.0)");
+		new JTextField("0.9");
 	    JTextField field_attack = 
-		new JTextField("Enter the attack (0 - 1.0)");
+		new JTextField("0.1");
 	    JTextField field_decay = 
-		new JTextField("Enter the decay (0 - 1.0)");
+		new JTextField("0.2");
 	    JTextField field_sustainAmp = 
-		new JTextField("Enter the sustain amplitude (0 - 1.0)");
+		new JTextField("0.6");
 	    JTextField field_sustainTime = 
-		new JTextField("Enter the sustain time (0 - 1.0)");
+		new JTextField("1.0");
 	    JTextField field_release = 
-		new JTextField("Enter the release (0 - 1.0)");
+		new JTextField("0.2");
 
-	    //JButton test_button = new JButton("hello this is a test");
+	    sliders.setLayout(new GridLayout(1,7));
+
+	    JSlider slider_freq = new JSlider();
+	    slider_freq.setMajorTickSpacing(20);
+	    //slider_freq.setMinorTickSpacing(10);
+	    slider_freq.setPaintTicks(true);
+	    slider_freq.setPaintLabels(true);
+
+	    JSlider slider_amp = new JSlider();
+	    slider_amp.setMajorTickSpacing(20);
+	    //slider_freq.setMinorTickSpacing(10);
+	    slider_amp.setPaintTicks(true);
+	    slider_amp.setPaintLabels(true);
+
+	    JSlider slider_attack = new JSlider();
+	    slider_attack.setMajorTickSpacing(20);
+	    //slider_freq.setMinorTickSpacing(10);
+	    slider_attack.setPaintTicks(true);
+	    slider_attack.setPaintLabels(true);
+
+	    JSlider slider_decay = new JSlider();
+	    slider_decay.setMajorTickSpacing(20);
+	    //slider_freq.setMinorTickSpacing(10);
+	    slider_decay.setPaintTicks(true);
+	    slider_decay.setPaintLabels(true);
+
+	    JSlider slider_susAmp = new JSlider();
+	    slider_susAmp.setMajorTickSpacing(20);
+	    //slider_freq.setMinorTickSpacing(10);
+	    slider_susAmp.setPaintTicks(true);
+	    slider_susAmp.setPaintLabels(true);
+
+	    JSlider slider_susTime = new JSlider();
+	    slider_susTime.setMajorTickSpacing(20);
+	    //slider_freq.setMinorTickSpacing(10);
+	    slider_susTime.setPaintTicks(true);
+	    slider_susTime.setPaintLabels(true);
+	    
+	    JSlider slider_release = new JSlider();
+	    slider_release.setMajorTickSpacing(20);
+	    //slider_freq.setMinorTickSpacing(10);
+	    slider_release.setPaintTicks(true);
+	    slider_release.setPaintLabels(true);
+
+	    sliders.add(slider_freq);
+	    sliders.add(slider_amp);
+	    sliders.add(slider_attack);
+	    sliders.add(slider_decay);
+	    sliders.add(slider_susAmp);
+	    sliders.add(slider_susTime);
+	    sliders.add(slider_release);
 
 	    center.setLayout(new GridLayout(2,1));
 	
@@ -82,11 +132,12 @@ public class BasicGuiForSynth {
 	    textFields.add(field_release);
 	    
 	    center.add(textFields);
+	    center.add(sliders);
  
 	    frame.add(labels,BorderLayout.NORTH);
 	    frame.add(center,BorderLayout.CENTER);
 	    frame.add(new JButton("Play Sound!"),BorderLayout.SOUTH);
-	    frame.setSize(1000,400);
+	    frame.setSize(1000,200);
 	    frame.setVisible(true);
 	}
 	

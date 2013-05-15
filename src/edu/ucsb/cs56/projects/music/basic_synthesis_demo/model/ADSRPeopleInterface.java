@@ -6,7 +6,7 @@ import javax.sound.sampled.SourceDataLine;
 import java.util.Scanner;
 import java.util.HashMap;
 /**
- This is the main UI. It will ask the user for a series of parameters
+ This is the command-line UI. It will ask the user for a series of parameters
  to place into the ADSR, 
  and then produce said note until user prompts the note to release.
  This will be released by a GUI at a later time.

@@ -26,24 +26,36 @@ import javax.sound.sampled.SourceDataLine;
 
 public class BasicGuiForSynth {
 	public void go() {
-		JFrame frame = new JFrame();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		JTextField field_freq = new JTextField("Enter the frequency (0 < 1000)",4);
-		//field_freq.addActionListener(new TextFieldListener());
-		
-		/*
-		amp
-		attack
-		decay
-		sus_amp
-		sus_time
-		release*/		
+	    JFrame frame = new JFrame();
+	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    
+	    JTextField field_freq = 
+		new JTextField("Enter the frequency (0 - 1000)");
+	    JTextField field_amp = 
+		new JTextField("Enter the amplitude (0 - 1.0)");
+	    JTextField field_attack = 
+		new JTextField("Enter the attack (0 - 1.0)");
+	    JTextField field_decay = 
+		new JTextField("Enter the decay (0 - 1.0)");
+	    JTextField field_sustainAmp = 
+		new JTextField("Enter the sustain amplitude (0 - 1.0)");
+	    JTextField field_sustainTime = 
+		new JTextField("Enter the sustain time (0 - 1.0)");
+	    JTextField field_release = 
+		new JTextField("Enter the release (0 - 1.0)");
 
 	    //JButton test_button = new JButton("hello this is a test");
 
+	    frame.getContentPane().setLayout(new GridLayout(1, 7));
+	    frame.getContentPane().add(field_freq);
+	    frame.getContentPane().add(field_amp);
+	    frame.getContentPane().add(field_attack);
+	    frame.getContentPane().add(field_decay);
+	    frame.getContentPane().add(field_sustainAmp);
+	    frame.getContentPane().add(field_sustainTime);
+	    frame.getContentPane().add(field_release);
 	    
-	    
-	    frame.getContentPane().add(BorderLayout.NORTH,field_freq);
+
 	    frame.setSize(1000,400);
 	    frame.setVisible(true);
 	}

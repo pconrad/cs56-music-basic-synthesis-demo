@@ -13,7 +13,7 @@ import javax.sound.sampled.SourceDataLine;
 */
 
 public class ADSREnvelopedContinuousSound extends EnvelopedSound {
-    private final boolean DEBUG=false;
+    private final boolean DEBUG = false;
     private double amplitude;
     private double attackTime;
     private double decayTime;
@@ -183,13 +183,12 @@ public class ADSREnvelopedContinuousSound extends EnvelopedSound {
        executes the program
     */
     public static void main(String[] args) {
-	BasicGuiForSynth.run();
 	if (args.length != 7) {
 	    System.out.print("frequency, amp, attack, decay, sustain amp,");
 	    System.out.println("sustain time, release");
 	    System.exit(1);
 	}
-	
+
 	AudioFormat f = new AudioFormat(44100,8,1,true,true);
 	try {
 	    /* Create a new audioLine which goes to the system, 

@@ -19,22 +19,20 @@ import javax.sound.sampled.SourceDataLine;
 	*sustain vol(0-1)	    *
 	*****************************
 	use JLabel and JTextBox then add a keyboardlistner--on keypress start 
-	the loader thread on release intterupt the sustain thread literl on key
+	the loader thread on release intterupt the sustain thread literal on key
 */
 
 public class BasicGuiForSynth {
-	public static void run () {
-	
-	JFrame frame = new JFrame();
-	JButton test_button = new JButton("hello this is a test");
+	public static void main(String[] args) {
+	    JFrame frame = new JFrame();
+	    JButton test_button = new JButton("hello this is a test");
 
-	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-	frame.getContentPane().add(test_button);
-	
-	frame.setSize(300,300);
-	
-	frame.setVisible(true);
-	
+	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    
+	    frame.getContentPane().add(test_button);
+	    
+	    frame.setSize(300,300);
+	    
+	    frame.setVisible(true);
 	}
 }

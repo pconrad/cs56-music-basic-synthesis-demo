@@ -27,9 +27,29 @@ import javax.sound.sampled.SourceDataLine;
 public class BasicGuiForSynth {
 	public void go() {
 	    JFrame frame = new JFrame();
+	    
+	    JPanel labels = new JPanel();
 	    JPanel textFields = new JPanel();
 	    JPanel sliders = new JPanel();
 	    JPanel center = new JPanel();
+	    
+	    JLabel label1 = new JLabel("Frequency (0-1000)", JLabel.CENTER);
+	    JLabel label2 = new JLabel("Amplitude (0-1)", JLabel.CENTER);
+	    JLabel label3 = new JLabel("Attack (0-1)", JLabel.CENTER);
+	    JLabel label4 = new JLabel("Decay (0-1)", JLabel.CENTER);
+	    JLabel label5 = new JLabel("Sustain Amplitude (0-1)",
+				       JLabel.CENTER);
+	    JLabel label6 = new JLabel("Sustain Time (0-1)", JLabel.CENTER);
+	    JLabel label7 = new JLabel("Release (0-1)", JLabel.CENTER);
+
+	    labels.setLayout(new GridLayout(1,7));
+	    labels.add(label1);
+	    labels.add(label2);
+	    labels.add(label3);
+	    labels.add(label4);
+	    labels.add(label5);
+	    labels.add(label6);
+	    labels.add(label7);
 	    
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    
@@ -51,7 +71,7 @@ public class BasicGuiForSynth {
 	    //JButton test_button = new JButton("hello this is a test");
 
 	    center.setLayout(new GridLayout(2,1));
-
+	
 	    textFields.setLayout(new GridLayout(1, 7));
 	    textFields.add(field_freq);
 	    textFields.add(field_amp);
@@ -62,7 +82,8 @@ public class BasicGuiForSynth {
 	    textFields.add(field_release);
 	    
 	    center.add(textFields);
-
+ 
+	    frame.add(labels,BorderLayout.NORTH);
 	    frame.add(center,BorderLayout.CENTER);
 	    frame.add(new JButton("Play Sound!"),BorderLayout.SOUTH);
 	    frame.setSize(1000,400);

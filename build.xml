@@ -14,7 +14,7 @@
   <property name="quarter" value="13S" />
   <property name="project" value="projects" />
   <property name="repo_name" value="basic_synthesis_demo"/>
-  <property name="mainClass" value="edu.ucsb.cs56.projects.music.cs56_music_basic_synthesis_demo.ADSREnvelopedContinuousSound" />
+  <property name="mainClass" value="edu.ucsb.cs56.projects.music.cs56_music_basic_synthesis_demo.Melody_Code.ADSREnvelopedContinuousSound" />
   <property name="projectName" value="${course}_${quarter}_${project}" />
   <property name="projectPath" value="${course}/${project}/music/${repo_name}" />
   <property name="javadocDest" value="${webRoot}/${course}/13S/${env.USER}/${repo_name}/javadoc" />
@@ -52,7 +52,7 @@
     <delete dir="temp" quiet="true" />
   </target>
   
-	<target name="test" depends="compile">
+<target name="test" depends="compile">
 
     <junit haltonerror="no" haltonfailure="no">
        <classpath>
@@ -78,7 +78,7 @@
     <javadoc  destdir="javadoc" author="true" version="true" use="true" >
       <fileset dir="src" includes="**/*.java"/>
       <classpath>
-	<pathelement location="/cs/faculty/pconrad/public_html/cs56/lib/junit-4.8.2.jar"/>
+	<pathelement location="lib/junit-4.8.2.jar"/>
       </classpath>
     </javadoc>
     
@@ -102,14 +102,7 @@
     
   </target>
   
-  <target name="jar" depends="compile">
-    <mkdir dir="dist" />
-    <jar destfile="dist/${projectName}.jar" basedir="build" >
-      <manifest>
-	<attribute name="Main-Class" value="${mainClass}"/>
-      </manifest>
-    </jar>
-  </target>
+
 
   <target name="linenumbers" description="Creates a file containing all source files with line numbers">
     <exec executable="bash">

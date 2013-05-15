@@ -27,6 +27,9 @@ import javax.sound.sampled.SourceDataLine;
 public class BasicGuiForSynth {
 	public void go() {
 	    JFrame frame = new JFrame();
+	    frame.getContentPane().setLayout(new GridLayout(2,1));
+	    JPanel p1 = new JPanel();
+	    JPanel p2 = new JPanel();
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    
 	    JTextField field_freq = 
@@ -46,16 +49,16 @@ public class BasicGuiForSynth {
 
 	    //JButton test_button = new JButton("hello this is a test");
 
-	    frame.getContentPane().setLayout(new GridLayout(1, 7));
-	    frame.getContentPane().add(field_freq);
-	    frame.getContentPane().add(field_amp);
-	    frame.getContentPane().add(field_attack);
-	    frame.getContentPane().add(field_decay);
-	    frame.getContentPane().add(field_sustainAmp);
-	    frame.getContentPane().add(field_sustainTime);
-	    frame.getContentPane().add(field_release);
+	    p1.setLayout(new GridLayout(1, 7));
+	    p1.add(field_freq);
+	    p1.add(field_amp);
+	    p1.add(field_attack);
+	    p1.add(field_decay);
+	    p1.add(field_sustainAmp);
+	    p1.add(field_sustainTime);
+	    p1.add(field_release);
 	    
-
+	    frame.add(p1);
 	    frame.setSize(1000,400);
 	    frame.setVisible(true);
 	}

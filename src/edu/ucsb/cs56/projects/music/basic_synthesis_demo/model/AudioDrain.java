@@ -1,4 +1,4 @@
-package edu.ucsb.cs56.projects.music.basic_synthesis_demo.model;
+package edu.ucsb.cs56.projects.music.basic_synthesis_demo;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;

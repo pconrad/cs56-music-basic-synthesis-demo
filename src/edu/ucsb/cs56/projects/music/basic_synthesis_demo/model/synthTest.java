@@ -1,4 +1,4 @@
-package edu.ucsb.cs56.projects.music.basic_synthesis_demo.model;
+package edu.ucsb.cs56.projects.music.basic_synthesis_demo;
 
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;

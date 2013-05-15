@@ -1,6 +1,9 @@
 package edu.ucsb.cs56.projects.music.basic_synthesis_demo;
 
 import javax.swing.*;
+import javax.swing.text.*;
+import java.util.*;
+import java.text.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.sound.sampled.AudioFormat;
@@ -37,7 +40,7 @@ public class BasicGuiForSynth {
 	    JLabel label2 = new JLabel("Amplitude (0-1)", JLabel.CENTER);
 	    JLabel label3 = new JLabel("Attack (0-1)", JLabel.CENTER);
 	    JLabel label4 = new JLabel("Decay (0-1)", JLabel.CENTER);
-	    JLabel label5 = new JLabel("Sustain Amplitude (0-1)",
+	    JLabel label5 = new JLabel("Sustain Amp (0-1)",
 				       JLabel.CENTER);
 	    JLabel label6 = new JLabel("Sustain Time (0-1)", JLabel.CENTER);
 	    JLabel label7 = new JLabel("Release (0-1)", JLabel.CENTER);
@@ -53,20 +56,29 @@ public class BasicGuiForSynth {
 	    
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    
-	    JTextField field_freq = 
-		new JTextField("220");
-	    JTextField field_amp = 
-		new JTextField("0.9");
-	    JTextField field_attack = 
-		new JTextField("0.1");
-	    JTextField field_decay = 
-		new JTextField("0.2");
-	    JTextField field_sustainAmp = 
-		new JTextField("0.6");
-	    JTextField field_sustainTime = 
-		new JTextField("1.0");
-	    JTextField field_release = 
-		new JTextField("0.2");
+	    NumberFormat f = NumberFormat.getNumberInstance();
+	    f.format(new Integer(123456789));
+	    JFormattedTextField field_freq = 
+		new JFormattedTextField("220");
+	    field_freq.setHorizontalAlignment(JTextField.CENTER);
+	    JFormattedTextField field_amp = 
+		new JFormattedTextField("0.9");
+	    field_amp.setHorizontalAlignment(JTextField.CENTER);
+	    JFormattedTextField field_attack = 
+		new JFormattedTextField("0.1");
+	    field_attack.setHorizontalAlignment(JTextField.CENTER);
+	    JFormattedTextField field_decay = 
+		new JFormattedTextField("0.2");
+	    field_decay.setHorizontalAlignment(JTextField.CENTER);
+	    JFormattedTextField field_sustainAmp = 
+		new JFormattedTextField("0.6");
+	    field_sustainAmp.setHorizontalAlignment(JTextField.CENTER);
+	    JFormattedTextField field_sustainTime = 
+		new JFormattedTextField("1.0");
+	    field_sustainTime.setHorizontalAlignment(JTextField.CENTER);
+	    JFormattedTextField field_release = 
+		new JFormattedTextField("0.2");
+	    field_release.setHorizontalAlignment(JTextField.CENTER);
 
 	    sliders.setLayout(new GridLayout(1,7));
 

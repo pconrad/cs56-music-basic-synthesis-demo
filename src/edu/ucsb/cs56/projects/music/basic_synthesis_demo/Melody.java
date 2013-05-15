@@ -22,6 +22,24 @@ public class Melody extends ArrayList<Note>{
 		super(1);
 	}
 
+    /**
+    * method to check if the durations for all the notes in the melody are compatible with the envelope being used
+    */
+    public boolean checkCompatibility(ADSREnvelope a, Melody m){
+        double note_duration;
+        for(Note n : m)
+        {
+            note_duration = n.getDuration() - a.getAttackTime() - a.getDecayTime() - a.getReleaseTime();
+            if(note_duration < 0)
+            {
+                return false;
+            }   
+
+        }
+
+        return true;
+    }
+
 	/**
 	* void method to play the melody
 	* @param e the ADSREnvelope that is used to play the note
@@ -40,15 +58,18 @@ public class Melody extends ArrayList<Note>{
 			d.open(f, 44100*2);
 		    d.start();
 		
-			for(Note n: m)
+			for(int i =0 ; i<m.size() ; i++)
 			{
-					freq = n.getFrequency();
-					amp = n.getVolume();
+                    Note n = m.get(i);
+                    
+					freq = n.getFrequency();          					
+                    amp = n.getVolume();
+                    a.setSustainTime(n.getDuration() - a.getAttackTime() - a.getDecayTime() - a.getReleaseTime());
 					ADSREnvelopedContinuousSound env =
 							new ADSREnvelopedContinuousSound(freq, amp, a, 44100, d);
+                    System.out.printf("Freq = %f \n", freq);
 					env.load();
-					System.out.printf("Freq = %f \n", freq);
-
+					
 			}
 
 			d.drain();
@@ -83,8 +104,16 @@ public class Melody extends ArrayList<Note>{
 
 		
 		Melody m = new Melody();
-		m.add(new Note(220.0, 1, 0.9));
-		m.add(new Note(330.0, 1, 0.9));
+
+        double freq = 220;
+        
+        for(int i=1; i<=12; i++){
+            freq = freq * Math.pow(2, 1/12.0);
+		    m.add(new Note(freq, 1, 0.9));
+        }
+
+        if(!m.checkCompatibility(a,m))
+            throw new IllegalArgumentException("Melody and Envelope are incompatible");
 		m.play(a, m);
 	}
 	

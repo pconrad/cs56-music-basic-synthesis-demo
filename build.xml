@@ -2,6 +2,7 @@
 <project default="compile">
   
   <!-- build.xml for music.basic_synthesis_demo
+		 name: P. Conrad
        name: Chris Atanasian and Marc Lindsay for CS56, S13 -->
   
   <property environment="env"/> <!-- load the environment variables -->
@@ -11,18 +12,13 @@
   <property name="course" value="cs56" />
   <property name="categoryName" value="music" />
   <property name="repoName" value="basic_synthesis_demo" />
-  <property name="mainClass" value="edu.ucsb.cs56.projects.${categoryName}.${repoName}.ADSREnvelopedContinuousSound" />
+  <property name="mainClass" value="edu.ucsb.cs56.projects.${categoryName}.${repoName}.model.ADSREnvelopedContinuousSound" />
   <property name="projectName" value="${course}_projects__${categoryName}_${repoName}" />
   <property name="projectPath" value="${course}/projects/${categoryName}/${repoName}" />
   <property name="javadocDest" value="${webRoot}/cs56/13S/${env.USER}/${course}-${categoryName}-${repoName}" />
   <property name="javadocURL" value="${webBaseUrl}/cs56/13S/${env.USER}/${course}-${categoryName}-${repoName}" />
-  
-
-
-
-   <property name="csil.junit.path" value="lib/junit-4.8.2.jar" />
+  <property name="csil.junit.path" value="lib/junit-4.8.2.jar" />
   <property name="local.junit.path" value="lib/junit-4.8.2.jar" />
-
   <property name="csil.junit.URL" value="lib/junit-4.8.2.jar" />
 
   <target name="junit.available">

@@ -22,15 +22,13 @@ public class ADSREnvelopedContinuousSound extends EnvelopedSound {
     private double sustainTime;
     
     /**
-       @param frequency the frequency to play at
-       @param amplitude the maximum volume
-       @param attackTime the number of seconds to attack for
-       @param decayTime amount of time to decay/sustain
-       @param sustainAmplitude the sustain volume
-       @param sustainTime the amount of time to sustain over
-       @param releaseTime amount of time to release over
-       @param sampleRate the number of samples per second
-       @param l the source data line
+       @param double frequency the frequency to play at
+       @param double amplitude the maximum volume
+       @param double sustainAmplitude the sustain volume
+       @param double attackTime the number of seconds to attack for
+       @param double decayTime amount of time to decay/sustain
+       @param double releaseTime amount of time to release over
+       @param int sampleRate the number of samples per second
     */
     public ADSREnvelopedContinuousSound (	
 			      double frequency,

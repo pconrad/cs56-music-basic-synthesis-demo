@@ -7,19 +7,37 @@ A basic demo of some simple synthesis starting with sine waves
 	java -cp build  edu.ucsb.cs56.projects.music.basic_synthesis_demo.ADSREnvelopedContinuousSound 220 0.9 0.1 0.2 0.6 1.0 0.2
 
 The parameters are: frequency, amplitude, attack, decay, sustain amplitude, sustain time, release.
-frequency: The frequency to play at. (0 - 1000)
-amplitude: The maximum volume. (0 - 1.0)
-attack: The number of seconds to attack for. (0 - 1.0)
-decay: The amount of time to decay/sustain. (0 - 1.0)
-sustain amplitude: The sustained volume. (0 - 1.0)
-sustain time: The time to sustain for. (0 - 1.0)
-release: The amount of time to release over. (0 - 1.0)
+frequency:
+
+	 The frequency to play at. (0 - 1000)
+
+amplitude:
+
+	 The maximum volume. (0 - 1.0)
+
+attack:
+
+	 The number of seconds to attack for. (0 - 1.0)
+
+decay:
+
+	 The amount of time to decay/sustain. (0 - 1.0)
+
+sustain amplitude:
+		
+	 The sustained volume. (0 - 1.0)
+
+sustain time:
+	
+	 The time to sustain for. (0 - 1.0)
+release:
+	 The amount of time to release over. (0 - 1.0)
 
 # Gui Example run
         java -cp build edu.ucsb.cs56.projects.music.basic_synthesis_demo.view.Gu
 iForSynth
 
-	GUI is simply a skeleton, and is not functional
+GUI is simply a skeleton, and is not functional
 	
 # Useful resources
 	The following may be helpful:

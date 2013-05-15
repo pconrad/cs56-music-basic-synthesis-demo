@@ -1,6 +1,8 @@
 package edu.ucsb.cs56.projects.music.basic_synthesis_demo;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.SourceDataLine;
@@ -23,16 +25,31 @@ import javax.sound.sampled.SourceDataLine;
 */
 
 public class BasicGuiForSynth {
-	public static void main(String[] args) {
-	    JFrame frame = new JFrame();
-	    JButton test_button = new JButton("hello this is a test");
+	public void go() {
+		JFrame frame = new JFrame();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		JTextField field_freq = new JTextField("Enter the frequency (0 < 1000)",4);
+		//field_freq.addActionListener(new TextFieldListener());
+		
+		/*
+		amp
+		attack
+		decay
+		sus_amp
+		sus_time
+		release*/		
 
-	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    //JButton test_button = new JButton("hello this is a test");
+
 	    
-	    frame.getContentPane().add(test_button);
 	    
-	    frame.setSize(300,300);
-	    
+	    frame.getContentPane().add(BorderLayout.NORTH,field_freq);
+	    frame.setSize(1000,400);
 	    frame.setVisible(true);
+	}
+	
+	public static void main(String[] args) {
+		BasicGuiForSynth synthGUI = new BasicGuiForSynth();
+		synthGUI.go();
 	}
 }

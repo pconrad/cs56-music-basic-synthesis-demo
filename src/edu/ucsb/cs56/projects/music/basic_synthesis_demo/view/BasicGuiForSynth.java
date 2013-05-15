@@ -27,13 +27,14 @@ import javax.sound.sampled.SourceDataLine;
 public class BasicGuiForSynth {
 	public void go() {
 	    JFrame frame = new JFrame();
-	    frame.getContentPane().setLayout(new GridLayout(2,1));
-	    JPanel p1 = new JPanel();
-	    JPanel p2 = new JPanel();
+	    JPanel textFields = new JPanel();
+	    JPanel sliders = new JPanel();
+	    JPanel center = new JPanel();
+	    
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    
 	    JTextField field_freq = 
-		new JTextField("Enter the frequency (0 - 1000)");
+		new JTextField("Enter\nfrequency\n(0 - 1000)");
 	    JTextField field_amp = 
 		new JTextField("Enter the amplitude (0 - 1.0)");
 	    JTextField field_attack = 
@@ -49,16 +50,21 @@ public class BasicGuiForSynth {
 
 	    //JButton test_button = new JButton("hello this is a test");
 
-	    p1.setLayout(new GridLayout(1, 7));
-	    p1.add(field_freq);
-	    p1.add(field_amp);
-	    p1.add(field_attack);
-	    p1.add(field_decay);
-	    p1.add(field_sustainAmp);
-	    p1.add(field_sustainTime);
-	    p1.add(field_release);
+	    center.setLayout(new GridLayout(2,1));
+
+	    textFields.setLayout(new GridLayout(1, 7));
+	    textFields.add(field_freq);
+	    textFields.add(field_amp);
+	    textFields.add(field_attack);
+	    textFields.add(field_decay);
+	    textFields.add(field_sustainAmp);
+	    textFields.add(field_sustainTime);
+	    textFields.add(field_release);
 	    
-	    frame.add(p1);
+	    center.add(textFields);
+
+	    frame.add(center,BorderLayout.CENTER);
+	    frame.add(new JButton("Play Sound!"),BorderLayout.SOUTH);
 	    frame.setSize(1000,400);
 	    frame.setVisible(true);
 	}

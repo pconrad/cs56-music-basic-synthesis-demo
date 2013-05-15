@@ -7,13 +7,13 @@ A basic demo of some simple synthesis starting with sine waves
 	java -cp build  edu.ucsb.cs56.projects.music.basic_synthesis_demo.ADSREnvelopedContinuousSound 220 0.9 0.1 0.2 0.6 1.0 0.2
 
 The parameters are: frequency, amplitude, attack, decay, sustain amplitude, sustain time, release.
-	frequency: The frequency to play at.
-	amplitude: The maximum volume.
-	attack: The number of seconds to attack for.
-	decay: The amount of time to decay/sustain.
-	sustain amplitude: The sustained volume.
-	sustain time: The time to sustain for.
-	release: The amount of time to release over.
+\nfrequency: The frequency to play at.
+\namplitude: The maximum volume.
+\nattack: The number of seconds to attack for.
+\ndecay: The amount of time to decay/sustain.
+\nsustain amplitude: The sustained volume.
+\nsustain time: The time to sustain for.
+\nrelease: The amount of time to release over.
 
 # Useful resources
 	The following may be helpful:

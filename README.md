@@ -6,10 +6,10 @@ A basic demo of some simple synthesis starting with sine waves
 
 # Example run
 
- java -cp build  edu.ucsb.cs56.S12.ISSUE0000779.ADSREnvelopedContinuousSound 220 0.9 0.1 0.2 0.6 1.0 0.2
+ java -cp build edu.ucsb.cs56.projects.music.basic_synthesis_demo.Melody_Code.Melody 0.1 0.2 0.6 1.0 0.2
 
 
-The parameters are: frequency, amp, attack, decay, sustain amp, sustain time, release
+The parameters are: attack, decay, sustain amp, sustain time, release
 
 # Useful resources
 

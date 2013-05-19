@@ -3,51 +3,34 @@
   
   <!-- build.xml for Mantis issue
        name: P.Conrad for CS56, S12 -->
+	<!-- build.xml for Project Issue
+       name: Bronwyn Perry-Huston for CS56, S13 -->
   
   <property environment="env"/> <!-- load the environment variables -->
-  <property name="webRoot" value="${env.HOME}/public_html/" />
-  <property name="webBaseUrl" value="http://www.cs.ucsb.edu/~${env.USER}/" />
+  <property name="webRoot" value="${env.HOME}/public_html" />
+  <property name="webBaseUrl" value="http://www.cs.ucsb.edu/~${env.USER}"/>
   
   <property name="course" value="cs56" />
-  <property name="quarter" value="S12" />
-  <property name="issueNum" value="0000779" />
-  <property name="mainClass" value="edu.ucsb.cs56.S12.ISSUE${issueNum}.ADSREnvelopedContinuousSound" />
-  <property name="projectName" value="${course}_${quarter}_${issueNum}" />
-  <property name="projectPath" value="${course}/${quarter}/issues/${issueNum}" />
-  <property name="javadocDest" value="${webRoot}/${projectPath}/javadoc" />
-  <property name="javadocURL" value="${webBaseUrl}/${projectPath}/javadoc" />
+  <property name="quarter" value="13S" />
+  <property name="project" value="projects" />
+  <property name="repo_name" value="basic_synthesis_demo"/>
+  <property name="mainClass" value="edu.ucsb.cs56.projects.music.cs56_music_basic_synthesis_demo.Melody_Code.ADSREnvelopedContinuousSound" />
+  <property name="projectName" value="${course}_${quarter}_${project}/" />
+  <property name="projectPath" value="${course}/${project}/music/${repo_name}/Melody_Code/" />
+  <property name="javadocDest" value="${webRoot}/${course}/13S/${env.USER}/${repo_name}/javadoc" />
+  <property name="javadocURL" value="${webBaseUrl}/${course}/13S/${env.USER}/${repo_name}/javadoc" />
   
 
 
 
-   <property name="csil.junit.path" value="/cs/faculty/pconrad/public_html/cs56/lib/junit-4.8.2.jar" />
-  <property name="local.junit.path" value="lib/junit-4.8.2.jar" />
-
-  <property name="csil.junit.URL" value="http://www.cs.ucsb.edu/~pconrad/cs56/lib/junit-4.8.2.jar" />
-
-  <target name="junit.available">
-    <available property="csil.junit.available" file="${csil.junit.path}"/>
-    <available property="local.junit.available" file="${local.junit.path}"/>
-  </target>
-
-  <target name="get.local.junit" 
-          depends="junit.available" 
-          unless="csil.junit.available" >
-     <mkdir dir="lib" />
-     <get src="${csil.junit.URL}" dest="${local.junit.path}" />
-  </target>
-  
-  <target name="compile" depends="get.local.junit" >
-    <mkdir dir="build" />
-    <javac srcdir="src" destdir="build" debug="true" includeantruntime="false" debuglevel="lines,source" target="1.5" >
-      
-      <classpath>
-	<pathelement location="build"/>
-	<pathelement location="${local.junit.path}"/>
-        <pathelement location="${csil.junit.path}"/>
-      </classpath>
+  <target name="compile">
+    <mkdir dir="build"/>
+    <javac srcdir="src" destdir="build" debuglevel="lines,source" includeantruntime="false">
+        <classpath>
+            <pathelement location="build"/>
+            <pathelement location="lib/junit-4.8.2.jar"/>
+        </classpath>
     </javac>
-    
   </target>
   
   <target name="run" depends="compile">
@@ -66,36 +49,36 @@
     </delete>
     <delete dir="javadoc" quiet="true" />
     <delete dir="dist" quiet="true" />
-    <delete dir="download" quiet="true" />
     <delete dir="temp" quiet="true" />
   </target>
   
-  <target name="test" depends="compile">
-    
+<target name="test" depends="compile">
+
     <junit haltonerror="no" haltonfailure="no">
-      <classpath>
-	<pathelement location="/cs/faculty/pconrad/public_html/cs56/lib/junit-4.8.2.jar"/>
-	<pathelement location="build" />
-      </classpath>
-      
-      <batchtest fork="yes">
-	<fileset dir="src">
-	  <!-- this will pick up every class with a name ending in Test -->
-	  <include name="**/*Test.java"/>
-	</fileset>
-      </batchtest>
-      
-      <formatter type="plain" usefile="false" />
-      
+       <classpath>
+		 <pathelement location="build"/>
+         <pathelement location="lib/junit-4.8.2.jar"/>
+       </classpath>
+
+       <batchtest fork="yes">
+          <fileset dir="src">
+            <!-- this will pick up every class with a name ending in Test -->
+            <include name="**/*Test.java"/>
+          </fileset>
+       </batchtest>
+
+        <formatter type="plain" usefile="false" /> 
+       
     </junit>
-  </target>
+  </target> 
+
   <target name="javadoc" depends="compile">
     
     <delete dir="javadoc" quiet="true" />
     <javadoc  destdir="javadoc" author="true" version="true" use="true" >
       <fileset dir="src" includes="**/*.java"/>
       <classpath>
-	<pathelement location="/cs/faculty/pconrad/public_html/cs56/lib/junit-4.8.2.jar"/>
+	<pathelement location="lib/junit-4.8.2.jar"/>
       </classpath>
     </javadoc>
     
@@ -119,80 +102,7 @@
     
   </target>
   
-  <target name="jar" depends="compile">
-    <mkdir dir="dist" />
-    <jar destfile="dist/${projectName}.jar" basedir="build" >
-      <manifest>
-	<attribute name="Main-Class" value="${mainClass}"/>
-      </manifest>
-    </jar>
-  </target>
-  
-  <target name="download" >
-    
-    <delete quiet="true">
-      <fileset dir="temp" includes="**/*" />
-      <fileset dir="download" includes="**/*" />
-    </delete>
-    
-    <mkdir dir="download" />
-    <mkdir dir="temp" />
-    <mkdir dir="temp/${projectName}" />
-    
-    <copy todir="temp/${projectName}">
-      <fileset dir="."
-	       excludes="build/**, javadoc/**, **/*~, temp/**, dist/**, download/**"/>
-    </copy>
-    
-    <tar destfile="temp/${projectName}.tar"
-	 basedir="temp"
-	 includes="${projectName}/**"
-	 />
-    
-    <gzip zipfile="download/${projectName}.tgz"
-	  src="temp/${projectName}.tar" />
-    
-    <zip destfile="download/${projectName}.zip"
-	 basedir="temp"
-	 includes="${projectName}/**"
-	 />
-    
-    <delete quiet="true">
-      <fileset dir="temp" includes="**/*"/>
-    </delete>
-    
-  </target>
-  
-  <target name="publish" depends="jar,javadoc,download,linenumbers">
-    <mkdir dir="${webRoot}/${projectPath}" />
-    
-    <delete dir="${webRoot}/${projectPath}/browse" />
-    <mkdir dir="${webRoot}/${projectPath}/browse" />
-    
-    <delete dir="${webRoot}/${projectPath}/download" />
-    <mkdir dir="${webRoot}/${projectPath}/download" />
-    
-    <copy file="html/index.html" todir="${webRoot}/${projectPath}"/>
-    <copy file="numberedsource.txt" todir="${webRoot}/${projectPath}/browse"/>
-    
-    <copy todir="${webRoot}/${projectPath}/download" >
-      <fileset dir="download"/>
-      <fileset dir="dist" />
-    </copy>
-    
-    <copy file="build.xml" todir="${webRoot}/${projectPath}/browse"/>
-    
-    <copy todir="${webRoot}/${projectPath}/browse/src" >
-      <fileset dir="src"/>
-    </copy>
-    
 
-    <chmod dir="${webRoot}/${projectPath}"
-	   perm="755" type="both" includes="**/*"/>
-    
-    <echo>Project published to ${webBaseUrl}/${projectPath}</echo>
-  </target>
-  
 
   <target name="linenumbers" description="Creates a file containing all source files with line numbers">
     <exec executable="bash">
@@ -200,6 +110,5 @@
       <arg value='tree -ifQ src | grep \.java\"$ | xargs pr -n > numberedsource.txt' />
     </exec>
   </target>
-
 
 </project>

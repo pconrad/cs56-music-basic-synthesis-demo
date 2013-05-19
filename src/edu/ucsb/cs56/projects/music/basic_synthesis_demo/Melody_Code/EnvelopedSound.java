@@ -1,4 +1,4 @@
-package edu.ucsb.cs56.S12.ISSUE0000779;
+package edu.ucsb.cs56.projects.music.basic_synthesis_demo.Melody_Code;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.SourceDataLine;
@@ -33,63 +33,64 @@ public class EnvelopedSound{
 			      double totalTime,
 			      int sampleRate,
 			      SourceDataLine l){
-	this.frequency=frequency;
-	this.sampleRate=sampleRate;
-	this.line=l;
-	this.totalTime=totalTime;
-	this.unclipped=false;
-	this.samples = (int)(this.totalTime*this.sampleRate);
+		this.frequency=frequency;
+		this.sampleRate=sampleRate;
+		this.line=l;
+		this.totalTime=totalTime;
+		this.unclipped=false;
+		this.samples = (int)(this.totalTime*this.sampleRate);
     }
+
     protected EnvelopedSound(	
 			      double frequency,
 			      double totalTime,
 			      int sampleRate,
 			      SourceDataLine l,
 			      boolean unclip){
-	this.frequency=frequency;
-	this.sampleRate=sampleRate;
-	this.line=l;
-	this.totalTime=totalTime;
-	if(unclip)
-	    unclipTime();
-	this.unclipped=unclip;
-	this.samples = (int)(this.totalTime*this.sampleRate);
+		this.frequency=frequency;
+		this.sampleRate=sampleRate;
+		this.line=l;
+		this.totalTime=totalTime;
+		if(unclip)
+			unclipTime();
+		this.unclipped=unclip;
+		this.samples = (int)(this.totalTime*this.sampleRate);
     }    
     /**
        Getter for the sample rate.
      */
     public int getSampleRate(){
-	return this.sampleRate;
+		return this.sampleRate;
     }
     /** 
 	Setter for the the sampleRate
     */
     public void setSampleRate(int s){
-	this.sampleRate=s;
+		this.sampleRate=s;
     }
     /**
        Getter for the audio line
     */
     public SourceDataLine getLine(){
-	return line;
+		return line;
     }
     /** 
 	Setter for the audio line
     */
     public void setLine(SourceDataLine line){
-	this.line=line;
+		this.line=line;
     }
     /**
        Getter for the frequency
     */
     public double getFrequency(){
-	return frequency;
+		return frequency;
     }
     /**
        Stter for the frequency
     */
     public void setFrequency(double freq){
-	this.frequency = freq;
+		this.frequency = freq;
     }
     /**
      * find the total time of attack, decay, and release (without sustain)
@@ -97,22 +98,22 @@ public class EnvelopedSound{
      * @return total ammount of time with no sustain
      */
     public double totalTime(){
-	return totalTime;
+		return totalTime;
     }
     /**
        setter for the total time;
     */
     public void setTime(double T){
-	this.totalTime=T;
+		this.totalTime=T;
     }
     /**
        Getter for the audio data
     */
     public byte[] getData(){
-	return audioData;
+		return audioData;
     }
     public String toString(){
-	return "Frequency: "+frequency+"Duration: "+totalTime+"  Sample rate: "+sampleRate; 
+		return "Frequency: "+frequency+"Duration: "+totalTime+"  Sample rate: "+sampleRate; 
     } 
     /**
      * find the amplitude of a specific sample within the audio array
@@ -121,15 +122,15 @@ public class EnvelopedSound{
      */
     public byte wavValAtTime(double time){
 
-	double samptime=time*sampleRate;
-	int index = (int) samptime;
-	return audioData[index];
+		double samptime=time*sampleRate;
+		int index = (int) samptime;
+		return audioData[index];
     }
     /**
        Return whether or not the clipping code has been called
      */
     public boolean getClipState(){
-	return this.unclipped;
+		return this.unclipped;
     }
     /**
      * Prevents clipping by making sure that the sin wave finishes before switching from sustain to release.
@@ -137,29 +138,29 @@ public class EnvelopedSound{
      */
     protected void unclipTime(){
 
-	this.totalTime = this.samples/(double)this.sampleRate;
-	while(Math.abs(Math.sin(2*Math.PI*frequency*this.totalTime))>=0.001){
-	    this.totalTime+=1/(double)this.sampleRate;
-	    this.samples++;
-	}
+		this.totalTime = this.samples/(double)this.sampleRate;
+		while(Math.abs(Math.sin(2*Math.PI*frequency*this.totalTime))>=0.001){
+			this.totalTime+=1/(double)this.sampleRate;
+			this.samples++;
+		}
     }
     /**
        This Code generates the actual envelope as a function of the wave and the amplitdue, it should not be changed
      */
     protected void generateEnvelope(){
-	audioData = new byte[samples];
-	double t=0;
-	int i=0;
-	double amp=0;
-	for(; i<samples; i++){      //attack
-	     if(DEBUG&&i%50==0)
-	    	System.out.println(t+" : time amplitude base:"+ amp);
-	    amp=generateAmplitude(t,amp);
-	     if(DEBUG&&i%50==0)
-	    	System.out.println("New Amplitude: "+amp);
-	    audioData[i]=(byte)((127)*generateWave(t)*amp);
-	    t+=1.0/(double)this.sampleRate;	    
-	}	
+		audioData = new byte[samples];
+		double t=0;
+		int i=0;
+		double amp=0;
+		for(; i<samples; i++){      //attack
+			 if(DEBUG&&i%50==0)
+				System.out.println(t+" : time amplitude base:"+ amp);
+			amp=generateAmplitude(t,amp);
+			 if(DEBUG&&i%50==0)
+				System.out.println("New Amplitude: "+amp);
+			audioData[i]=(byte)((127)*generateWave(t)*amp);
+			t+=1.0/(double)this.sampleRate;	    
+		}	
     }
     /**
       This method is responsible for defining the value of the wave at a given time t 
@@ -172,17 +173,17 @@ public class EnvelopedSound{
        this method defines the amplitude of the wave, at the time t.
      */
     protected double generateAmplitude(double time, double amplitude){
-	return 1;
+		return 1;
     }
     /**
        load up the internal audio output line we get with the byte sample we already generated.
      */
     public void load(){
-	try{
-	    line.write(audioData,0,audioData.length);
-	} catch(Exception ex){
-	    ex.printStackTrace();
-	}
-	    
+		try{
+			line.write(audioData,0,audioData.length);
+		} catch(Exception ex){
+			ex.printStackTrace();
+		}
+			
     }
 }

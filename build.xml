@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project default="compile">
   
+<<<<<<< HEAD
   <!-- build.xml for music.basic_synthesis_demo
        name: P. Conrad
        name: Chris Atanasian and Marc Lindsay for CS56, S13 -->
+=======
+  <!-- build.xml for Mantis issue
+       name: P.Conrad for CS56, S12 -->
+	<!-- build.xml for Project Issue
+       name: Bronwyn Perry-Huston for CS56, S13 -->
+>>>>>>> 7f1697dae4402962284f74c1aa6f0cdda88dd5b3
   
   <property environment="env"/> <!-- load the environment variables -->
-  <property name="webRoot" value="${env.HOME}/public_html/" />
-  <property name="webBaseUrl" value="http://www.cs.ucsb.edu/~${env.USER}/" />
+  <property name="webRoot" value="${env.HOME}/public_html" />
+  <property name="webBaseUrl" value="http://www.cs.ucsb.edu/~${env.USER}"/>
   
   <property name="course" value="cs56" />
+<<<<<<< HEAD
   <property name="categoryName" value="music" />
   <property name="repoName" value="basic_synthesis_demo" />
   <property name="mainClass" value="edu.ucsb.cs56.projects.${categoryName}.${repoName}.view.BasicGuiForSynth" />
@@ -42,8 +50,28 @@
 	<pathelement location="${local.junit.path}"/>
         <pathelement location="${csil.junit.path}"/>
       </classpath>
+=======
+  <property name="quarter" value="13S" />
+  <property name="project" value="projects" />
+  <property name="repo_name" value="basic_synthesis_demo"/>
+  <property name="mainClass" value="edu.ucsb.cs56.projects.music.cs56_music_basic_synthesis_demo.Melody_Code.ADSREnvelopedContinuousSound" />
+  <property name="projectName" value="${course}_${quarter}_${project}/" />
+  <property name="projectPath" value="${course}/${project}/music/${repo_name}/Melody_Code/" />
+  <property name="javadocDest" value="${webRoot}/${course}/13S/${env.USER}/${repo_name}/javadoc" />
+  <property name="javadocURL" value="${webBaseUrl}/${course}/13S/${env.USER}/${repo_name}/javadoc" />
+  
+
+
+
+  <target name="compile">
+    <mkdir dir="build"/>
+    <javac srcdir="src" destdir="build" debuglevel="lines,source" includeantruntime="false">
+        <classpath>
+            <pathelement location="build"/>
+            <pathelement location="lib/junit-4.8.2.jar"/>
+        </classpath>
+>>>>>>> 7f1697dae4402962284f74c1aa6f0cdda88dd5b3
     </javac>
-    
   </target>
   
   <target name="run" depends="compile">
@@ -62,13 +90,13 @@
     </delete>
     <delete dir="javadoc" quiet="true" />
     <delete dir="dist" quiet="true" />
-    <delete dir="download" quiet="true" />
     <delete dir="temp" quiet="true" />
   </target>
   
-  <target name="test" depends="compile">
-    
+<target name="test" depends="compile">
+
     <junit haltonerror="no" haltonfailure="no">
+<<<<<<< HEAD
       <classpath>
 	<pathelement location="lib/junit-4.8.2.jar"/>
 	<pathelement location="build" />
@@ -83,8 +111,25 @@
       
       <formatter type="plain" usefile="false" />
       
+=======
+       <classpath>
+		 <pathelement location="build"/>
+         <pathelement location="lib/junit-4.8.2.jar"/>
+       </classpath>
+
+       <batchtest fork="yes">
+          <fileset dir="src">
+            <!-- this will pick up every class with a name ending in Test -->
+            <include name="**/*Test.java"/>
+          </fileset>
+       </batchtest>
+
+        <formatter type="plain" usefile="false" /> 
+       
+>>>>>>> 7f1697dae4402962284f74c1aa6f0cdda88dd5b3
     </junit>
-  </target>
+  </target> 
+
   <target name="javadoc" depends="compile">
     
     <delete dir="javadoc" quiet="true" />
@@ -115,80 +160,7 @@
     
   </target>
   
-  <target name="jar" depends="compile">
-    <mkdir dir="dist" />
-    <jar destfile="dist/${projectName}.jar" basedir="build" >
-      <manifest>
-	<attribute name="Main-Class" value="${mainClass}"/>
-      </manifest>
-    </jar>
-  </target>
-  
-  <target name="download" >
-    
-    <delete quiet="true">
-      <fileset dir="temp" includes="**/*" />
-      <fileset dir="download" includes="**/*" />
-    </delete>
-    
-    <mkdir dir="download" />
-    <mkdir dir="temp" />
-    <mkdir dir="temp/${projectName}" />
-    
-    <copy todir="temp/${projectName}">
-      <fileset dir="."
-	       excludes="build/**, javadoc/**, **/*~, temp/**, dist/**, download/**"/>
-    </copy>
-    
-    <tar destfile="temp/${projectName}.tar"
-	 basedir="temp"
-	 includes="${projectName}/**"
-	 />
-    
-    <gzip zipfile="download/${projectName}.tgz"
-	  src="temp/${projectName}.tar" />
-    
-    <zip destfile="download/${projectName}.zip"
-	 basedir="temp"
-	 includes="${projectName}/**"
-	 />
-    
-    <delete quiet="true">
-      <fileset dir="temp" includes="**/*"/>
-    </delete>
-    
-  </target>
-  
-  <target name="publish" depends="jar,javadoc,download,linenumbers">
-    <mkdir dir="${webRoot}/${projectPath}" />
-    
-    <delete dir="${webRoot}/${projectPath}/browse" />
-    <mkdir dir="${webRoot}/${projectPath}/browse" />
-    
-    <delete dir="${webRoot}/${projectPath}/download" />
-    <mkdir dir="${webRoot}/${projectPath}/download" />
-    
-    <copy file="html/index.html" todir="${webRoot}/${projectPath}"/>
-    <copy file="numberedsource.txt" todir="${webRoot}/${projectPath}/browse"/>
-    
-    <copy todir="${webRoot}/${projectPath}/download" >
-      <fileset dir="download"/>
-      <fileset dir="dist" />
-    </copy>
-    
-    <copy file="build.xml" todir="${webRoot}/${projectPath}/browse"/>
-    
-    <copy todir="${webRoot}/${projectPath}/browse/src" >
-      <fileset dir="src"/>
-    </copy>
-    
 
-    <chmod dir="${webRoot}/${projectPath}"
-	   perm="755" type="both" includes="**/*"/>
-    
-    <echo>Project published to ${webBaseUrl}/${projectPath}</echo>
-  </target>
-  
 
   <target name="linenumbers" description="Creates a file containing all source files with line numbers">
     <exec executable="bash">
@@ -197,5 +169,8 @@
     </exec>
   </target>
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7f1697dae4402962284f74c1aa6f0cdda88dd5b3
 </project>

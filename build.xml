@@ -1,26 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project default="compile">
   
-<<<<<<< HEAD
+
   <!-- build.xml for music.basic_synthesis_demo
        name: P. Conrad
-       name: Chris Atanasian and Marc Lindsay for CS56, S13 -->
-=======
-  <!-- build.xml for Mantis issue
-       name: P.Conrad for CS56, S12 -->
-	<!-- build.xml for Project Issue
-       name: Bronwyn Perry-Huston for CS56, S13 -->
->>>>>>> 7f1697dae4402962284f74c1aa6f0cdda88dd5b3
-  
+       name: Chris Atanasian and Marc Lindsay for CS56, S13
+       name: Brownyn Perry-Huston for CS56, S13 -->
+
   <property environment="env"/> <!-- load the environment variables -->
   <property name="webRoot" value="${env.HOME}/public_html" />
   <property name="webBaseUrl" value="http://www.cs.ucsb.edu/~${env.USER}"/>
-  
   <property name="course" value="cs56" />
-<<<<<<< HEAD
   <property name="categoryName" value="music" />
   <property name="repoName" value="basic_synthesis_demo" />
   <property name="mainClass" value="edu.ucsb.cs56.projects.${categoryName}.${repoName}.view.BasicGuiForSynth" />
+  <property name="melodyClass" value="edu.ucsb.cs56.projects.${catergoryName}.${repoName}.Melody_Code.ADSREnvelopedContinuousSound"/>
   <property name="projectName" value="${course}_projects__${categoryName}_${repoName}" />
   <property name="projectPath" value="${course}/projects/${categoryName}/${repoName}" />
   <property name="javadocDest" value="${webRoot}/cs56/13S/${env.USER}/${course}-${categoryName}-${repoName}" />
@@ -50,40 +44,19 @@
 	<pathelement location="${local.junit.path}"/>
         <pathelement location="${csil.junit.path}"/>
       </classpath>
-=======
-  <property name="quarter" value="13S" />
-  <property name="project" value="projects" />
-  <property name="repo_name" value="basic_synthesis_demo"/>
-  <property name="mainClass" value="edu.ucsb.cs56.projects.music.cs56_music_basic_synthesis_demo.Melody_Code.ADSREnvelopedContinuousSound" />
-  <property name="projectName" value="${course}_${quarter}_${project}/" />
-  <property name="projectPath" value="${course}/${project}/music/${repo_name}/Melody_Code/" />
-  <property name="javadocDest" value="${webRoot}/${course}/13S/${env.USER}/${repo_name}/javadoc" />
-  <property name="javadocURL" value="${webBaseUrl}/${course}/13S/${env.USER}/${repo_name}/javadoc" />
-  
-
-
-
-  <target name="compile">
-    <mkdir dir="build"/>
-    <javac srcdir="src" destdir="build" debuglevel="lines,source" includeantruntime="false">
-        <classpath>
-            <pathelement location="build"/>
-            <pathelement location="lib/junit-4.8.2.jar"/>
-        </classpath>
->>>>>>> 7f1697dae4402962284f74c1aa6f0cdda88dd5b3
     </javac>
   </target>
-  
   <target name="run" depends="compile">
-    <!-- <java classname="${mainClass}" classpath="build">
+ 	<!--<java classname="${mainClass}" classpath="build">
 	 <classpath>
 	 <pathelement location="build"/>
 	 <pathelement location="lib/junit-4.8.2.jar"/>
 	 </classpath>
-	 </java>-->
-    <echo>To run: java -cp build edu.ucsb.cs56.projects.${categoryName}.${repoName}.BasicGuiForSynth </echo>
+    	</java>-->
+    <echo>To run: java -cp build edu.ucsb.cs56.projects.${categoryName}.${repoName}.BasicGuiForSynth
+To run melody: java -cp build edu.ucsb.cs56.projects.${categoryName}.${repoName}.Melody_Code.ADSREnvelopedContinuousSound </echo>
   </target>
-  
+
   <target name="clean" >
     <delete failonerror="false" verbose="true">
       <fileset dir="build" includes="**/*.class"/>
@@ -96,7 +69,6 @@
 <target name="test" depends="compile">
 
     <junit haltonerror="no" haltonfailure="no">
-<<<<<<< HEAD
       <classpath>
 	<pathelement location="lib/junit-4.8.2.jar"/>
 	<pathelement location="build" />
@@ -110,10 +82,8 @@
       </batchtest>
       
       <formatter type="plain" usefile="false" />
-      
-=======
-       <classpath>
-		 <pathelement location="build"/>
+    	 <classpath>
+	 <pathelement location="build"/>
          <pathelement location="lib/junit-4.8.2.jar"/>
        </classpath>
 
@@ -125,9 +95,8 @@
        </batchtest>
 
         <formatter type="plain" usefile="false" /> 
-       
->>>>>>> 7f1697dae4402962284f74c1aa6f0cdda88dd5b3
-    </junit>
+	      
+	 </junit>
   </target> 
 
   <target name="javadoc" depends="compile">
@@ -159,8 +128,6 @@
     <echo>Javadoc deployed to ${javadocURL}</echo>
     
   </target>
-  
-
 
   <target name="linenumbers" description="Creates a file containing all source files with line numbers">
     <exec executable="bash">
@@ -169,8 +136,4 @@
     </exec>
   </target>
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 7f1697dae4402962284f74c1aa6f0cdda88dd5b3
 </project>

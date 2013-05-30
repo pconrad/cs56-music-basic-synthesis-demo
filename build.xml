@@ -14,7 +14,7 @@
   <property name="quarter" value="13S" />
   <property name="project" value="projects" />
   <property name="repo_name" value="basic_synthesis_demo"/>
-  <property name="mainClass" value="edu.ucsb.cs56.projects.music.cs56_music_basic_synthesis_demo.Melody_Code.ADSREnvelopedContinuousSound" />
+  <property name="mainClass" value="edu.ucsb.cs56.projects.music.basic_synthesis_demo.Melody_Code.Melody" />
   <property name="projectName" value="${course}_${quarter}_${project}/" />
   <property name="projectPath" value="${course}/${project}/music/${repo_name}/Melody_Code/" />
   <property name="javadocDest" value="${webRoot}/${course}/13S/${env.USER}/${repo_name}/javadoc" />

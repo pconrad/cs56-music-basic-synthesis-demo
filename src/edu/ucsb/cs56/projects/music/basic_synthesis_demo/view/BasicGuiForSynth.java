@@ -30,6 +30,19 @@ import javax.sound.sampled.SourceDataLine;
 public class BasicGuiForSynth implements ActionListener {
 	    JFormattedTextField field_freq = 
 		new JFormattedTextField("220");
+	    JFormattedTextField field_amp = 
+		new JFormattedTextField("0.9");
+	    JFormattedTextField field_attack = 
+		new JFormattedTextField("0.1");
+	    JFormattedTextField field_decay = 
+		new JFormattedTextField("0.2");
+	    JFormattedTextField field_sustainAmp = 
+		new JFormattedTextField("0.6");
+	    JFormattedTextField field_sustainTime = 
+		new JFormattedTextField("1.0");
+	    JFormattedTextField field_release = 
+		new JFormattedTextField("0.2");
+
 	public void go() {
 	    JFrame frame = new JFrame();
 	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	    
@@ -63,23 +76,11 @@ public class BasicGuiForSynth implements ActionListener {
 	    f.format(new Integer(123456789));
 
 	    field_freq.setHorizontalAlignment(JTextField.CENTER);
-	    JFormattedTextField field_amp = 
-		new JFormattedTextField("0.9");
 	    field_amp.setHorizontalAlignment(JTextField.CENTER);
-	    JFormattedTextField field_attack = 
-		new JFormattedTextField("0.1");
 	    field_attack.setHorizontalAlignment(JTextField.CENTER);
-	    JFormattedTextField field_decay = 
-		new JFormattedTextField("0.2");
 	    field_decay.setHorizontalAlignment(JTextField.CENTER);
-	    JFormattedTextField field_sustainAmp = 
-		new JFormattedTextField("0.6");
 	    field_sustainAmp.setHorizontalAlignment(JTextField.CENTER);
-	    JFormattedTextField field_sustainTime = 
-		new JFormattedTextField("1.0");
 	    field_sustainTime.setHorizontalAlignment(JTextField.CENTER);
-	    JFormattedTextField field_release = 
-		new JFormattedTextField("0.2");
 	    field_release.setHorizontalAlignment(JTextField.CENTER);
 
 	    // create sliders for each parameter
@@ -154,16 +155,31 @@ public class BasicGuiForSynth implements ActionListener {
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-	    System.out.println(field_freq.getText());
 	    AudioFormat f = new AudioFormat(44100,8,1,true,true);
 	    try {
 		/* Create a new audioLine which goes to the system, 
 		   the audio format specifys all the features of the line.
 		*/
 		SourceDataLine d = AudioSystem.getSourceDataLine(f);
+		
+		int    freq        =   Integer.parseInt(field_freq.getText());
+		double amp         =   Double.parseDouble(field_amp.getText());
+		double attack      =   
+		    Double.parseDouble(field_attack.getText());
+		double decay       =   
+		    Double.parseDouble(field_decay.getText());
+	        double sustainAmp  =   
+		    Double.parseDouble(field_sustainAmp.getText());
+		double sustainTime = 
+		    Double.parseDouble(field_sustainTime.getText());
+		double release     = 
+		    Double.parseDouble(field_release.getText());
+		
+		    
 		ADSREnvelopedContinuousSound env =
-		    new ADSREnvelopedContinuousSound(220,0.9,0.1,
-						     0.2,0.6,1.0,0.2,
+		    new ADSREnvelopedContinuousSound(freq,amp,attack,decay,
+						     sustainAmp,sustainTime,
+						     release,
 						     44100,d);
 		d.open(f);
 		d.start();

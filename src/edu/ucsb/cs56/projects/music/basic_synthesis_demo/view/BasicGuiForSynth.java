@@ -94,6 +94,7 @@ public class BasicGuiForSynth implements ActionListener, ChangeListener {
 	slider_freq.setPaintTicks(true);
 	slider_freq.setPaintLabels(true);
 	slider_freq.addChangeListener(this);
+	slider_freq.setMaximum(1000);
 	
 	JSlider slider_amp = new JSlider();
 	slider_amp.setMajorTickSpacing(20);

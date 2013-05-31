@@ -28,14 +28,18 @@ import javax.sound.sampled.SourceDataLine;
 */
 
 public class BasicGuiForSynth implements ActionListener {
+	    JFormattedTextField field_freq = 
+		new JFormattedTextField("220");
 	public void go() {
 	    JFrame frame = new JFrame();
-	    
+	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	    
+
 	    JPanel labels = new JPanel();
 	    JPanel textFields = new JPanel();
 	    JPanel sliders = new JPanel();
 	    JPanel center = new JPanel();
 	    
+	    // create JLabels for each parameter
 	    JLabel label1 = new JLabel("Frequency (0-1000)", JLabel.CENTER);
 	    JLabel label2 = new JLabel("Amplitude (0-1)", JLabel.CENTER);
 	    JLabel label3 = new JLabel("Attack (0-1)", JLabel.CENTER);
@@ -52,14 +56,12 @@ public class BasicGuiForSynth implements ActionListener {
 	    labels.add(label4);
 	    labels.add(label5);
 	    labels.add(label6);
-	    labels.add(label7);
+	    labels.add(label7); 
 	    
-	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    
+	    // create formatted text fields for each parameter
 	    NumberFormat f = NumberFormat.getNumberInstance();
 	    f.format(new Integer(123456789));
-	    JFormattedTextField field_freq = 
-		new JFormattedTextField("220");
+
 	    field_freq.setHorizontalAlignment(JTextField.CENTER);
 	    JFormattedTextField field_amp = 
 		new JFormattedTextField("0.9");
@@ -80,47 +82,41 @@ public class BasicGuiForSynth implements ActionListener {
 		new JFormattedTextField("0.2");
 	    field_release.setHorizontalAlignment(JTextField.CENTER);
 
+	    // create sliders for each parameter
 	    sliders.setLayout(new GridLayout(1,7));
 
 	    JSlider slider_freq = new JSlider();
 	    slider_freq.setMajorTickSpacing(20);
-	    //slider_freq.setMinorTickSpacing(10);
 	    slider_freq.setPaintTicks(true);
 	    slider_freq.setPaintLabels(true);
 
 	    JSlider slider_amp = new JSlider();
 	    slider_amp.setMajorTickSpacing(20);
-	    //slider_freq.setMinorTickSpacing(10);
 	    slider_amp.setPaintTicks(true);
 	    slider_amp.setPaintLabels(true);
 
 	    JSlider slider_attack = new JSlider();
 	    slider_attack.setMajorTickSpacing(20);
-	    //slider_freq.setMinorTickSpacing(10);
 	    slider_attack.setPaintTicks(true);
 	    slider_attack.setPaintLabels(true);
 
 	    JSlider slider_decay = new JSlider();
 	    slider_decay.setMajorTickSpacing(20);
-	    //slider_freq.setMinorTickSpacing(10);
 	    slider_decay.setPaintTicks(true);
 	    slider_decay.setPaintLabels(true);
 
 	    JSlider slider_susAmp = new JSlider();
 	    slider_susAmp.setMajorTickSpacing(20);
-	    //slider_freq.setMinorTickSpacing(10);
 	    slider_susAmp.setPaintTicks(true);
 	    slider_susAmp.setPaintLabels(true);
 
 	    JSlider slider_susTime = new JSlider();
 	    slider_susTime.setMajorTickSpacing(20);
-	    //slider_freq.setMinorTickSpacing(10);
 	    slider_susTime.setPaintTicks(true);
 	    slider_susTime.setPaintLabels(true);
 	    
 	    JSlider slider_release = new JSlider();
 	    slider_release.setMajorTickSpacing(20);
-	    //slider_freq.setMinorTickSpacing(10);
 	    slider_release.setPaintTicks(true);
 	    slider_release.setPaintLabels(true);
 		
@@ -132,6 +128,7 @@ public class BasicGuiForSynth implements ActionListener {
 	    sliders.add(slider_susTime);
 	    sliders.add(slider_release);
 
+	    // add everything into the frame using layout managers
 	    center.setLayout(new GridLayout(2,1));
 	
 	    textFields.setLayout(new GridLayout(1, 7));
@@ -157,24 +154,25 @@ public class BasicGuiForSynth implements ActionListener {
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-	AudioFormat f = new AudioFormat(44100,8,1,true,true);
-	try {
-	    /* Create a new audioLine which goes to the system, 
-	       the audio format specifys all the features of the line.
-	    */
-	    SourceDataLine d = AudioSystem.getSourceDataLine(f);
-	    ADSREnvelopedContinuousSound env =
-		new ADSREnvelopedContinuousSound(220,0.9,0.1,
-													0.2,0.6,1.0,0.2,
-													44100,d);
-	    d.open(f);
-	    d.start();
-	    env.load();
-	    d.drain();
-	} catch (Exception ex) {
-	    ex.printStackTrace();
+	    System.out.println(field_freq.getText());
+	    AudioFormat f = new AudioFormat(44100,8,1,true,true);
+	    try {
+		/* Create a new audioLine which goes to the system, 
+		   the audio format specifys all the features of the line.
+		*/
+		SourceDataLine d = AudioSystem.getSourceDataLine(f);
+		ADSREnvelopedContinuousSound env =
+		    new ADSREnvelopedContinuousSound(220,0.9,0.1,
+						     0.2,0.6,1.0,0.2,
+						     44100,d);
+		d.open(f);
+		d.start();
+		env.load();
+		d.drain();
+	    } catch (Exception ex) {
+		ex.printStackTrace();
+	    }
 	}
-    }
 
 	public static void main(String[] args) {
 		BasicGuiForSynth synthGUI = new BasicGuiForSynth();

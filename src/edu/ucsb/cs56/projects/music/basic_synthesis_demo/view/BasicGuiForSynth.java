@@ -27,7 +27,7 @@ import javax.sound.sampled.SourceDataLine;
 	the loader thread on release intterupt the sustain thread literal on key
 */
 
-public class BasicGuiForSynth {
+public class BasicGuiForSynth implements ActionListener {
 	public void go() {
 	    JFrame frame = new JFrame();
 	    
@@ -123,7 +123,7 @@ public class BasicGuiForSynth {
 	    //slider_freq.setMinorTickSpacing(10);
 	    slider_release.setPaintTicks(true);
 	    slider_release.setPaintLabels(true);
-
+		
 	    sliders.add(slider_freq);
 	    sliders.add(slider_amp);
 	    sliders.add(slider_attack);
@@ -148,11 +148,34 @@ public class BasicGuiForSynth {
  
 	    frame.add(labels,BorderLayout.NORTH);
 	    frame.add(center,BorderLayout.CENTER);
-	    frame.add(new JButton("Play Sound!"),BorderLayout.SOUTH);
+	    
+	    JButton button = new JButton("Play Sound!");
+	    button.addActionListener(this);
+	    frame.add(button,BorderLayout.SOUTH);
 	    frame.setSize(1000,200);
 	    frame.setVisible(true);
 	}
 	
+	public void actionPerformed(ActionEvent e) {
+	AudioFormat f = new AudioFormat(44100,8,1,true,true);
+	try {
+	    /* Create a new audioLine which goes to the system, 
+	       the audio format specifys all the features of the line.
+	    */
+	    SourceDataLine d = AudioSystem.getSourceDataLine(f);
+	    ADSREnvelopedContinuousSound env =
+		new ADSREnvelopedContinuousSound(220,0.9,0.1,
+													0.2,0.6,1.0,0.2,
+													44100,d);
+	    d.open(f);
+	    d.start();
+	    env.load();
+	    d.drain();
+	} catch (Exception ex) {
+	    ex.printStackTrace();
+	}
+    }
+
 	public static void main(String[] args) {
 		BasicGuiForSynth synthGUI = new BasicGuiForSynth();
 		synthGUI.go();

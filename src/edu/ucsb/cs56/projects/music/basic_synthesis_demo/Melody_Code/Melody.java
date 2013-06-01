@@ -2,8 +2,8 @@ package edu.ucsb.cs56.projects.music.basic_synthesis_demo.Melody_Code;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.SourceDataLine;
-import java.util.ArrayList;
-
+import java.util.*;
+import java.io.*;
 /**
 *    A Class that represents a Melody.   
 *    
@@ -21,6 +21,43 @@ public class Melody extends ArrayList<Note>{
 	public Melody(){
 		//call constructor for ArrayList<Note>, with capacity 1
 		super(1);
+	}
+
+	/**
+	* void method to create a Melody from a text file
+	*/
+	public Melody createMelodyFromFile() throws IOException{
+		
+			InputStream melodyFile = Melody.class.getResourceAsStream("/resources/Melody.txt");
+			BufferedReader reader = new BufferedReader(new InputStreamReader(melodyFile));
+
+			String line;
+
+			Melody m = new Melody();
+			
+
+			line = reader.readLine();
+
+		try{
+			while(line != null)
+			{
+				
+				String[] splitline = line.split("\\s+");
+				m.add(new Note(Double.parseDouble(splitline[0]),
+							   Double.parseDouble(splitline[1]),
+							   Double.parseDouble(splitline[2])));
+				line = reader.readLine();
+
+			}
+		}catch(IOException ex)
+		{	
+
+			ex.printStackTrace();
+		}
+		finally{
+			reader.close();
+			return m;
+		}
 	}
 
     /**
@@ -89,6 +126,7 @@ public class Melody extends ArrayList<Note>{
 					//load the ADSREnveloped note to the audioLine
 					env.load();
 					
+					
 			}
 
 			d.drain();
@@ -122,14 +160,17 @@ public class Melody extends ArrayList<Note>{
 						            		  releaseTime,
 		                            		  sustainTime);
 
-		//Create a hardcoded melody
+		//Create a melody
 		Melody m = new Melody();
 
-        double freq = 220;
-        for(int i=1; i<=12; i++){
-            freq = freq * Math.pow(2, 1/12.0);
-		    m.add(new Note(freq, 0.5 , 0.3));
-        }
+		try{
+			m = m.createMelodyFromFile();
+		}
+		catch(IOException ex)
+		{
+			
+			ex.printStackTrace();
+		}
 
 		//Check that the melody and envelope are compatible
         if(!m.checkCompatibility(a,m))

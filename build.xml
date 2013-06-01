@@ -32,6 +32,10 @@
         </classpath>
     </javac>
   </target>
+
+	<copy todir="build/resources" > 
+      <fileset dir="resources"/> 
+    </copy> 
   
   <target name="run" depends="compile">
     <!-- <java classname="${mainClass}" classpath="build">

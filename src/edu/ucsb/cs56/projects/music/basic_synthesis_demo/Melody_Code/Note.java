@@ -5,7 +5,7 @@ package edu.ucsb.cs56.projects.music.basic_synthesis_demo.Melody_Code;
     
     
     @author Bronwyn Perry-Huston
-    @version CS56 S13 for project 1 
+    @version CS56 S13 for project 2 
 */
 
 public class Note{

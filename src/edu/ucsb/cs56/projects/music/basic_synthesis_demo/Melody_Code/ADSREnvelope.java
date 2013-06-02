@@ -5,7 +5,7 @@ package edu.ucsb.cs56.projects.music.basic_synthesis_demo.Melody_Code;
 	The code first creates a linear climb based on a time ammount specifice in  attackTime,	followed by an exponential decay, at which point it will maintain the sustain volume. This encapsulates the attackTime, decayTime, sustainAmplitude, releaseTime, and sustainTime attributes that are used to create an ADSREnveloped Frequency.
 
 	@author Bronwyn Perry-Huston	
-	@version cs56 S13 project1
+	@version cs56 S13 project2
 */
 public class ADSREnvelope{
 

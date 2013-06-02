@@ -8,7 +8,7 @@ import java.io.*;
 *    A Class that represents a Melody.   
 *    
 *   @author Bronwyn Perry-Huston
-*   @version CS56 S13 for project 1 
+*   @version CS56 S13 for project 2 
 */
 
 public class Melody extends ArrayList<Note>{

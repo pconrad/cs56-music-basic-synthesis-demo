@@ -207,6 +207,27 @@ public class BasicGuiForSynth implements ActionListener, ChangeListener {
 	    ex.printStackTrace();
 	}
     }
+
+    public <T extends JTextField> void rangeFix(T text){
+	try {
+	    double value = Double.parseDouble(text.getText());
+	    double min = 0;
+	    double max;
+	    if (text != field_freq)
+		max = 1;
+	    else
+	    max = 1000;
+	    
+	    if (value > max)
+		value = max;
+	    else if (value < min)
+		value = min;
+	    
+	    text.setText(String.valueOf(value));
+	} catch (Exception ex) {
+	    ex.printStackTrace();
+	}
+    }
     
     public static void main(String[] args) {
 	BasicGuiForSynth synthGUI = new BasicGuiForSynth();

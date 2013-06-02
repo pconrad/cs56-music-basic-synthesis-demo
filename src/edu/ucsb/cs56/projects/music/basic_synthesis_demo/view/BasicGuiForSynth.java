@@ -57,14 +57,14 @@ public class BasicGuiForSynth implements ActionListener, ChangeListener {
 	JPanel center = new JPanel();
 	
 	// create JLabels for each parameter
-	JLabel label1 = new JLabel("Frequency", JLabel.CENTER);
-	JLabel label2 = new JLabel("Amplitude", JLabel.CENTER);
-	JLabel label3 = new JLabel("Attack", JLabel.CENTER);
-	JLabel label4 = new JLabel("Decay", JLabel.CENTER);
-	JLabel label5 = new JLabel("Sustain Amp",
+	JLabel label1 = new JLabel("<html>Frequency<br>(0 - 10,000.0 Hz)</html>", JLabel.CENTER);
+	JLabel label2 = new JLabel("<html>Amplitude<br>(0 - 1.0)</html>", JLabel.CENTER);
+	JLabel label3 = new JLabel("<html>Attack<br>(0 - 1.0)</html>", JLabel.CENTER);
+	JLabel label4 = new JLabel("<html>Decay<br>(0 - 1.0)</html>", JLabel.CENTER);
+	JLabel label5 = new JLabel("<html>Sustain Amp<br>(0 - 1.0)</html>",
 				   JLabel.CENTER);
-	JLabel label6 = new JLabel("Sustain Time", JLabel.CENTER);
-	JLabel label7 = new JLabel("Release", JLabel.CENTER);
+	JLabel label6 = new JLabel("<html>Sustain Time<br>(0 - 1.0)</html>", JLabel.CENTER);
+	JLabel label7 = new JLabel("<html>Release<br>(0 - 1.0)</html>", JLabel.CENTER);
 	
 	labels.setLayout(new GridLayout(1,7));
 	labels.add(label1);
@@ -223,7 +223,7 @@ public class BasicGuiForSynth implements ActionListener, ChangeListener {
 	    if (text != field_freq)
 		max = 1;
 	    else
-	    max = 1000;
+	    max = 10000;
 	    
 	    if (value > max)
 		value = max;

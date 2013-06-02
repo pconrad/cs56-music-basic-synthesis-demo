@@ -11,6 +11,8 @@ A basic demo of some simple synthesis starting with sine waves
 
 The parameters are: attack, decay, sustain amp, sustain time, release
 
+This will play the Melody contained in the file Melody.txt (found in the resources folder).
+
 # Useful resources
 
 The following may be helpful:

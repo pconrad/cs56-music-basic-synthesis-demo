@@ -56,14 +56,14 @@ public class BasicGuiForSynth implements ActionListener, ChangeListener {
 	JPanel center = new JPanel();
 	
 	// create JLabels for each parameter
-	JLabel label1 = new JLabel("Frequency (0-1000)", JLabel.CENTER);
-	JLabel label2 = new JLabel("Amplitude (0-1)", JLabel.CENTER);
-	JLabel label3 = new JLabel("Attack (0-1)", JLabel.CENTER);
-	JLabel label4 = new JLabel("Decay (0-1)", JLabel.CENTER);
-	JLabel label5 = new JLabel("Sustain Amp (0-1)",
+	JLabel label1 = new JLabel("Frequency", JLabel.CENTER);
+	JLabel label2 = new JLabel("Amplitude", JLabel.CENTER);
+	JLabel label3 = new JLabel("Attack", JLabel.CENTER);
+	JLabel label4 = new JLabel("Decay", JLabel.CENTER);
+	JLabel label5 = new JLabel("Sustain Amp",
 				   JLabel.CENTER);
-	JLabel label6 = new JLabel("Sustain Time (0-1)", JLabel.CENTER);
-	JLabel label7 = new JLabel("Release (0-1)", JLabel.CENTER);
+	JLabel label6 = new JLabel("Sustain Time", JLabel.CENTER);
+	JLabel label7 = new JLabel("Release", JLabel.CENTER);
 	
 	labels.setLayout(new GridLayout(1,7));
 	labels.add(label1);
@@ -90,47 +90,53 @@ public class BasicGuiForSynth implements ActionListener, ChangeListener {
 	sliders.setLayout(new GridLayout(1,7));
 	
 	JSlider slider_freq = new JSlider();
-	slider_freq.setMajorTickSpacing(20);
+	slider_freq.setMajorTickSpacing(250);
 	slider_freq.setPaintTicks(true);
 	slider_freq.setPaintLabels(true);
 	slider_freq.addChangeListener(this);
 	slider_freq.setMaximum(1000);
 	
 	JSlider slider_amp = new JSlider();
-	slider_amp.setMajorTickSpacing(20);
+	slider_amp.setMajorTickSpacing(5);
 	slider_amp.setPaintTicks(true);
 	slider_amp.setPaintLabels(true);
 	slider_amp.addChangeListener(this);
+	slider_amp.setMaximum(25);
 	
 	JSlider slider_attack = new JSlider();
-	slider_attack.setMajorTickSpacing(20);
+	slider_attack.setMajorTickSpacing(5);
 	slider_attack.setPaintTicks(true);
 	slider_attack.setPaintLabels(true);
 	slider_attack.addChangeListener(this);
+	slider_attack.setMaximum(25);
 
 	JSlider slider_decay = new JSlider();
-	slider_decay.setMajorTickSpacing(20);
+	slider_decay.setMajorTickSpacing(5);
 	slider_decay.setPaintTicks(true);
 	slider_decay.setPaintLabels(true);
 	slider_decay.addChangeListener(this);
+	slider_decay.setMaximum(25);
 	
 	JSlider slider_susAmp = new JSlider();
-	slider_susAmp.setMajorTickSpacing(20);
+	slider_susAmp.setMajorTickSpacing(5);
 	slider_susAmp.setPaintTicks(true);
 	slider_susAmp.setPaintLabels(true);
 	slider_susAmp.addChangeListener(this);
+	slider_susAmp.setMaximum(25);
 	
 	JSlider slider_susTime = new JSlider();
-	slider_susTime.setMajorTickSpacing(20);
+	slider_susTime.setMajorTickSpacing(5);
 	slider_susTime.setPaintTicks(true);
 	slider_susTime.setPaintLabels(true);
-	slider_susTime.addChangeListener(this);	
+	slider_susTime.addChangeListener(this);
+	slider_susTime.setMaximum(25);
 
 	JSlider slider_release = new JSlider();
-	slider_release.setMajorTickSpacing(20);
+	slider_release.setMajorTickSpacing(5);
 	slider_release.setPaintTicks(true);
 	slider_release.setPaintLabels(true);
 	slider_release.addChangeListener(this);
+	slider_release.setMaximum(25);
 	
 	sliders.add(slider_freq);
 	sliders.add(slider_amp);
@@ -176,7 +182,7 @@ public class BasicGuiForSynth implements ActionListener, ChangeListener {
 	       the audio format specifys all the features of the line.
 	    */
 	    SourceDataLine d = AudioSystem.getSourceDataLine(f);
-		
+	    
 	    int    freq        =   Integer.parseInt(field_freq.getText());
 	    double amp         =   Double.parseDouble(field_amp.getText());
 	    double attack      =   
@@ -189,8 +195,8 @@ public class BasicGuiForSynth implements ActionListener, ChangeListener {
 		Double.parseDouble(field_sustainTime.getText());
 	    double release     = 
 		Double.parseDouble(field_release.getText());
-		
-		    
+	    
+	    
 	    ADSREnvelopedContinuousSound env =
 		new ADSREnvelopedContinuousSound(freq,amp,attack,decay,
 						 sustainAmp,sustainTime,
@@ -204,7 +210,7 @@ public class BasicGuiForSynth implements ActionListener, ChangeListener {
 	    ex.printStackTrace();
 	}
     }
-
+    
     public static void main(String[] args) {
 	BasicGuiForSynth synthGUI = new BasicGuiForSynth();
 	synthGUI.go();

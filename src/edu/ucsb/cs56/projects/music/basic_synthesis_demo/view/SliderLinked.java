@@ -1,3 +1,5 @@
+package edu.ucsb.cs56.projects.music.basic_synthesis_demo;
+
 import javax.swing.JTextField;
 import javax.swing.JSlider;
 import javax.swing.event.ChangeEvent;

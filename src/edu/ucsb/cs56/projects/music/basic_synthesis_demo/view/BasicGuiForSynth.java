@@ -1,5 +1,6 @@
 package edu.ucsb.cs56.projects.music.basic_synthesis_demo;
 
+import java.lang.Math;
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.text.*;
@@ -92,51 +93,44 @@ public class BasicGuiForSynth implements ActionListener, ChangeListener {
 	JSlider slider_freq = new SliderLinked(field_freq);
 	slider_freq.setMajorTickSpacing(250);
 	slider_freq.setPaintTicks(true);
-	slider_freq.setPaintLabels(true);
 	slider_freq.addChangeListener(this);
 	slider_freq.setMaximum(1000);
 	
 	JSlider slider_amp = new SliderLinked(field_amp);
-	slider_amp.setMajorTickSpacing(5);
+	slider_amp.setMajorTickSpacing(10);
 	slider_amp.setPaintTicks(true);
-	slider_amp.setPaintLabels(true);
 	slider_amp.addChangeListener(this);
-	slider_amp.setMaximum(25);
+	slider_amp.setMaximum(100);
 	
 	JSlider slider_attack = new SliderLinked(field_attack);
-	slider_attack.setMajorTickSpacing(5);
+	slider_attack.setMajorTickSpacing(10);
 	slider_attack.setPaintTicks(true);
-	slider_attack.setPaintLabels(true);
 	slider_attack.addChangeListener(this);
-	slider_attack.setMaximum(25);
+	slider_attack.setMaximum(100);
 
 	JSlider slider_decay = new SliderLinked(field_decay);
-	slider_decay.setMajorTickSpacing(5);
+	slider_decay.setMajorTickSpacing(10);
 	slider_decay.setPaintTicks(true);
-	slider_decay.setPaintLabels(true);
 	slider_decay.addChangeListener(this);
-	slider_decay.setMaximum(25);
+	slider_decay.setMaximum(100);
 	
 	JSlider slider_susAmp = new SliderLinked(field_sustainAmp);
-	slider_susAmp.setMajorTickSpacing(5);
+	slider_susAmp.setMajorTickSpacing(10);
 	slider_susAmp.setPaintTicks(true);
-	slider_susAmp.setPaintLabels(true);
 	slider_susAmp.addChangeListener(this);
-	slider_susAmp.setMaximum(25);
+	slider_susAmp.setMaximum(100);
 	
 	JSlider slider_susTime = new SliderLinked(field_sustainTime);
-	slider_susTime.setMajorTickSpacing(5);
+	slider_susTime.setMajorTickSpacing(10);
 	slider_susTime.setPaintTicks(true);
-	slider_susTime.setPaintLabels(true);
 	slider_susTime.addChangeListener(this);
-	slider_susTime.setMaximum(25);
+	slider_susTime.setMaximum(100);
 
 	JSlider slider_release = new SliderLinked(field_release);
-	slider_release.setMajorTickSpacing(5);
+	slider_release.setMajorTickSpacing(10);
 	slider_release.setPaintTicks(true);
-	slider_release.setPaintLabels(true);
 	slider_release.addChangeListener(this);
-	slider_release.setMaximum(25);
+	slider_release.setMaximum(100);
 	
 	sliders.add(slider_freq);
 	sliders.add(slider_amp);
@@ -173,7 +167,10 @@ public class BasicGuiForSynth implements ActionListener, ChangeListener {
     public void stateChanged(ChangeEvent e) {
 	SliderLinked s = (SliderLinked) e.getSource();
 	double value = s.getValue();
-	s.text.setText(String.valueOf(value));
+	if (s.text != field_freq)
+	    s.text.setText(String.valueOf(Math.round(value*0.01*100.0)/100.0));
+	else
+	    s.text.setText(String.valueOf(value));
     }
     public void actionPerformed(ActionEvent e) {
      	AudioFormat f = new AudioFormat(44100,8,1,true,true);
@@ -183,7 +180,8 @@ public class BasicGuiForSynth implements ActionListener, ChangeListener {
    	    */
      	    SourceDataLine d = AudioSystem.getSourceDataLine(f);
 	    
-	    int    freq        =   Integer.parseInt(field_freq.getText());
+	    double freq        =   
+		Math.round(Double.parseDouble(field_freq.getText()));
 	    double amp         =   Double.parseDouble(field_amp.getText());
 	    double attack      =   
 		Double.parseDouble(field_attack.getText());

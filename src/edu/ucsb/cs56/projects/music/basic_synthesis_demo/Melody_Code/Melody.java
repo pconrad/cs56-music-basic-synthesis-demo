@@ -28,20 +28,20 @@ public class Melody extends ArrayList<Note>{
 	*/
 	public Melody createMelodyFromFile() throws IOException{
 		
+			//acccess the file with the Melody
 			InputStream melodyFile = Melody.class.getResourceAsStream("/resources/Melody.txt");
 			BufferedReader reader = new BufferedReader(new InputStreamReader(melodyFile));
 
+
 			String line;
-
 			Melody m = new Melody();
-			
-
-			line = reader.readLine();
 
 		try{
+			//read in the file one line at a time
+			line = reader.readLine();
 			while(line != null)
 			{
-				
+				//parse each line and add a new Note to the melody
 				String[] splitline = line.split("\\s+");
 				m.add(new Note(Double.parseDouble(splitline[0]),
 							   Double.parseDouble(splitline[1]),
@@ -51,7 +51,6 @@ public class Melody extends ArrayList<Note>{
 			}
 		}catch(IOException ex)
 		{	
-
 			ex.printStackTrace();
 		}
 		finally{
@@ -126,7 +125,6 @@ public class Melody extends ArrayList<Note>{
 					//load the ADSREnveloped note to the audioLine
 					env.load();
 					
-					
 			}
 
 			d.drain();
@@ -160,7 +158,7 @@ public class Melody extends ArrayList<Note>{
 						            		  releaseTime,
 		                            		  sustainTime);
 
-		//Create a melody
+		//Create a melody from the text file
 		Melody m = new Melody();
 
 		try{

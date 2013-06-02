@@ -179,7 +179,14 @@ public class BasicGuiForSynth implements ActionListener, ChangeListener {
      	       the audio format specifys all the features of the line.
    	    */
      	    SourceDataLine d = AudioSystem.getSourceDataLine(f);
-	    
+
+	    rangeFix(field_freq);
+	    rangeFix(field_attack);
+	    rangeFix(field_decay);
+	    rangeFix(field_sustainAmp);
+	    rangeFix(field_sustainTime);
+	    rangeFix(field_release);
+
 	    double freq        =   
 		Math.round(Double.parseDouble(field_freq.getText()));
 	    double amp         =   Double.parseDouble(field_amp.getText());

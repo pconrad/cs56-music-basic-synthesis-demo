@@ -14,6 +14,7 @@ import java.io.*;
 public class Melody extends ArrayList<Note>{
 
 	private boolean debug = false;
+	private FrequencyMap freqmap;
 
 	/**
     * no-arg constructor returns an empty melody 
@@ -21,19 +22,25 @@ public class Melody extends ArrayList<Note>{
 	public Melody(){
 		//call constructor for ArrayList<Note>, with capacity 1
 		super(1);
+		freqmap = new FrequencyMap();
 	}
 
 	/**
 	* void method to create a Melody from a text file
 	*/
-	public Melody createMelodyFromFile() throws IOException{
+	public Melody createMelodyFromFile(String filename) throws IOException{
 		
 			//acccess the file with the Melody
-			InputStream melodyFile = Melody.class.getResourceAsStream("/resources/Melody.txt");
+			InputStream melodyFile = Melody.class.getResourceAsStream("/resources/"+ filename);
 			BufferedReader reader = new BufferedReader(new InputStreamReader(melodyFile));
 
-
 			String line;
+			String note_name;
+			int octave;
+			double duration;
+			double volume;
+			double freq;
+			
 			Melody m = new Melody();
 
 		try{
@@ -43,9 +50,14 @@ public class Melody extends ArrayList<Note>{
 			{
 				//parse each line and add a new Note to the melody
 				String[] splitline = line.split("\\s+");
-				m.add(new Note(Double.parseDouble(splitline[0]),
-							   Double.parseDouble(splitline[1]),
-							   Double.parseDouble(splitline[2])));
+				note_name = splitline[0];
+				octave = Integer.parseInt(splitline[1]);
+				duration = Double.parseDouble(splitline[2]);
+				volume = Double.parseDouble(splitline[3]);
+				freq = freqmap.getFreq(note_name) * Math.pow(2,octave);
+
+				m.add (new Note(freq,duration,volume));
+			
 				line = reader.readLine();
 
 			}
@@ -124,10 +136,12 @@ public class Melody extends ArrayList<Note>{
 
 					//load the ADSREnveloped note to the audioLine
 					env.load();
+					d.drain();
+
 					
 			}
 
-			d.drain();
+			//d.drain();
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}
@@ -162,11 +176,11 @@ public class Melody extends ArrayList<Note>{
 		Melody m = new Melody();
 
 		try{
-			m = m.createMelodyFromFile();
+			m = m.createMelodyFromFile("YellowSub.txt");
+			
 		}
 		catch(IOException ex)
-		{
-			
+		{	
 			ex.printStackTrace();
 		}
 

@@ -11,10 +11,11 @@
   <property name="webRoot" value="${env.HOME}/public_html" />
   <property name="webBaseUrl" value="http://www.cs.ucsb.edu/~${env.USER}"/>
   <property name="course" value="cs56" />
+
   <property name="categoryName" value="music" />
   <property name="repoName" value="basic_synthesis_demo" />
   <property name="mainClass" value="edu.ucsb.cs56.projects.${categoryName}.${repoName}.view.BasicGuiForSynth" />
-  <property name="melodyClass" value="edu.ucsb.cs56.projects.${catergoryName}.${repoName}.Melody_Code.ADSREnvelopedContinuousSound"/>
+  <property name="melodyClass" value="edu.ucsb.cs56.projects.${catergoryName}.${repoName}.Melody_Code.Melody"/>
   <property name="projectName" value="${course}_projects__${categoryName}_${repoName}" />
   <property name="projectPath" value="${course}/projects/${categoryName}/${repoName}" />
   <property name="javadocDest" value="${webRoot}/cs56/13S/${env.USER}/${course}-${categoryName}-${repoName}" />
@@ -22,6 +23,7 @@
   <property name="csil.junit.path" value="lib/junit-4.8.2.jar" />
   <property name="local.junit.path" value="lib/junit-4.8.2.jar" />
   <property name="csil.junit.URL" value="lib/junit-4.8.2.jar" />
+
 
   <target name="junit.available">
     <available property="csil.junit.available" file="${csil.junit.path}"/>
@@ -34,10 +36,14 @@
      <mkdir dir="lib" />
      <get src="${csil.junit.URL}" dest="${local.junit.path}" />
   </target>
+
+	<copy todir="build/resources" > 
+      <fileset dir="resources"/> 
+    </copy> 
   
   <target name="compile" depends="get.local.junit" >
     <mkdir dir="build" />
-    <javac srcdir="src" destdir="build" debug="true" includeantruntime="false" debuglevel="lines,source" target="1.7" >
+    <javac srcdir="src" destdir="build" debug="true" includeantruntime="false" debuglevel="lines,source">
       
       <classpath>
 	<pathelement location="build"/>
@@ -54,7 +60,7 @@
 	 </classpath>
     	</java>-->
     <echo>To run: java -cp build edu.ucsb.cs56.projects.${categoryName}.${repoName}.BasicGuiForSynth
-To run melody: java -cp build edu.ucsb.cs56.projects.${categoryName}.${repoName}.Melody_Code.ADSREnvelopedContinuousSound </echo>
+To run melody: java -cp build edu.ucsb.cs56.projects.${categoryName}.${repoName}.Melody_Code.Melody </echo>
   </target>
 
   <target name="clean" >

@@ -4,13 +4,9 @@ cs56-music-basic-synthesis-demo
 A basic demo of some simple synthesis starting with sine waves
 
 # Example run
-	java -cp build  edu.ucsb.cs56.projects.music.basic_synthesis_demo.ADSREnvelopedContinuousSound 220 0.9 0.1 0.2 0.6 1.0 0.2
+	java -cp build  edu.ucsb.cs56.projects.music.basic_synthesis_demo.Melody 0.1 0.2 0.6 1.0 0.2
 
-The parameters are: frequency, amplitude, attack, decay, sustain amplitude, sustain time, release.
-
-frequency: The frequency to play at. (0 - 1000)
-
-amplitude: The maximum volume. (0 - 1.0)
+The parameters are: attack, decay, sustain amplitude, sustain time, release.
 
 attack: The number of seconds to attack for. (0 - 1.0)
 
@@ -29,6 +25,8 @@ GUI is simply a skeleton, and is not functional
 
 # Melody Example run
 	java -cp build edu.ucsb.cs56.projects.music.basic_synthesis_demo.Melody_Code.Melody 0.1 0.2 0.6 1.0 0.2
+
+This will play the Melody contained in the file Melody.txt (found in the resources folder)
 
 the parameters are: attack, decay, sustain amp, sustain time, release
 

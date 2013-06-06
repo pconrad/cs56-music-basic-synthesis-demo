@@ -41,8 +41,7 @@ public class BasicGuiForSynth implements ActionListener, ChangeListener {
        creates the GUI
     */
     
-    public void go() {
-	JFrame frame = new JFrame();
+    public void go(JFrame frame) {
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	    
 	
 	JPanel labels = new JPanel();
@@ -135,7 +134,7 @@ public class BasicGuiForSynth implements ActionListener, ChangeListener {
 	sliders.add(slider_release);
 	
 	// add everything into the frame using layout managers
-	center.setLayout(new GridLayout(2,1));
+	center.setLayout(new GridLayout(3,1));
 	
 	textFields.setLayout(new GridLayout(1, 7));
 	textFields.add(field_freq);
@@ -146,10 +145,11 @@ public class BasicGuiForSynth implements ActionListener, ChangeListener {
 	textFields.add(field_sustainTime);
 	textFields.add(field_release);
 	
+	center.add(labels);
 	center.add(textFields);
 	center.add(sliders);
 	
-	frame.add(labels,BorderLayout.NORTH);
+	//frame.add(labels,BorderLayout.NORTH);
 	frame.add(center,BorderLayout.CENTER);
 	
 	JButton button = new JButton("Play Sound!");
@@ -253,6 +253,7 @@ public class BasicGuiForSynth implements ActionListener, ChangeListener {
 
     public static void main(String[] args) {
 	BasicGuiForSynth synthGUI = new BasicGuiForSynth();
-	synthGUI.go();
+	JFrame frame = new JFrame();
+	synthGUI.go(frame);
     }
 }

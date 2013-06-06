@@ -30,8 +30,19 @@ public class MelodyGui extends BasicGuiForSynth
        creates the GUI, calling BasicGuiForSynth's go method first
     */
     
-    public void go() {
-	super.go();
+    public void go(JFrame frame) {
+	super.go(frame);
+	
+	JPanel saveFunctionality = new JPanel();
+	saveFunctionality.setLayout(new GridLayout(6,1));
+	
+	JButton melodyButton = new JButton("Play Melody!");
+	saveFunctionality.add(melodyButton);
+
+	frame.add(saveFunctionality, BorderLayout.EAST);
+	
+
+	frame.setVisible(true);
     }
     
     /**
@@ -40,6 +51,7 @@ public class MelodyGui extends BasicGuiForSynth
 
     public static void main(String[] args) {
 	MelodyGui melodyGui = new MelodyGui();
-	melodyGui.go();
+	JFrame frame = new JFrame();
+	melodyGui.go(frame);
     }
 }

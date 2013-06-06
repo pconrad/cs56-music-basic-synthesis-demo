@@ -28,7 +28,7 @@ public class Melody extends ArrayList<Note>{
 	/**
 	* void method to create a Melody from a text file
 	*/
-	public Melody createMelodyFromFile(String filename) throws IOException{
+	public Melody createMelodyFromFile(String filename) throws IOException, FileNotFoundException{
 		
 			//acccess the file with the Melody
 			InputStream melodyFile = Melody.class.getResourceAsStream("/resources/"+ filename);
@@ -43,7 +43,6 @@ public class Melody extends ArrayList<Note>{
 			
 			Melody m = new Melody();
 
-		try{
 			//read in the file one line at a time
 			line = reader.readLine();
 			while(line != null)
@@ -61,14 +60,10 @@ public class Melody extends ArrayList<Note>{
 				line = reader.readLine();
 
 			}
-		}catch(IOException ex)
-		{	
-			ex.printStackTrace();
-		}
-		finally{
+
 			reader.close();
 			return m;
-		}
+		
 	}
 
     /**
@@ -176,11 +171,12 @@ public class Melody extends ArrayList<Note>{
 		Melody m = new Melody();
 
 		try{
-			m = m.createMelodyFromFile("YellowSub.txt");
+			m = m.createMelodyFromFile("YellowSub2.txt");
 			
 		}
-		catch(IOException ex)
+		catch(Exception ex)
 		{	
+			System.out.println("An error occured in creating the melody from the file");
 			ex.printStackTrace();
 		}
 

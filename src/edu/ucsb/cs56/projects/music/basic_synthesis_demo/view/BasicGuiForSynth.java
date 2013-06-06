@@ -13,20 +13,12 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.SourceDataLine;
 
 /**
-   @TODO add a tool for inserting keybindgs/keyboard mode: in keybinding, 
-   certain keys are set to bind to a set of params, with keyboard mode
-   a set of keys isused as a keyboard for a make a frame with five input
-   boxes plus a keylistner bound to the space character
-	
-	*****************************
-	*atk time		    *
-	*decay time	       	    *
-	*release time		    *
-	*atk vol(0-1)		    *
-	*sustain vol(0-1)	    *
-	*****************************
-	use JLabel and JTextBox then add a keyboardlistner--on keypress start 
-	the loader thread on release intterupt the sustain thread literal on key
+   @author Chris Atanasian
+   @author Marc Lindsay
+
+   A basic gui for the music sythesis program.
+   Allows editing of the parameters with JTextFields and JSliders.
+   There is a play sound button that plays the sound with the parameters set.
 */
 
 public class BasicGuiForSynth implements ActionListener, ChangeListener {
@@ -45,8 +37,10 @@ public class BasicGuiForSynth implements ActionListener, ChangeListener {
     JFormattedTextField field_release = 
 	new JFormattedTextField("0.2");
     
-            
-
+    /**
+       creates the GUI
+    */
+    
     public void go() {
 	JFrame frame = new JFrame();
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	    
@@ -164,6 +158,11 @@ public class BasicGuiForSynth implements ActionListener, ChangeListener {
 	frame.setSize(1000,200);
 	frame.setVisible(true);
     }
+
+    /**
+       changes the value of the field parameters based on the slider
+       @param e the ChangeEvent
+    */
     public void stateChanged(ChangeEvent e) {
 	SliderLinked s = (SliderLinked) e.getSource();
 	double value = s.getValue();
@@ -172,6 +171,11 @@ public class BasicGuiForSynth implements ActionListener, ChangeListener {
 	else
 	    s.text.setText(String.valueOf(value));
     }
+
+    /**
+       plays the specified sound given the parameters inputted
+       @param e the ActionEvent
+    */
     public void actionPerformed(ActionEvent e) {
      	AudioFormat f = new AudioFormat(44100,8,1,true,true);
     	try {
@@ -189,7 +193,8 @@ public class BasicGuiForSynth implements ActionListener, ChangeListener {
 
 	    double freq        =   
 		Math.round(Double.parseDouble(field_freq.getText()));
-	    double amp         =   Double.parseDouble(field_amp.getText());
+	    double amp         =   
+		Double.parseDouble(field_amp.getText());
 	    double attack      =   
 		Double.parseDouble(field_attack.getText());
 	    double decay       =   
@@ -215,6 +220,12 @@ public class BasicGuiForSynth implements ActionListener, ChangeListener {
 	}
     }
 
+    /**
+       ensures that the values enetered in the JTextFields are
+       within the correct range
+       @param text the JTextField or JFormattedTextField to correct
+    */
+
     public <T extends JTextField> void rangeFix(T text){
 	try {
 	    double value = Double.parseDouble(text.getText());
@@ -236,6 +247,10 @@ public class BasicGuiForSynth implements ActionListener, ChangeListener {
 	}
     }
     
+    /**
+       executes the program so it will run
+    */
+
     public static void main(String[] args) {
 	BasicGuiForSynth synthGUI = new BasicGuiForSynth();
 	synthGUI.go();

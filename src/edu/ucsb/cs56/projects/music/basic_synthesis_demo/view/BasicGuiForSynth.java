@@ -54,7 +54,7 @@ public class BasicGuiForSynth implements ActionListener, ChangeListener {
 	JPanel center = new JPanel();
 
 	// create JLabels for each parameter
-	JLabel label1 = new JLabel("<html>Frequency<br>(0 - 20,000.0 Hz)</html>", JLabel.CENTER);
+	JLabel label1 = new JLabel("<html>Frequency<br>(0 - 20,000.0)</html>", JLabel.CENTER);
 	JLabel label2 = new JLabel("<html>Amplitude<br>(0 - 1.0)</html>", JLabel.CENTER);
 	JLabel label3 = new JLabel("<html>Attack<br>(0 - 1.0)</html>", JLabel.CENTER);
 	JLabel label4 = new JLabel("<html>Decay<br>(0 - 1.0)</html>", JLabel.CENTER);
@@ -159,7 +159,7 @@ public class BasicGuiForSynth implements ActionListener, ChangeListener {
 	frame.add(center,BorderLayout.CENTER);
 	if (isBasic)
 		frame.add(playButton,BorderLayout.SOUTH);	
-	frame.setSize(1000,200);
+	frame.setSize(1000,150);
 	frame.setVisible(true);
     }
 

@@ -36,7 +36,8 @@ public class BasicGuiForSynth implements ActionListener, ChangeListener {
 	new JFormattedTextField("1.0");
     JFormattedTextField field_release = 
 	new JFormattedTextField("0.2");
-    
+	JButton playButton = new JButton("Play Sound!");
+
     /**
        creates the GUI
     */
@@ -44,11 +45,14 @@ public class BasicGuiForSynth implements ActionListener, ChangeListener {
     public void go(JFrame frame) {
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	    
 	
+	boolean isBasic = true;
+	if (this instanceof MelodyGui)
+		isBasic = false;		
 	JPanel labels = new JPanel();
 	JPanel textFields = new JPanel();
 	JPanel sliders = new JPanel();
 	JPanel center = new JPanel();
-	
+
 	// create JLabels for each parameter
 	JLabel label1 = new JLabel("<html>Frequency<br>(0 - 20,000.0 Hz)</html>", JLabel.CENTER);
 	JLabel label2 = new JLabel("<html>Amplitude<br>(0 - 1.0)</html>", JLabel.CENTER);
@@ -134,8 +138,6 @@ public class BasicGuiForSynth implements ActionListener, ChangeListener {
 	sliders.add(slider_release);
 	
 	// add everything into the frame using layout managers
-	center.setLayout(new GridLayout(3,1));
-	
 	textFields.setLayout(new GridLayout(1, 7));
 	textFields.add(field_freq);
 	textFields.add(field_amp);
@@ -144,17 +146,19 @@ public class BasicGuiForSynth implements ActionListener, ChangeListener {
 	textFields.add(field_sustainAmp);
 	textFields.add(field_sustainTime);
 	textFields.add(field_release);
-	
-	center.add(labels);
-	center.add(textFields);
-	center.add(sliders);
-	
-	//frame.add(labels,BorderLayout.NORTH);
+	playButton.addActionListener(this);
+
+
+		center.setLayout(new GridLayout(3,1));
+
+		center.add(labels);
+		center.add(textFields);
+		center.add(sliders);	
+
+	center.add(playButton);	
 	frame.add(center,BorderLayout.CENTER);
-	
-	JButton button = new JButton("Play Sound!");
-	button.addActionListener(this);
-	frame.add(button,BorderLayout.SOUTH);
+	if (isBasic)
+		frame.add(playButton,BorderLayout.SOUTH);	
 	frame.setSize(1000,200);
 	frame.setVisible(true);
     }

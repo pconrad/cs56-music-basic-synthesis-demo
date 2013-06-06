@@ -33,14 +33,38 @@ public class MelodyGui extends BasicGuiForSynth
     public void go(JFrame frame) {
 	super.go(frame);
 	
+	JPanel buttonRows = new JPanel();	
+	buttonRows.setLayout(new GridLayout(2,1));
+		
 	JPanel saveFunctionality = new JPanel();
-	saveFunctionality.setLayout(new GridLayout(6,1));
+	saveFunctionality.setLayout(new GridLayout(5,1));
 	
+	JPanel topButtonRow = new JPanel();	
+	topButtonRow.setLayout(new GridLayout(1,2));
+	
+	JRadioButton noteOne = new JRadioButton("One");	
+	JRadioButton noteTwo = new JRadioButton("Two");
+	JRadioButton noteThree = new JRadioButton("Three");	
+	JRadioButton noteFour = new JRadioButton("Four");
+	JRadioButton noteFive = new JRadioButton("Five");
+	
+	saveFunctionality.add(noteOne);
+	saveFunctionality.add(noteTwo);
+	saveFunctionality.add(noteThree);
+	saveFunctionality.add(noteFour);
+	saveFunctionality.add(noteFive);
+	
+	JButton saveButton = new JButton("Save Note");
 	JButton melodyButton = new JButton("Play Melody!");
-	saveFunctionality.add(melodyButton);
 
+	topButtonRow.add(saveButton);
+	topButtonRow.add(super.playButton);
+	buttonRows.add(topButtonRow);	
+	//buttonRows.add(saveFunctionality);
+	buttonRows.add(melodyButton);
+
+	frame.add(buttonRows, BorderLayout.SOUTH);
 	frame.add(saveFunctionality, BorderLayout.EAST);
-	
 
 	frame.setVisible(true);
     }

@@ -26,6 +26,7 @@ import javax.sound.sampled.SourceDataLine;
 public class MelodyGui extends BasicGuiForSynth
     implements ActionListener, ChangeListener {
     
+	private JRadioButton[] radioButtons = new JRadioButton[5];
     /**
        creates the GUI, calling BasicGuiForSynth's go method first
     */
@@ -37,28 +38,38 @@ public class MelodyGui extends BasicGuiForSynth
 	buttonRows.setLayout(new GridLayout(2,1));
 		
 	JPanel saveFunctionality = new JPanel();
-	saveFunctionality.setLayout(new GridLayout(5,1));
+	saveFunctionality.setLayout(new GridLayout(7,1));
 	
 	JPanel topButtonRow = new JPanel();	
 	topButtonRow.setLayout(new GridLayout(1,2));
 	
+	JLabel noteLabel = new JLabel("NOTES!", JLabel.CENTER);
 	JRadioButton noteOne = new JRadioButton("One");	
 	JRadioButton noteTwo = new JRadioButton("Two");
 	JRadioButton noteThree = new JRadioButton("Three");	
 	JRadioButton noteFour = new JRadioButton("Four");
-	JRadioButton noteFive = new JRadioButton("Five");
+	JRadioButton noteFive = new JRadioButton("Five");	
+	JButton clearArray = new JButton("Clear Notes");
 	
+	radioButtons[0] = noteOne;
+	radioButtons[1] = noteTwo;
+	radioButtons[2] = noteThree;
+	radioButtons[3] = noteFour;
+	radioButtons[4] = noteFive;
+	
+	saveFunctionality.add(noteLabel);
 	saveFunctionality.add(noteOne);
 	saveFunctionality.add(noteTwo);
 	saveFunctionality.add(noteThree);
 	saveFunctionality.add(noteFour);
 	saveFunctionality.add(noteFive);
+	saveFunctionality.add(clearArray);
 	
 	JButton saveButton = new JButton("Save Note");
 	JButton melodyButton = new JButton("Play Melody!");
 
-	topButtonRow.add(saveButton);
 	topButtonRow.add(super.playButton);
+	topButtonRow.add(saveButton);
 	buttonRows.add(topButtonRow);	
 	//buttonRows.add(saveFunctionality);
 	buttonRows.add(melodyButton);

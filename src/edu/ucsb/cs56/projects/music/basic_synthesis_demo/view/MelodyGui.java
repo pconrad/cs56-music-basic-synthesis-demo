@@ -26,7 +26,7 @@ import javax.sound.sampled.SourceDataLine;
 public class MelodyGui extends BasicGuiForSynth
     implements ActionListener, ChangeListener {
     
-	private ADSREnvelopedContinuousSound[] soundArray = new ADSREnvelopedContinuousSound[5];
+    private ADSREnvelopedContinuousSound[] soundArray = new ADSREnvelopedContinuousSound[5];
     /**
        creates the GUI, calling BasicGuiForSynth's go method first
     */

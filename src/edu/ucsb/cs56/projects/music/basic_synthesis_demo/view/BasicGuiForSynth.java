@@ -36,7 +36,7 @@ public class BasicGuiForSynth implements ActionListener, ChangeListener {
 	new JFormattedTextField("1.0");
     JFormattedTextField field_release = 
 	new JFormattedTextField("0.2");
-	JButton playButton = new JButton("Play Sound!");
+    JButton playButton = new JButton("Play Sound!");
 
     /**
        creates the GUI
@@ -47,7 +47,7 @@ public class BasicGuiForSynth implements ActionListener, ChangeListener {
 	
 	boolean isBasic = true;
 	if (this instanceof MelodyGui)
-		isBasic = false;		
+	    isBasic = false;		
 	JPanel labels = new JPanel();
 	JPanel textFields = new JPanel();
 	JPanel sliders = new JPanel();
@@ -149,16 +149,16 @@ public class BasicGuiForSynth implements ActionListener, ChangeListener {
 	playButton.addActionListener(this);
 
 
-		center.setLayout(new GridLayout(3,1));
+	center.setLayout(new GridLayout(3,1));
 
-		center.add(labels);
-		center.add(textFields);
-		center.add(sliders);	
+	center.add(labels);
+	center.add(textFields);
+	center.add(sliders);	
 
 	center.add(playButton);	
 	frame.add(center,BorderLayout.CENTER);
 	if (isBasic)
-		frame.add(playButton,BorderLayout.SOUTH);	
+	    frame.add(playButton,BorderLayout.SOUTH);	
 	frame.setSize(1000,150);
 	frame.setVisible(true);
     }
@@ -238,7 +238,7 @@ public class BasicGuiForSynth implements ActionListener, ChangeListener {
 	    if (text != field_freq)
 		max = 1;
 	    else
-	    max = 10000;
+		max = 10000;
 	    
 	    if (value > max)
 		value = max;

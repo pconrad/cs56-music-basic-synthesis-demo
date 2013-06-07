@@ -21,7 +21,7 @@ import javax.sound.sampled.SourceDataLine;
    There is a play sound button that plays the sound with the parameters set.
 */
 
-public class BasicGuiForSynth implements ActionListener, ChangeListener {
+public class BasicGuiForSynth implements ChangeListener {
     private JFormattedTextField field_freq = 
 	new JFormattedTextField("220");
     private JFormattedTextField field_amp = 
@@ -36,7 +36,9 @@ public class BasicGuiForSynth implements ActionListener, ChangeListener {
 	new JFormattedTextField("1.0");
     private JFormattedTextField field_release = 
 	new JFormattedTextField("0.2");
+
     protected JButton playButton = new JButton("Play Sound!");
+    protected JButton randomizer = new JButton("Random Note!");
 
     /**
        creates the GUI
@@ -53,7 +55,7 @@ public class BasicGuiForSynth implements ActionListener, ChangeListener {
 	JPanel center = new JPanel();
 
 	// create JLabels for each parameter
-	JLabel label1 = new JLabel("<html>Frequency<br>(0 - 20,000.0)</html>", 
+	JLabel label1 = new JLabel("<html>Frequency<br>(0 - 1,000.0)</html>", 
 				   JLabel.CENTER);
 	JLabel label2 = new JLabel("<html>Amplitude<br>(0 - 1.0)</html>",
 				   JLabel.CENTER);
@@ -93,10 +95,10 @@ public class BasicGuiForSynth implements ActionListener, ChangeListener {
 	sliders.setLayout(new GridLayout(1,7));
 	
 	JSlider slider_freq = new SliderLinked(field_freq);
-	slider_freq.setMajorTickSpacing(5000);
+	slider_freq.setMajorTickSpacing(100);
 	slider_freq.setPaintTicks(true);
 	slider_freq.addChangeListener(this);
-	slider_freq.setMaximum(20000);
+	slider_freq.setMaximum(1000);
 	
 	JSlider slider_amp = new SliderLinked(field_amp);
 	slider_amp.setMajorTickSpacing(10);
@@ -151,7 +153,8 @@ public class BasicGuiForSynth implements ActionListener, ChangeListener {
 	textFields.add(field_sustainAmp);
 	textFields.add(field_sustainTime);
 	textFields.add(field_release);
-	playButton.addActionListener(this);
+	playButton.addActionListener(new playNoteListener());
+	randomizer.addActionListener(new randomListener());
 
 
 	center.setLayout(new GridLayout(3,1));
@@ -162,8 +165,14 @@ public class BasicGuiForSynth implements ActionListener, ChangeListener {
 
 	center.add(playButton);	
 	frame.add(center,BorderLayout.CENTER);
-	if (isBasic)
-	    frame.add(playButton,BorderLayout.SOUTH);	
+
+	if (isBasic) {
+	    JPanel row = new JPanel(new GridLayout(1,2));
+	    row.add(playButton);
+	    row.add(randomizer);
+	    frame.add(row,BorderLayout.SOUTH);
+	}
+	
 	frame.setSize(1000,150);
 	frame.setVisible(true);
     }
@@ -181,26 +190,61 @@ public class BasicGuiForSynth implements ActionListener, ChangeListener {
 	    s.text.setText(String.valueOf(value));
     }
 
-    /**
-       plays the specified sound given the parameters inputted
-       @param e the ActionEvent
+        /**
+       inner class button listener for randomizing a note
     */
-    public void actionPerformed(ActionEvent e) {
-     	AudioFormat f = new AudioFormat(44100,8,1,true,true);
-    	try {
-    	    /* Create a new audioLine which goes to the system, 
-     	       the audio format specifys all the features of the line.
-   	    */
-     	    SourceDataLine d = AudioSystem.getSourceDataLine(f);
+    private class randomListener implements ActionListener {
 
-	    ADSREnvelopedContinuousSound env = getNote(d);
+	/**
+	   actionPerformed event for randomizing a note
+	   @param e the ActionEvent
+	*/
+	public void actionPerformed(ActionEvent e) {
+	    Random r = new Random();
+	    
+	    field_amp.setText(String.valueOf(Math.round(r.nextDouble()*
+							100.0)/100.0));
+	    field_attack.setText(String.valueOf(Math.round(r.nextDouble()*
+							   100.0)/100.0));
+	    field_decay.setText(String.valueOf(Math.round(r.nextDouble()*
+							  100.0)/100.0));
+	    field_sustainAmp.setText(String.valueOf(Math.round(r.nextDouble()*
+							       100.0)/100.0));
+	    field_sustainTime.setText(String.valueOf(Math.round(r.nextDouble()*
+								100.0)/100.0));
+	    field_release.setText(String.valueOf(Math.round(r.nextDouble()*
+							    100.0)/100.0));
+	    field_freq.setText(String.valueOf(r.nextInt(1000)+1));
+	    
+	}
+    }
+    
+    /**
+       inner class button listener for playing a sound
+    */
+    private class playNoteListener implements ActionListener {
 
-	    d.open(f);
-	    d.start();
-	    env.load();
-	    d.drain();
-	} catch (Exception ex) {
-	    ex.printStackTrace();
+	/**
+	   plays the specified sound given the parameters inputted
+	   @param e the ActionEvent
+	*/
+	public void actionPerformed(ActionEvent e) {
+	    AudioFormat f = new AudioFormat(44100,8,1,true,true);
+	    try {
+		/* Create a new audioLine which goes to the system, 
+		   the audio format specifys all the features of the line.
+		*/
+		SourceDataLine d = AudioSystem.getSourceDataLine(f);
+
+		ADSREnvelopedContinuousSound env = getNote(d);
+
+		d.open(f);
+		d.start();
+		env.load();
+		d.drain();
+	    } catch (Exception ex) {
+		ex.printStackTrace();
+	    }
 	}
     }
 

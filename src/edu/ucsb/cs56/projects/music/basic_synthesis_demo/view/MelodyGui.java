@@ -29,7 +29,7 @@ public class MelodyGui extends BasicGuiForSynth
     
     private Melody melody = new Melody();
     JLabel numNotesLabel = new JLabel("Note Count: " + melody.size());
-    private double timeTotal=0;
+    private double timeTotal = 0;
 	 JLabel lenMelodyLabel = new JLabel("Length: " + timeTotal + " s"); 
     /**
        creates the GUI, calling BasicGuiForSynth's go method first
@@ -132,16 +132,17 @@ public class MelodyGui extends BasicGuiForSynth
 	    try {
 		SourceDataLine d = AudioSystem.getSourceDataLine(f);
 		ADSREnvelopedContinuousSound env = getNote(d);
+		
 		double time = (env.getAttackTime() + env.getDecayTime() +
 				  env.getReleaseTime() + env.getSustainTime());
 		time = Math.round(time*100.0)/100.0;
-		timeTotal = timeTotal + time;
+		timeTotal += time;
+		timeTotal = Math.round(timeTotal*100.0)/100.0;
 		Note n = new Note(env.getFrequency(),
 				  time, env.getAmplitude());
 		melody.add(n);
 	        numNotesLabel.setText("Note Count: " + melody.size());
-				lenMelodyLabel.setText("Length: " + 
-						       timeTotal + " s");
+		lenMelodyLabel.setText("Length: " + timeTotal + " s");
 	    } catch (Exception ex) {
 		ex.printStackTrace();
 	    }

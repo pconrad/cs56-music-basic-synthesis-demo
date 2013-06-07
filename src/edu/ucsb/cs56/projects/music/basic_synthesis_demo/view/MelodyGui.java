@@ -28,33 +28,37 @@ public class MelodyGui extends BasicGuiForSynth
     implements ActionListener, ChangeListener {
     
     private Melody melody = new Melody();
+    JLabel numNotesLabel = new JLabel("Note Count: " + melody.size());
     
     /**
        creates the GUI, calling BasicGuiForSynth's go method first
     */    
     public void go(JFrame frame) {
 	super.go(frame);
-
-	JPanel topRowGrid = new JPanel();
-	topRowGrid.setLayout(new GridLayout(1,2));
-
-	JPanel buttonRow = new JPanel();	
-	buttonRow.setLayout(new GridLayout(1,2));
 		
+	// entire melody area JPanel
 	JPanel melodyGrid = new JPanel();
 	melodyGrid.setLayout(new GridLayout(3,1));
+
+	// Melody
+	JPanel topRow = new JPanel();
+	topRow.setLayout(new GridLayout(1,2));
+
+	// row of buttons on bottom of GUI (not in melody side)
+	JPanel buttonRow = new JPanel();	
+	buttonRow.setLayout(new GridLayout(1,2));
 	
+	// note count and time length
 	JPanel botMelodyGrid = new JPanel();	
 	botMelodyGrid.setLayout(new GridLayout(1,2));
 	
-	JPanel botRowGrid = new JPanel();	
-	botRowGrid.setLayout(new GridLayout(1,2));
+	// save button / clear button
+	JPanel midRowButtons = new JPanel();	
+	midRowButtons.setLayout(new GridLayout(1,2));
 	
-	//JProgressBar pBar = new JProgressBar(SwingConstants.HORIZONTAL, 0, 5);
-
 	JLabel noteLabel = new JLabel("Melody", JLabel.CENTER);
-	topRowGrid.add(noteLabel);
-	melodyGrid.add(topRowGrid);
+	topRow.add(noteLabel);
+	melodyGrid.add(topRow);
 	
 	JButton melodyButton = new JButton("Play Melody!");
 	melodyButton.addActionListener(new melodyButtonListener());
@@ -64,14 +68,13 @@ public class MelodyGui extends BasicGuiForSynth
 	JButton saveButton = new JButton("Save Note");
 	saveButton.addActionListener(new saveNoteListener());
 	 
-	JLabel numNotesLabel = new JLabel("Number of Notes:" + melody.size());
 	botMelodyGrid.add(numNotesLabel);
 
 	JButton clearArray = new JButton("Clear All Notes");
 	clearArray.addActionListener(new clearNoteListener());
-	botRowGrid.add(saveButton);
-	botRowGrid.add(clearArray);
-	melodyGrid.add(botRowGrid);
+	midRowButtons.add(saveButton);
+	midRowButtons.add(clearArray);
+	melodyGrid.add(midRowButtons);
 	melodyGrid.add(botMelodyGrid);
 	
 
@@ -87,32 +90,35 @@ public class MelodyGui extends BasicGuiForSynth
     */
     private class melodyButtonListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
-	 	AudioFormat f = new AudioFormat(44100,8,1,true,true);
+	    AudioFormat f = new AudioFormat(44100,8,1,true,true);
 	    try {
-			SourceDataLine d = AudioSystem.getSourceDataLine(f);
-			ADSREnvelopedContinuousSound envCont = getNote(d);
-			ADSREnvelope env = new ADSREnvelope(envCont.getAttackTime(),envCont.getDecayTime(),
-																envCont.getSustainAmplitude(),
-																envCont.getReleaseTime(), 
-																envCont.getSustainTime());
-			melody.play(env,melody);		    
-		}	catch (Exception ex) {
-			ex.printStackTrace();
-		}
+		SourceDataLine d = AudioSystem.getSourceDataLine(f);
+		ADSREnvelopedContinuousSound envCont = getNote(d);
+		ADSREnvelope env = 
+		    new ADSREnvelope(envCont.getAttackTime(),
+				     envCont.getDecayTime(),
+				     envCont.getSustainAmplitude(),
+				     envCont.getReleaseTime(),
+				     envCont.getSustainTime());
+		melody.play(env,melody);		    
+	    } catch (Exception ex) {
+		ex.printStackTrace();
+	    }
 	}	
 	}
 
     /**
-       inner class button listener to clearArray
+       inner class button listener for clearing all notes
     */
     private class clearNoteListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
-	    	melody.clear();
-    }
+	    melody.clear();
+	    numNotesLabel.setText("Note Count: " + melody.size());
 	}
+    }
 
     /**
-       inner class button listener for save note
+       inner class button listener for saving a note
     */
     private class saveNoteListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
@@ -128,7 +134,7 @@ public class MelodyGui extends BasicGuiForSynth
 				  env.getAmplitude());
 		
 		melody.add(n);
-		System.out.println(melody.size());
+	        numNotesLabel.setText("Note Count: " + melody.size());
 	    } catch (Exception ex) {
 		ex.printStackTrace();
 	    }

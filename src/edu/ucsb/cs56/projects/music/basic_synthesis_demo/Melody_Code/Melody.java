@@ -8,7 +8,7 @@ import java.io.*;
 *    A Class that represents a Melody.   
 *    
 *   @author Bronwyn Perry-Huston
-*   @version CS56 S13 for project 2 
+*   @version CS56 S13 
 */
 
 public class Melody extends ArrayList<Note>{
@@ -47,15 +47,18 @@ public class Melody extends ArrayList<Note>{
 			line = reader.readLine();
 			while(line != null)
 			{
-				//parse each line and add a new Note to the melody
+				//parse each line
 				String[] splitline = line.split("\\s+");
 				note_name = splitline[0];
 				octave = Integer.parseInt(splitline[1]);
 				duration = Double.parseDouble(splitline[2]);
 				volume = Double.parseDouble(splitline[3]);
+
+				//calculate the frequency from the letter and octave
 				freq = freqmap.getFreq(note_name) * Math.pow(2,octave);
 
-				m.add (new Note(freq,duration,volume));
+				//create the note and add it to the melody
+				m.add(new Note(freq,duration,volume));
 			
 				line = reader.readLine();
 
@@ -136,7 +139,6 @@ public class Melody extends ArrayList<Note>{
 					
 			}
 
-			//d.drain();
 			d.close();
 		}catch(Exception ex){
 			
@@ -147,10 +149,11 @@ public class Melody extends ArrayList<Note>{
 	/**
 	* Main method that will play the melody
 	* Takes in command line arguments to create ADSREnvelope
+	* Takes in optional command line arguments to play one or more specific Melody files
 	*/
 	public static void main(String[] args){
 
-		//check that the correct number of arguments were entered
+		//check that the minimum number of command line arguments were entered
 		if(args.length<5){
 	        System.out.println("attack, decay, sustain amp, sustain time, release");
 			System.out.println("Optional: Num_of_file, names of files");
@@ -174,9 +177,10 @@ public class Melody extends ArrayList<Note>{
 		
 		if(args.length == 5)
 		{
-			//Create a melody from the text file
+			//Create a melody from the default text file
 			Melody m = new Melody();
 
+			//try to open the file and create the melody
 			try{
 				m = m.createMelodyFromFile("Default.txt");
 			
@@ -195,13 +199,17 @@ public class Melody extends ArrayList<Note>{
 			m.play(a, m);
 		}
 		else{
+			//get the number of files the user wants to play
 			int numFiles = Integer.parseInt(args[5]);
+			
+			//check that the correct number of file names are present
 			if(args.length != (6 + numFiles))
 			{
 				System.out.println("Error: " + numFiles + " File names were not entered");
 				System.exit(2);
 			}
 
+			//try to create a melody from each file that was entered
 			ArrayList<Melody> melody_list = new ArrayList<Melody>();
 			Melody n = new Melody();
 			try{
@@ -216,6 +224,7 @@ public class Melody extends ArrayList<Note>{
 				System.exit(3);
 			}
 
+			//concatenate the melodys and play them all
 			Melody concatMelody = new Melody();
 			for(Melody m: melody_list)
 			{

@@ -1,10 +1,19 @@
 package edu.ucsb.cs56.projects.music.basic_synthesis_demo.Melody_Code;
 import java.util.*;
 
+/**
+*    A Class that maps Note names to their numerical frequencies  
+*    
+*   @author Bronwyn Perry-Huston
+*   @version CS56 S13  
+*/
 public class FrequencyMap{
 	
 	private HashMap map;
 	
+	/**
+    * no-arg constructor to create the mapping 
+    */
 	public FrequencyMap(){
 		map = new HashMap();
 
@@ -17,6 +26,9 @@ public class FrequencyMap{
 		map.put("G", new Double(24.50));
 	}
    
+	/**
+    * getter method to access and return the frequency of a note 
+    */
 	public double getFreq(String note)
 	{
 		double freq = ((Double)map.get(note)).doubleValue();

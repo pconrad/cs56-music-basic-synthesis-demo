@@ -27,17 +27,13 @@ import javax.sound.sampled.SourceDataLine;
 public class MelodyGui extends BasicGuiForSynth
     implements ActionListener, ChangeListener {
     
-    private Melody melody = new Melody(); 
-    private JFormattedTextField melodyLength = 
-	new JFormattedTextField("set melody length");
+    private Melody melody = new Melody();
     
     /**
        creates the GUI, calling BasicGuiForSynth's go method first
     */    
     public void go(JFrame frame) {
 	super.go(frame);
-	
-	melodyLength.setHorizontalAlignment(JTextField.CENTER);
 
 	JPanel topRowGrid = new JPanel();
 	topRowGrid.setLayout(new GridLayout(1,2));
@@ -48,30 +44,36 @@ public class MelodyGui extends BasicGuiForSynth
 	JPanel melodyGrid = new JPanel();
 	melodyGrid.setLayout(new GridLayout(3,1));
 	
+	JPanel botMelodyGrid = new JPanel();	
+	botMelodyGrid.setLayout(new GridLayout(1,2));
+	
 	JPanel botRowGrid = new JPanel();	
 	botRowGrid.setLayout(new GridLayout(1,2));
 	
-	JProgressBar pBar = new JProgressBar(SwingConstants.HORIZONTAL, 0, 5);
+	//JProgressBar pBar = new JProgressBar(SwingConstants.HORIZONTAL, 0, 5);
 
 	JLabel noteLabel = new JLabel("Melody", JLabel.CENTER);
 	topRowGrid.add(noteLabel);
-	topRowGrid.add(melodyLength);
 	melodyGrid.add(topRowGrid);
 	
 	JButton melodyButton = new JButton("Play Melody!");
 	melodyButton.addActionListener(new melodyButtonListener());
 	buttonRow.add(super.playButton);
 	buttonRow.add(melodyButton);
-
+	
 	JButton saveButton = new JButton("Save Note");
 	saveButton.addActionListener(new saveNoteListener());
-	    
+	 
+	JLabel numNotesLabel = new JLabel("Number of Notes:" + melody.size());
+	botMelodyGrid.add(numNotesLabel);
+
 	JButton clearArray = new JButton("Clear All Notes");
 	clearArray.addActionListener(new clearNoteListener());
 	botRowGrid.add(saveButton);
 	botRowGrid.add(clearArray);
 	melodyGrid.add(botRowGrid);
-	melodyGrid.add(pBar);
+	melodyGrid.add(botMelodyGrid);
+	
 
 	frame.add(buttonRow, BorderLayout.SOUTH);
 	frame.add(melodyGrid, BorderLayout.EAST);

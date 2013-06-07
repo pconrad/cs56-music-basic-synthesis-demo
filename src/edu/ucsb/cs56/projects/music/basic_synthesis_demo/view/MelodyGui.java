@@ -25,7 +25,7 @@ import javax.sound.sampled.SourceDataLine;
 */
 
 public class MelodyGui extends BasicGuiForSynth
-    implements ActionListener, ChangeListener {
+    implements ChangeListener {
     
     private Melody melody = new Melody();
     JLabel numNotesLabel = new JLabel("Note Count: " + melody.size());
@@ -47,7 +47,7 @@ public class MelodyGui extends BasicGuiForSynth
 
 	// row of buttons on bottom of GUI (not in melody side)
 	JPanel buttonRow = new JPanel();	
-	buttonRow.setLayout(new GridLayout(1,2));
+	buttonRow.setLayout(new GridLayout(1,3));
 	
 	// note count and time length
 	JPanel botMelodyGrid = new JPanel();	
@@ -64,6 +64,7 @@ public class MelodyGui extends BasicGuiForSynth
 	JButton melodyButton = new JButton("Play Melody!");
 	melodyButton.addActionListener(new melodyButtonListener());
 	buttonRow.add(super.playButton);
+	buttonRow.add(super.randomizer);
 	buttonRow.add(melodyButton);
 	
 	JButton saveButton = new JButton("Save Note");
@@ -126,6 +127,11 @@ public class MelodyGui extends BasicGuiForSynth
        inner class button listener for saving a note
     */
     private class saveNoteListener implements ActionListener {
+
+	/**
+	   actionPerformed event for saving a note
+	   @param e the ActionEvent
+	*/
 	public void actionPerformed(ActionEvent e) {
 	    
 	    AudioFormat f = new AudioFormat(44100,8,1,true,true);

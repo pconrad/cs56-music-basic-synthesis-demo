@@ -41,7 +41,6 @@ public class BasicGuiForSynth implements ActionListener, ChangeListener {
     /**
        creates the GUI
     */
-    
     public void go(JFrame frame) {
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	    
 	
@@ -54,14 +53,20 @@ public class BasicGuiForSynth implements ActionListener, ChangeListener {
 	JPanel center = new JPanel();
 
 	// create JLabels for each parameter
-	JLabel label1 = new JLabel("<html>Frequency<br>(0 - 20,000.0)</html>", JLabel.CENTER);
-	JLabel label2 = new JLabel("<html>Amplitude<br>(0 - 1.0)</html>", JLabel.CENTER);
-	JLabel label3 = new JLabel("<html>Attack<br>(0 - 1.0)</html>", JLabel.CENTER);
-	JLabel label4 = new JLabel("<html>Decay<br>(0 - 1.0)</html>", JLabel.CENTER);
+	JLabel label1 = new JLabel("<html>Frequency<br>(0 - 20,000.0)</html>", 
+				   JLabel.CENTER);
+	JLabel label2 = new JLabel("<html>Amplitude<br>(0 - 1.0)</html>",
+				   JLabel.CENTER);
+	JLabel label3 = new JLabel("<html>Attack<br>(0 - 1.0)</html>", 
+				   JLabel.CENTER);
+	JLabel label4 = new JLabel("<html>Decay<br>(0 - 1.0)</html>", 
+				   JLabel.CENTER);
 	JLabel label5 = new JLabel("<html>Sustain Amp<br>(0 - 1.0)</html>",
 				   JLabel.CENTER);
-	JLabel label6 = new JLabel("<html>Sustain Time<br>(0 - 1.0)</html>", JLabel.CENTER);
-	JLabel label7 = new JLabel("<html>Release<br>(0 - 1.0)</html>", JLabel.CENTER);
+	JLabel label6 = new JLabel("<html>Sustain Time<br>(0 - 1.0)</html>", 
+				   JLabel.CENTER);
+	JLabel label7 = new JLabel("<html>Release<br>(0 - 1.0)</html>", 
+				   JLabel.CENTER);
 	
 	labels.setLayout(new GridLayout(1,7));
 	labels.add(label1);
@@ -188,33 +193,8 @@ public class BasicGuiForSynth implements ActionListener, ChangeListener {
    	    */
      	    SourceDataLine d = AudioSystem.getSourceDataLine(f);
 
-	    rangeFix(field_freq);
-	    rangeFix(field_attack);
-	    rangeFix(field_decay);
-	    rangeFix(field_sustainAmp);
-	    rangeFix(field_sustainTime);
-	    rangeFix(field_release);
+	    ADSREnvelopedContinuousSound env = getNote(d);
 
-	    double freq        =   
-		Math.round(Double.parseDouble(field_freq.getText()));
-	    double amp         =   
-		Double.parseDouble(field_amp.getText());
-	    double attack      =   
-		Double.parseDouble(field_attack.getText());
-	    double decay       =   
-		Double.parseDouble(field_decay.getText());
-	    double sustainAmp  =   
-		Double.parseDouble(field_sustainAmp.getText());
-	    double sustainTime = 
-		Double.parseDouble(field_sustainTime.getText());
-	    double release     = 
-		Double.parseDouble(field_release.getText());
-	    
-	    ADSREnvelopedContinuousSound env =
-		new ADSREnvelopedContinuousSound(freq,amp,attack,decay,
-						 sustainAmp,sustainTime,
-						 release,
-						 44100,d);
 	    d.open(f);
 	    d.start();
 	    env.load();
@@ -225,11 +205,48 @@ public class BasicGuiForSynth implements ActionListener, ChangeListener {
     }
 
     /**
+       returns a note given the field parameters
+       @param d data line to which data may be written
+    */
+
+    public ADSREnvelopedContinuousSound getNote(SourceDataLine d) {
+
+	rangeFix(field_freq);
+	rangeFix(field_attack);
+	rangeFix(field_decay);
+	rangeFix(field_sustainAmp);
+	rangeFix(field_sustainTime);
+	rangeFix(field_release);
+
+	double freq        =   
+	    Math.round(Double.parseDouble(field_freq.getText()));
+	double amp         =   
+	    Double.parseDouble(field_amp.getText());
+	double attack      =   
+	    Double.parseDouble(field_attack.getText());
+	double decay       =   
+	    Double.parseDouble(field_decay.getText());
+	double sustainAmp  =   
+	    Double.parseDouble(field_sustainAmp.getText());
+	double sustainTime = 
+	    Double.parseDouble(field_sustainTime.getText());
+	double release     = 
+	    Double.parseDouble(field_release.getText());
+	    
+	ADSREnvelopedContinuousSound env =
+	    new ADSREnvelopedContinuousSound(freq,amp,attack,decay,
+					     sustainAmp,sustainTime,
+					     release,
+					     44100,d);
+
+	return env;
+    }
+
+    /**
        ensures that the values enetered in the JTextFields are
        within the correct range
        @param text the JTextField or JFormattedTextField to correct
     */
-
     public <T extends JTextField> void rangeFix(T text){
 	try {
 	    double value = Double.parseDouble(text.getText());

@@ -63,6 +63,8 @@ public class MelodyGui extends BasicGuiForSynth
 	buttonRow.add(melodyButton);
 
 	JButton saveButton = new JButton("Save Note");
+	saveButton.addActionListener(new saveNoteListener());
+	    
 	JButton clearArray = new JButton("Clear All Notes");
 	botRowGrid.add(saveButton);
 	botRowGrid.add(clearArray);
@@ -74,11 +76,35 @@ public class MelodyGui extends BasicGuiForSynth
 
 	frame.setVisible(true);
     }
-    
+
+    /**
+       inner class button listener for save note
+    */
+    private class saveNoteListener implements ActionListener {
+	public void actionPerformed(ActionEvent e) {
+	    
+	    AudioFormat f = new AudioFormat(44100,8,1,true,true);
+	    try {
+		SourceDataLine d = AudioSystem.getSourceDataLine(f);
+		ADSREnvelopedContinuousSound env = getNote(d);
+
+		Note n = new Note(env.getFrequency(),
+				  env.getAttackTime() + env.getDecayTime() +
+				  env.getReleaseTime() + env.getSustainTime(),
+				  env.getAmplitude());
+		
+		melody.add(n);
+		System.out.println(melody.size());
+	    } catch (Exception ex) {
+		ex.printStackTrace();
+	    }
+	}
+    }
+
+
     /**
        executes the program so it will run
     */
-
     public static void main(String[] args) {
 	MelodyGui melodyGui = new MelodyGui();
 	JFrame frame = new JFrame();

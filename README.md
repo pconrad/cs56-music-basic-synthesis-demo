@@ -26,9 +26,16 @@ GUI is simply a skeleton, and is not functional
 # Melody Example run
 	java -cp build edu.ucsb.cs56.projects.music.basic_synthesis_demo.Melody_Code.Melody 0.1 0.2 0.6 1.0 0.2
 
-This will play the Melody contained in the file Melody.txt (found in the resources folder)
+This will play the Melody contained in the file Default.txt (found in the resources folder)
 
-the parameters are: attack, decay, sustain amp, sustain time, release
+To play more than one melody in a row, use 
+
+	java -cp build edu.ucsb.cs56.projects.music.basic_synthesis_demo.Melody_Code.Melody 0.1 0.2 0.6 1.0 0.1 3 YellowSub.txt MaryHadALittleLamb.txt Default.txt 
+
+This will play the Melodies contained in the files YellowSub.txt, MaryHadALittleLamb.txt, and Default.txt one after another. 
+The Melodies in the files will be played in the order that they are entered. All of the text files to be played must be in the resource folder.
+
+the parameters are: attack, decay, sustain amp, sustain time, release, the number of files to play, and the names of the files containing the melodies
 
 # Useful resources
 The following may be helpful:

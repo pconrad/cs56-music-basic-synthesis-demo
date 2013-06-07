@@ -30,7 +30,7 @@ public class MelodyGui extends BasicGuiForSynth
     private Melody melody = new Melody();
     JLabel numNotesLabel = new JLabel("Note Count: " + melody.size());
     private double timeTotal=0;
-	 JLabel lenMelodyLabel = new JLabel("Length: " + timeTotal + "s"); 
+	 JLabel lenMelodyLabel = new JLabel("Length: " + timeTotal + " s"); 
     /**
        creates the GUI, calling BasicGuiForSynth's go method first
     */    
@@ -78,7 +78,6 @@ public class MelodyGui extends BasicGuiForSynth
 	midRowButtons.add(clearArray);
 	melodyGrid.add(midRowButtons);
 	melodyGrid.add(botMelodyGrid);
-	
 
 	frame.add(buttonRow, BorderLayout.SOUTH);
 	frame.add(melodyGrid, BorderLayout.EAST);
@@ -92,7 +91,9 @@ public class MelodyGui extends BasicGuiForSynth
     */
     private class melodyButtonListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
+	    
 	    AudioFormat f = new AudioFormat(44100,8,1,true,true);
+	    
 	    try {
 		SourceDataLine d = AudioSystem.getSourceDataLine(f);
 		ADSREnvelopedContinuousSound envCont = getNote(d);
@@ -107,7 +108,7 @@ public class MelodyGui extends BasicGuiForSynth
 		ex.printStackTrace();
 	    }
 	}	
-	}
+    }
 
     /**
        inner class button listener for clearing all notes
@@ -133,12 +134,14 @@ public class MelodyGui extends BasicGuiForSynth
 		ADSREnvelopedContinuousSound env = getNote(d);
 		double time = (env.getAttackTime() + env.getDecayTime() +
 				  env.getReleaseTime() + env.getSustainTime());
+		time = Math.round(time*100.0)/100.0;
 		timeTotal = timeTotal + time;
 		Note n = new Note(env.getFrequency(),
 				  time, env.getAmplitude());
 		melody.add(n);
 	        numNotesLabel.setText("Note Count: " + melody.size());
-				lenMelodyLabel.setText("Length: " + timeTotal +"s");
+				lenMelodyLabel.setText("Length: " + 
+						       timeTotal + " s");
 	    } catch (Exception ex) {
 		ex.printStackTrace();
 	    }

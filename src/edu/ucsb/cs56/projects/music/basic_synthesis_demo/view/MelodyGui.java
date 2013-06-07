@@ -59,6 +59,7 @@ public class MelodyGui extends BasicGuiForSynth
 	melodyGrid.add(topRowGrid);
 	
 	JButton melodyButton = new JButton("Play Melody!");
+	melodyButton.addActionListener(new melodyButtonListener());
 	buttonRow.add(super.playButton);
 	buttonRow.add(melodyButton);
 
@@ -66,6 +67,7 @@ public class MelodyGui extends BasicGuiForSynth
 	saveButton.addActionListener(new saveNoteListener());
 	    
 	JButton clearArray = new JButton("Clear All Notes");
+	clearArray.addActionListener(new clearNoteListener());
 	botRowGrid.add(saveButton);
 	botRowGrid.add(clearArray);
 	melodyGrid.add(botRowGrid);
@@ -76,6 +78,36 @@ public class MelodyGui extends BasicGuiForSynth
 
 	frame.setVisible(true);
     }
+	
+	
+    /**
+       inner class button listener to melodyButton
+    */
+    private class melodyButtonListener implements ActionListener {
+	public void actionPerformed(ActionEvent e) {
+	 	AudioFormat f = new AudioFormat(44100,8,1,true,true);
+	    try {
+			SourceDataLine d = AudioSystem.getSourceDataLine(f);
+			ADSREnvelopedContinuousSound envCont = getNote(d);
+			ADSREnvelope env = new ADSREnvelope(envCont.getAttackTime(),envCont.getDecayTime(),
+																envCont.getSustainAmplitude(),
+																envCont.getReleaseTime(), 
+																envCont.getSustainTime());
+			melody.play(env,melody);		    
+		}	catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}	
+	}
+
+    /**
+       inner class button listener to clearArray
+    */
+    private class clearNoteListener implements ActionListener {
+	public void actionPerformed(ActionEvent e) {
+	    	melody.clear();
+    }
+	}
 
     /**
        inner class button listener for save note

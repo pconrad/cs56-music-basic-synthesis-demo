@@ -28,6 +28,8 @@ public class MelodyGui extends BasicGuiForSynth
     implements ActionListener, ChangeListener {
     
     private Melody melody = new Melody(); 
+    private JFormattedTextField melodyLength = 
+	new JFormattedTextField("set melody length");
     
     /**
        creates the GUI, calling BasicGuiForSynth's go method first
@@ -35,19 +37,26 @@ public class MelodyGui extends BasicGuiForSynth
     public void go(JFrame frame) {
 	super.go(frame);
 	
+	melodyLength.setHorizontalAlignment(JTextField.CENTER);
+
+	JPanel topRowGrid = new JPanel();
+	topRowGrid.setLayout(new GridLayout(1,2));
+
 	JPanel buttonRow = new JPanel();	
 	buttonRow.setLayout(new GridLayout(1,2));
 		
-	JPanel saveFunctionality = new JPanel();
-	saveFunctionality.setLayout(new GridLayout(3,1));
+	JPanel melodyGrid = new JPanel();
+	melodyGrid.setLayout(new GridLayout(3,1));
 	
-	JPanel botSaveRow = new JPanel();	
-	botSaveRow.setLayout(new GridLayout(1,2));
+	JPanel botRowGrid = new JPanel();	
+	botRowGrid.setLayout(new GridLayout(1,2));
 	
 	JProgressBar pBar = new JProgressBar(SwingConstants.HORIZONTAL, 0, 5);
 
 	JLabel noteLabel = new JLabel("Melody", JLabel.CENTER);
-	saveFunctionality.add(noteLabel);
+	topRowGrid.add(noteLabel);
+	topRowGrid.add(melodyLength);
+	melodyGrid.add(topRowGrid);
 	
 	JButton melodyButton = new JButton("Play Melody!");
 	buttonRow.add(super.playButton);
@@ -55,13 +64,13 @@ public class MelodyGui extends BasicGuiForSynth
 
 	JButton saveButton = new JButton("Save Note");
 	JButton clearArray = new JButton("Clear All Notes");
-	botSaveRow.add(saveButton);
-	botSaveRow.add(clearArray);
-	saveFunctionality.add(botSaveRow);
-	saveFunctionality.add(pBar);
+	botRowGrid.add(saveButton);
+	botRowGrid.add(clearArray);
+	melodyGrid.add(botRowGrid);
+	melodyGrid.add(pBar);
 
 	frame.add(buttonRow, BorderLayout.SOUTH);
-	frame.add(saveFunctionality, BorderLayout.EAST);
+	frame.add(melodyGrid, BorderLayout.EAST);
 
 	frame.setVisible(true);
     }

@@ -22,21 +22,21 @@ import javax.sound.sampled.SourceDataLine;
 */
 
 public class BasicGuiForSynth implements ActionListener, ChangeListener {
-    JFormattedTextField field_freq = 
+    private JFormattedTextField field_freq = 
 	new JFormattedTextField("220");
-    JFormattedTextField field_amp = 
+    private JFormattedTextField field_amp = 
 	new JFormattedTextField("0.9");
-    JFormattedTextField field_attack = 
+    private JFormattedTextField field_attack = 
 	new JFormattedTextField("0.1");
-    JFormattedTextField field_decay = 
+    private JFormattedTextField field_decay = 
 	new JFormattedTextField("0.2");
-    JFormattedTextField field_sustainAmp = 
+    private JFormattedTextField field_sustainAmp = 
 	new JFormattedTextField("0.6");
-    JFormattedTextField field_sustainTime = 
+    private JFormattedTextField field_sustainTime = 
 	new JFormattedTextField("1.0");
-    JFormattedTextField field_release = 
+    private JFormattedTextField field_release = 
 	new JFormattedTextField("0.2");
-    JButton playButton = new JButton("Play Sound!");
+    protected JButton playButton = new JButton("Play Sound!");
 
     /**
        creates the GUI

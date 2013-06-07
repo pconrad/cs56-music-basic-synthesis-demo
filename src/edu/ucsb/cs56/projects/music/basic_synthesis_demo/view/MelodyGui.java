@@ -1,5 +1,6 @@
 package edu.ucsb.cs56.projects.music.basic_synthesis_demo;
 
+import edu.ucsb.cs56.projects.music.basic_synthesis_demo.Melody_Code.*;
 import java.lang.Math;
 import javax.swing.*;
 import javax.swing.event.*;
@@ -26,11 +27,11 @@ import javax.sound.sampled.SourceDataLine;
 public class MelodyGui extends BasicGuiForSynth
     implements ActionListener, ChangeListener {
     
-    private ADSREnvelopedContinuousSound[] soundArray = new ADSREnvelopedContinuousSound[5];
+    private Melody melody = new Melody(); 
+    
     /**
        creates the GUI, calling BasicGuiForSynth's go method first
-    */
-    
+    */    
     public void go(JFrame frame) {
 	super.go(frame);
 	

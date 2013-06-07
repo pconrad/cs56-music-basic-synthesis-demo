@@ -137,7 +137,9 @@ public class Melody extends ArrayList<Note>{
 			}
 
 			//d.drain();
+			d.close();
 		}catch(Exception ex){
+			
 			ex.printStackTrace();
 		}
 	}
@@ -149,10 +151,13 @@ public class Melody extends ArrayList<Note>{
 	public static void main(String[] args){
 
 		//check that the correct number of arguments were entered
-		if(args.length!=5){
+		if(args.length<5){
 	        System.out.println("attack, decay, sustain amp, sustain time, release");
+			System.out.println("Optional: Num_of_file, names of files");
 	        System.exit(1);
 	    }
+		
+			
 
 		//parse all of the command line arguments to create the ADSREnvelope
 		double attackTime = Double.parseDouble(args[0]);
@@ -166,26 +171,62 @@ public class Melody extends ArrayList<Note>{
 						           		  sustainAmplitude,
 						            		  releaseTime,
 		                            		  sustainTime);
+		
+		if(args.length == 5)
+		{
+			//Create a melody from the text file
+			Melody m = new Melody();
 
-		//Create a melody from the text file
-		Melody m = new Melody();
-
-		try{
-			m = m.createMelodyFromFile("YellowSub2.txt");
+			try{
+				m = m.createMelodyFromFile("Default.txt");
 			
-		}
-		catch(Exception ex)
-		{	
-			System.out.println("An error occured in creating the melody from the file");
-			ex.printStackTrace();
-		}
+			}
+			catch(Exception ex)
+			{	
+				System.out.println("An error occured in creating the melody from the file");
+				ex.printStackTrace();
+			}
 
-		//Check that the melody and envelope are compatible
-        if(!m.checkCompatibility(a,m))
-           	throw new IllegalArgumentException("Melody and Envelope are incompatible");
+			//Check that the melody and envelope are compatible
+		    if(!m.checkCompatibility(a,m))
+		       	throw new IllegalArgumentException("Melody and Envelope are incompatible");
 
-		//play the melody
-		m.play(a, m);
+			//play the melody
+			m.play(a, m);
+		}
+		else{
+			int numFiles = Integer.parseInt(args[5]);
+			if(args.length != (6 + numFiles))
+			{
+				System.out.println("Error: " + numFiles + " File names were not entered");
+				System.exit(2);
+			}
+
+			ArrayList<Melody> melody_list = new ArrayList<Melody>();
+			Melody n = new Melody();
+			try{
+				for(int i = 6 ; i < args.length ; i++)
+				{
+					n = n.createMelodyFromFile(args[i]);
+					melody_list.add(n);
+				}
+			}catch(Exception ex)
+			{
+				System.out.println("An error occured in creating the melody from the file here. Check that the file exists and is in the correct format");
+				System.exit(3);
+			}
+
+			Melody concatMelody = new Melody();
+			for(Melody m: melody_list)
+			{
+				if(!m.checkCompatibility(a,m))
+		       		throw new IllegalArgumentException("Melody and Envelope are incompatible");
+				
+				concatMelody.addAll(m);
+			}
+			concatMelody.play(a,concatMelody);
+
+		}
 	}
 	
 

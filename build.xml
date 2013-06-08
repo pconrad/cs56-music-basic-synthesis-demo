@@ -66,6 +66,7 @@ To run melody: java -cp build edu.ucsb.cs56.projects.${categoryName}.${repoName}
   <target name="clean" >
     <delete failonerror="false" verbose="true">
       <fileset dir="build" includes="**/*.class"/>
+	  <fileset dir="build" includes="**/*.txt"/>
     </delete>
     <delete dir="javadoc" quiet="true" />
     <delete dir="dist" quiet="true" />

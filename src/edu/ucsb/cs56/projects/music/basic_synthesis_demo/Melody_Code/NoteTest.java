@@ -7,7 +7,7 @@ import org.junit.Before;
 /** Test class for Note
 
  * @author Bronwyn Perry-Huston
- * @version cs56 13S for project 2
+ * @version cs56 13S
  * @see Note
 
 */

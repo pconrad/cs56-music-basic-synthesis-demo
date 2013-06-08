@@ -8,12 +8,13 @@ import java.io.*;
 *    A Class that represents a Melody.   
 *    
 *   @author Bronwyn Perry-Huston
-*   @version CS56 S13 for project 2 
+*   @version CS56 S13 
 */
 
 public class Melody extends ArrayList<Note>{
 
 	private boolean debug = false;
+	private FrequencyMap freqmap;
 
 	/**
     * no-arg constructor returns an empty melody 
@@ -21,42 +22,51 @@ public class Melody extends ArrayList<Note>{
 	public Melody(){
 		//call constructor for ArrayList<Note>, with capacity 1
 		super(1);
+		freqmap = new FrequencyMap();
 	}
 
 	/**
 	* void method to create a Melody from a text file
 	*/
-	public Melody createMelodyFromFile() throws IOException{
+	public Melody createMelodyFromFile(String filename) throws IOException, FileNotFoundException{
 		
 			//acccess the file with the Melody
-			InputStream melodyFile = Melody.class.getResourceAsStream("/resources/Melody.txt");
+			InputStream melodyFile = Melody.class.getResourceAsStream("/resources/"+ filename);
 			BufferedReader reader = new BufferedReader(new InputStreamReader(melodyFile));
 
-
 			String line;
+			String note_name;
+			int octave;
+			double duration;
+			double volume;
+			double freq;
+			
 			Melody m = new Melody();
 
-		try{
 			//read in the file one line at a time
 			line = reader.readLine();
 			while(line != null)
 			{
-				//parse each line and add a new Note to the melody
+				//parse each line
 				String[] splitline = line.split("\\s+");
-				m.add(new Note(Double.parseDouble(splitline[0]),
-							   Double.parseDouble(splitline[1]),
-							   Double.parseDouble(splitline[2])));
+				note_name = splitline[0];
+				octave = Integer.parseInt(splitline[1]);
+				duration = Double.parseDouble(splitline[2]);
+				volume = Double.parseDouble(splitline[3]);
+
+				//calculate the frequency from the letter and octave
+				freq = freqmap.getFreq(note_name) * Math.pow(2,octave);
+
+				//create the note and add it to the melody
+				m.add(new Note(freq,duration,volume));
+			
 				line = reader.readLine();
 
 			}
-		}catch(IOException ex)
-		{	
-			ex.printStackTrace();
-		}
-		finally{
+
 			reader.close();
 			return m;
-		}
+		
 	}
 
     /**
@@ -124,11 +134,14 @@ public class Melody extends ArrayList<Note>{
 
 					//load the ADSREnveloped note to the audioLine
 					env.load();
+					d.drain();
+
 					
 			}
 
-			d.drain();
+			d.close();
 		}catch(Exception ex){
+			
 			ex.printStackTrace();
 		}
 	}
@@ -136,14 +149,18 @@ public class Melody extends ArrayList<Note>{
 	/**
 	* Main method that will play the melody
 	* Takes in command line arguments to create ADSREnvelope
+	* Takes in optional command line arguments to play one or more specific Melody files
 	*/
 	public static void main(String[] args){
 
-		//check that the correct number of arguments were entered
-		if(args.length!=5){
+		//check that the minimum number of command line arguments were entered
+		if(args.length<5){
 	        System.out.println("attack, decay, sustain amp, sustain time, release");
+			System.out.println("Optional: Num_of_file, names of files");
 	        System.exit(1);
 	    }
+		
+			
 
 		//parse all of the command line arguments to create the ADSREnvelope
 		double attackTime = Double.parseDouble(args[0]);
@@ -157,25 +174,68 @@ public class Melody extends ArrayList<Note>{
 						           		  sustainAmplitude,
 						            		  releaseTime,
 		                            		  sustainTime);
-
-		//Create a melody from the text file
-		Melody m = new Melody();
-
-		try{
-			m = m.createMelodyFromFile();
-		}
-		catch(IOException ex)
+		
+		if(args.length == 5)
 		{
+			//Create a melody from the default text file
+			Melody m = new Melody();
+
+			//try to open the file and create the melody
+			try{
+				m = m.createMelodyFromFile("Default.txt");
 			
-			ex.printStackTrace();
+			}
+			catch(Exception ex)
+			{	
+				System.out.println("An error occured in creating the melody from the file");
+				ex.printStackTrace();
+			}
+
+			//Check that the melody and envelope are compatible
+		    if(!m.checkCompatibility(a,m))
+		       	throw new IllegalArgumentException("Melody and Envelope are incompatible");
+
+			//play the melody
+			m.play(a, m);
 		}
+		else{
+			//get the number of files the user wants to play
+			int numFiles = Integer.parseInt(args[5]);
+			
+			//check that the correct number of file names are present
+			if(args.length != (6 + numFiles))
+			{
+				System.out.println("Error: " + numFiles + " File names were not entered");
+				System.exit(2);
+			}
 
-		//Check that the melody and envelope are compatible
-        if(!m.checkCompatibility(a,m))
-           	throw new IllegalArgumentException("Melody and Envelope are incompatible");
+			//try to create a melody from each file that was entered
+			ArrayList<Melody> melody_list = new ArrayList<Melody>();
+			Melody n = new Melody();
+			try{
+				for(int i = 6 ; i < args.length ; i++)
+				{
+					n = n.createMelodyFromFile(args[i]);
+					melody_list.add(n);
+				}
+			}catch(Exception ex)
+			{
+				System.out.println("An error occured in creating the melody from the file here. Check that the file exists and is in the correct format");
+				System.exit(3);
+			}
 
-		//play the melody
-		m.play(a, m);
+			//concatenate the melodys and play them all
+			Melody concatMelody = new Melody();
+			for(Melody m: melody_list)
+			{
+				if(!m.checkCompatibility(a,m))
+		       		throw new IllegalArgumentException("Melody and Envelope are incompatible");
+				
+				concatMelody.addAll(m);
+			}
+			concatMelody.play(a,concatMelody);
+
+		}
 	}
 	
 

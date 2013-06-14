@@ -59,8 +59,9 @@
 	 <pathelement location="lib/junit-4.8.2.jar"/>
 	 </classpath>
     	</java>-->
-    <echo>To run: java -cp build edu.ucsb.cs56.projects.${categoryName}.${repoName}.BasicGuiForSynth
-To run melody: java -cp build edu.ucsb.cs56.projects.${categoryName}.${repoName}.Melody_Code.Melody </echo>
+    <echo>To run basic GUI: java -cp build edu.ucsb.cs56.projects.${categoryName}.${repoName}.BasicGuiForSynth
+To run melody: java -cp build edu.ucsb.cs56.projects.${categoryName}.${repoName}.Melody_Code.ADSREnvelopedContinuousSound 
+To run melody GUI: java -cp build edu.ucsb.cs56.projects.${categoryName}.${repoName}.MelodyGui</echo>
   </target>
 
   <target name="clean" >

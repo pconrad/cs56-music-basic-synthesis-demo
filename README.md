@@ -1,3 +1,4 @@
+W14 Ready! (Bronwyn Perry-Huston)
 cs56-music-basic-synthesis-demo
 ===============================
 

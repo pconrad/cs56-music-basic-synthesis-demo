@@ -4,6 +4,8 @@ cs56-music-basic-synthesis-demo
 
 A basic demo of some simple synthesis starting with sine waves
 
+![](http://i.imgur.com/xk4Nk1c.png)
+
 # Example run
 	java -cp build  edu.ucsb.cs56.projects.music.basic_synthesis_demo.Melody 0.1 0.2 0.6 1.0 0.2
 

@@ -137,11 +137,5 @@ To run melody GUI: java -cp build edu.ucsb.cs56.projects.${categoryName}.${repoN
     
   </target>
 
-  <target name="linenumbers" description="Creates a file containing all source files with line numbers">
-    <exec executable="bash">
-      <arg value="-c" />
-      <arg value='tree -ifQ src | grep \.java\"$ | xargs pr -n > numberedsource.txt' />
-    </exec>
-  </target>
-
+  
 </project>

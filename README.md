@@ -22,12 +22,14 @@ sustain time: The time to sustain for. (0 - 1.0)
 release: The amount of time to release over. (0 - 1.0)
 
 # Gui Example run
-        java -cp build edu.ucsb.cs56.projects.music.basic_synthesis_demo.view.GuiForSynth
-
+	ant basicGUI
+		
 GUI is simply a skeleton, and is not functional
 
 # Melody Example run
 	java -cp build edu.ucsb.cs56.projects.music.basic_synthesis_demo.Melody_Code.Melody 0.1 0.2 0.6 1.0 0.2
+	-OR-
+	ant melody
 
 This will play the Melody contained in the file Default.txt (found in the resources folder)
 
@@ -39,6 +41,11 @@ This will play the Melodies contained in the files YellowSub.txt, MaryHadALittle
 The Melodies in the files will be played in the order that they are entered. All of the text files to be played must be in the resource folder.
 
 the parameters are: attack, decay, sustain amp, sustain time, release, the number of files to play, and the names of the files containing the melodies
+
+# Melody GUI Example
+	ant melodyGUI
+
+Currently throws errors when play is attempted
 
 # Useful resources
 The following may be helpful:

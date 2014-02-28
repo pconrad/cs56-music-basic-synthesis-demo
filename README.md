@@ -6,46 +6,31 @@ A basic demo of some simple synthesis starting with sine waves
 
 ![](http://i.imgur.com/xk4Nk1c.png)
 
-# Example run
-	java -cp build  edu.ucsb.cs56.projects.music.basic_synthesis_demo.Melody 0.1 0.2 0.6 1.0 0.2
+# Melody GUI Example
+	ant melodyGUI
 
-The parameters are: attack, decay, sustain amplitude, sustain time, release.
-
-attack: The number of seconds to attack for. (0 - 1.0)
-
-decay: The amount of time to decay/sustain. (0 - 1.0)
-
-sustain amplitude: The sustained volume. (0 - 1.0)
-
-sustain time: The time to sustain for. (0 - 1.0)
-
-release: The amount of time to release over. (0 - 1.0)
-
-# Gui Example run
+# GUI Skeleton Example Run
 	ant basicGUI
 		
 GUI is simply a skeleton, and is not functional
 
-# Melody Example run
+# Melody Example Run
 	java -cp build edu.ucsb.cs56.projects.music.basic_synthesis_demo.Melody_Code.Melody 0.1 0.2 0.6 1.0 0.2
 	-OR-
 	ant melody
 
-This will play the Melody contained in the file Default.txt (found in the resources folder)
+This will play the Melody contained in the file Default.txt (found in the resources folder) with
+attack: 0.1 // decay: 0.2 // sustain amplitude: 0.6 // sustain time 1.0 // release 0.2
 
 To play more than one melody in a row, use 
 
 	java -cp build edu.ucsb.cs56.projects.music.basic_synthesis_demo.Melody_Code.Melody 0.1 0.2 0.6 1.0 0.1 3 YellowSub.txt MaryHadALittleLamb.txt Default.txt 
 
 This will play the Melodies contained in the files YellowSub.txt, MaryHadALittleLamb.txt, and Default.txt one after another. 
-The Melodies in the files will be played in the order that they are entered. All of the text files to be played must be in the resource folder.
+The Melodies in the files will be played in the order that they are entered. All of the text files to be played must be in the build/resource/ folder.
 
 the parameters are: attack, decay, sustain amp, sustain time, release, the number of files to play, and the names of the files containing the melodies
 
-# Melody GUI Example
-	ant melodyGUI
-
-Currently throws errors when play is attempted
 
 # Useful resources
 The following may be helpful:

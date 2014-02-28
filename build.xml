@@ -27,7 +27,15 @@
 
 
   <target name="melody" depends="compile" description="run melody">
-    <java fork="true" classpathref="project.class.path" classname="${mainPackage}.Melody_Code.ADSREnvelopedContinuousSound" />
+    <java fork="true" classpathref="project.class.path" classname="${mainPackage}.Melody_Code.ADSREnvelopedContinuousSound">
+	  <arg value="${arg0}"/> <!--frequency -->
+	  <arg value="${arg1}"/> <!-- amp -->
+	  <arg value="${arg2}"/> <!-- attack -->
+	  <arg value="${arg3}"/> <!-- decay -->
+	  <arg value="${arg4}"/> <!-- sustain amp -->
+	  <arg value="${arg5}"/> <!-- sustain time -->
+	  <arg value="${arg6}"/> <!-- release -->
+	</java>
   </target>
 
 

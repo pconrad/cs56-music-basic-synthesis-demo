@@ -36,6 +36,8 @@ public class BasicGuiForSynth implements ChangeListener {
 	new JFormattedTextField("1.0");
     private JFormattedTextField field_release = 
 	new JFormattedTextField("0.2");
+    private JFormattedTextField field_volume = 
+	new JFormattedTextField("100%");
 
     protected JButton playButton = new JButton("Play Sound!");
     protected JButton randomizer = new JButton("Random Note!");
@@ -69,8 +71,10 @@ public class BasicGuiForSynth implements ChangeListener {
 				   JLabel.CENTER);
 	JLabel label7 = new JLabel("<html>Release<br>(0 - 1.0)</html>", 
 				   JLabel.CENTER);
-	
-	labels.setLayout(new GridLayout(1,7));
+	JLabel label8 = new JLabel("<html>Volume<br<(0 - 100%)</html>",
+				   JLabel.CENTER);
+
+	labels.setLayout(new GridLayout(1,8));
 	labels.add(label1);
 	labels.add(label2);
 	labels.add(label3);
@@ -78,7 +82,8 @@ public class BasicGuiForSynth implements ChangeListener {
 	labels.add(label5);
 	labels.add(label6);
 	labels.add(label7); 
-	
+	labels.add(label8);
+
 	// create formatted text fields for each parameter
 	NumberFormat f = NumberFormat.getNumberInstance();
 	f.format(new Integer(123456789));
@@ -90,9 +95,10 @@ public class BasicGuiForSynth implements ChangeListener {
 	field_sustainAmp.setHorizontalAlignment(JTextField.CENTER);
 	field_sustainTime.setHorizontalAlignment(JTextField.CENTER);
 	field_release.setHorizontalAlignment(JTextField.CENTER);
-	
+	field_volume.setHorizontalAlignment(JTextField.CENTER);
+
 	// create sliders for each parameter
-	sliders.setLayout(new GridLayout(1,7));
+	sliders.setLayout(new GridLayout(1,8));
 	
 	JSlider slider_freq = new SliderLinked(field_freq);
 	slider_freq.setMajorTickSpacing(100);
@@ -135,6 +141,13 @@ public class BasicGuiForSynth implements ChangeListener {
 	slider_release.setPaintTicks(true);
 	slider_release.addChangeListener(this);
 	slider_release.setMaximum(100);
+
+	JSlider slider_volume = new SliderLinked(field_volume);
+	slider_volume.setMajorTickSpacing(10);
+	slider_volume.setPaintTicks(true);
+	slider_volume.addChangeListener(this);
+	slider_volume.setMaximum(100);
+	slider_volume.setValue(100);
 	
 	sliders.add(slider_freq);
 	sliders.add(slider_amp);
@@ -143,9 +156,10 @@ public class BasicGuiForSynth implements ChangeListener {
 	sliders.add(slider_susAmp);
 	sliders.add(slider_susTime);
 	sliders.add(slider_release);
-	
+	sliders.add(slider_volume);
+
 	// add everything into the frame using layout managers
-	textFields.setLayout(new GridLayout(1, 7));
+	textFields.setLayout(new GridLayout(1, 8));
 	textFields.add(field_freq);
 	textFields.add(field_amp);
 	textFields.add(field_attack);	
@@ -153,9 +167,9 @@ public class BasicGuiForSynth implements ChangeListener {
 	textFields.add(field_sustainAmp);
 	textFields.add(field_sustainTime);
 	textFields.add(field_release);
+	textFields.add(field_volume);
 	playButton.addActionListener(new playNoteListener());
 	randomizer.addActionListener(new randomListener());
-
 
 	center.setLayout(new GridLayout(3,1));
 
@@ -173,7 +187,7 @@ public class BasicGuiForSynth implements ChangeListener {
 	    frame.add(row,BorderLayout.SOUTH);
 	}
 	
-	frame.setSize(1000,150);
+	frame.setSize(1000,250);
 	frame.setVisible(true);
     }
 
@@ -184,10 +198,12 @@ public class BasicGuiForSynth implements ChangeListener {
     public void stateChanged(ChangeEvent e) {
 	SliderLinked s = (SliderLinked) e.getSource();
 	double value = s.getValue();
-	if (s.text != field_freq)
+	if (s.text != field_freq && s.text != field_volume)
 	    s.text.setText(String.valueOf(Math.round(value*0.01*100.0)/100.0));
-	else
+	else if(s.text == field_freq)
 	    s.text.setText(String.valueOf(value));
+	else
+		s.text.setText(String.valueOf(value));
     }
 
         /**
@@ -214,8 +230,7 @@ public class BasicGuiForSynth implements ChangeListener {
 								100.0)/100.0));
 	    field_release.setText(String.valueOf(Math.round(r.nextDouble()*
 							    100.0)/100.0));
-	    field_freq.setText(String.valueOf(r.nextInt(1000)+1));
-	    
+	    field_freq.setText(String.valueOf(r.nextInt(1000)+1));	    
 	}
     }
     
@@ -261,7 +276,11 @@ public class BasicGuiForSynth implements ChangeListener {
 	rangeFix(field_sustainAmp);
 	rangeFix(field_sustainTime);
 	rangeFix(field_release);
+	rangeFix(field_volume);
 
+	//volume converted from 0-100 to 0-1 and then multiplied by .95 to get to 0-.95 range
+	double volume      = 
+	    Math.round( ( (Double.parseDouble(field_volume.getText())/100.0) *.95) );
 	double freq        =   
 	    Math.round(Double.parseDouble(field_freq.getText()));
 	double amp         =   
@@ -277,8 +296,9 @@ public class BasicGuiForSynth implements ChangeListener {
 	double release     = 
 	    Double.parseDouble(field_release.getText());
 	    
+	//note amplitude is multiplied by 0-.95 max volume before being passed into constructor	
 	ADSREnvelopedContinuousSound env =
-	    new ADSREnvelopedContinuousSound(freq,amp,attack,decay,
+	    new ADSREnvelopedContinuousSound(freq,(amp*volume),attack,decay,
 					     sustainAmp,sustainTime,
 					     release,
 					     44100,d);
@@ -287,7 +307,7 @@ public class BasicGuiForSynth implements ChangeListener {
     }
 
     /**
-       ensures that the values enetered in the JTextFields are
+       ensures that the values entered in the JTextFields are
        within the correct range
        @param text the JTextField or JFormattedTextField to correct
     */
@@ -296,10 +316,12 @@ public class BasicGuiForSynth implements ChangeListener {
 	    double value = Double.parseDouble(text.getText());
 	    double min = 0;
 	    double max;
-	    if (text != field_freq)
-		max = 1;
-	    else
-		max = 10000;
+	    if (text != field_freq && text != field_volume)
+			max = 1;
+	    else if(text == field_freq)
+			max = 10000;
+		else
+			max = 100;
 	    
 	    if (value > max)
 		value = max;

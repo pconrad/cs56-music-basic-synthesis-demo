@@ -203,14 +203,13 @@ public class BasicGuiForSynth implements ChangeListener {
 	else if(s.text == field_freq)
 	    s.text.setText(String.valueOf(value));
 	else
+	{
 		s.text.setText(String.valueOf(value)); 
 		//global volume converted from 0-100 to 0-1 and then multiplied by .95 to get to 0-.95 range
-		Global.masterVolume =  Math.round( Double.parseDouble(field_volume.getText()) );
-		if(Global.masterVolume != 0.0)
-		{
-			Global.masterVolume = (Global.masterVolume/100.0)*.95;
-   		}
+		Global.masterVolume =  Math.round( Double.parseDouble(field_volume.getText() ));
+		Global.masterVolume = (Global.masterVolume/100.0)*.95;
 		System.out.println("Master Vol: " + Global.masterVolume);
+	}
 	}
 
         /**

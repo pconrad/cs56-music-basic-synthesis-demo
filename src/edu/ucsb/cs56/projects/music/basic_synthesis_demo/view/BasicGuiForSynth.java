@@ -280,11 +280,15 @@ public class BasicGuiForSynth implements ChangeListener {
 
 	//volume converted from 0-100 to 0-1 and then multiplied by .95 to get to 0-.95 range
 	double volume      = 
-	    Math.round( ( (Double.parseDouble(field_volume.getText())/100.0) *.95) );
+	    Math.round( Double.parseDouble(field_volume.getText()) );
+		if(volume != 0.0)
+			volume = (volume/100.0)*.95;
+		System.out.println("Volume: " + volume);
 	double freq        =   
 	    Math.round(Double.parseDouble(field_freq.getText()));
 	double amp         =   
-	    Double.parseDouble(field_amp.getText());
+	    Double.parseDouble(field_amp.getText()) * volume;
+		System.out.println("Volume*amp: " + amp);
 	double attack      =   
 	    Double.parseDouble(field_attack.getText());
 	double decay       =   
@@ -298,7 +302,7 @@ public class BasicGuiForSynth implements ChangeListener {
 	    
 	//note amplitude is multiplied by 0-.95 max volume before being passed into constructor	
 	ADSREnvelopedContinuousSound env =
-	    new ADSREnvelopedContinuousSound(freq,(amp*volume),attack,decay,
+	    new ADSREnvelopedContinuousSound(freq,amp,attack,decay,
 					     sustainAmp,sustainTime,
 					     release,
 					     44100,d);

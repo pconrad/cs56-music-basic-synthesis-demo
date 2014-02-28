@@ -39,7 +39,7 @@ public class Note{
 		else{
 			this.frequency = frequency;
 			this.duration = duration;
-			this.volume = volume;
+			this.volume = volume * Global.masterVolume;//multiplies each note by master volume
 		}
     }
 

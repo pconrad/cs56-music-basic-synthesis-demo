@@ -1,5 +1,6 @@
 package edu.ucsb.cs56.projects.music.basic_synthesis_demo;
 
+import edu.ucsb.cs56.projects.music.basic_synthesis_demo.Melody_Code.*;
 import java.lang.Math;
 import javax.swing.*;
 import javax.swing.event.*;
@@ -20,7 +21,6 @@ import javax.sound.sampled.SourceDataLine;
    Allows editing of the parameters with JTextFields and JSliders.
    There is a play sound button that plays the sound with the parameters set.
 */
-
 public class BasicGuiForSynth implements ChangeListener {
     private JFormattedTextField field_freq = 
 	new JFormattedTextField("220");
@@ -37,7 +37,7 @@ public class BasicGuiForSynth implements ChangeListener {
     private JFormattedTextField field_release = 
 	new JFormattedTextField("0.2");
     private JFormattedTextField field_volume = 
-	new JFormattedTextField("100%");
+	new JFormattedTextField("100");
 
     protected JButton playButton = new JButton("Play Sound!");
     protected JButton randomizer = new JButton("Random Note!");
@@ -203,8 +203,15 @@ public class BasicGuiForSynth implements ChangeListener {
 	else if(s.text == field_freq)
 	    s.text.setText(String.valueOf(value));
 	else
-		s.text.setText(String.valueOf(value));
-    }
+		s.text.setText(String.valueOf(value)); 
+		//global volume converted from 0-100 to 0-1 and then multiplied by .95 to get to 0-.95 range
+		Global.masterVolume =  Math.round( Double.parseDouble(field_volume.getText()) );
+		if(Global.masterVolume != 0.0)
+		{
+			Global.masterVolume = (Global.masterVolume/100.0)*.95;
+   		}
+		System.out.println("Master Vol: " + Global.masterVolume);
+	}
 
         /**
        inner class button listener for randomizing a note
@@ -278,17 +285,10 @@ public class BasicGuiForSynth implements ChangeListener {
 	rangeFix(field_release);
 	rangeFix(field_volume);
 
-	//volume converted from 0-100 to 0-1 and then multiplied by .95 to get to 0-.95 range
-	double volume      = 
-	    Math.round( Double.parseDouble(field_volume.getText()) );
-		if(volume != 0.0)
-			volume = (volume/100.0)*.95;
-		System.out.println("Volume: " + volume);
 	double freq        =   
 	    Math.round(Double.parseDouble(field_freq.getText()));
 	double amp         =   
-	    Double.parseDouble(field_amp.getText()) * volume;
-		System.out.println("Volume*amp: " + amp);
+	    Double.parseDouble(field_amp.getText());
 	double attack      =   
 	    Double.parseDouble(field_attack.getText());
 	double decay       =   
@@ -300,7 +300,6 @@ public class BasicGuiForSynth implements ChangeListener {
 	double release     = 
 	    Double.parseDouble(field_release.getText());
 	    
-	//note amplitude is multiplied by 0-.95 max volume before being passed into constructor	
 	ADSREnvelopedContinuousSound env =
 	    new ADSREnvelopedContinuousSound(freq,amp,attack,decay,
 					     sustainAmp,sustainTime,

@@ -20,6 +20,7 @@ GUI is simply a skeleton, and is not functional
 	ant melody
 
 This will play the Melody contained in the file Default.txt (found in the resources folder) with
+
 attack: 0.1 // decay: 0.2 // sustain amplitude: 0.6 // sustain time 1.0 // release 0.2
 
 To play more than one melody in a row, use 

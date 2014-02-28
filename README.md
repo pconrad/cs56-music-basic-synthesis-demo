@@ -21,12 +21,22 @@ Replace [filename] with any text file in build/resources. Ex:
 
 	 ant melody -Darg6=YellowSub.txt
 
-This uses ADSR presets: attack: 0.1 // decay: 0.2 // sustain amplitude: 0.6 // sustain time 1.0 // release 0.2
+This uses ADSR presets: 
+* attack: 0.1
+* decay: 0.2 
+* sustain amplitude: 0.6 
+* sustain time 1.0 
+* release 0.2
 
 # Melody Run of YellowSub, MaryHadALittleLamb, and Default
 	 ant melodyAll
 
-This uses ADSR presets: attack: 0.1 // decay: 0.2 // sustain amplitude: 0.6 // sustain time 1.0 // release 0.2
+This uses ADSR presets: 
+* attack: 0.1
+* decay: 0.2 
+* sustain amplitude: 0.6 
+* sustain time 1.0 
+* release 0.2
 
 # Melody With Full ASR Options (Single Melody File)
 	 ant melodyADSR_Options -Darg0=[attack] -Darg1=[decay] -Darg2=[sustain amp] -Darg3=[sustain time] -Darg4=[release] -Darg6=[filename.txt]

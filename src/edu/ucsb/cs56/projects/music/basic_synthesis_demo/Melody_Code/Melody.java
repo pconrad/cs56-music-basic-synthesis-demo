@@ -49,10 +49,23 @@ public class Melody extends ArrayList<Note>{
 			{
 				//parse each line
 				String[] splitline = line.split("\\s+");
-				note_name = splitline[0];
-				octave = Integer.parseInt(splitline[1]);
-				duration = Double.parseDouble(splitline[2]);
-				volume = Double.parseDouble(splitline[3]);
+				if(splitline[0] instanceof Double){ //if we're given a freq, set freq
+					freq = splitline[0];
+				}
+				else //else, we're given a string of either midi or scientific name
+				{
+					note_name = splitline[0];
+					if(note_name.startsWith("M"))
+					{
+						freq = freqmap.getFreq(note_name);
+					}
+					else
+					{
+						freq = freqmap.getFreq(note_name);
+					}
+				}
+				duration = Double.parseDouble(splitline[1]);
+				volume = Double.parseDouble(splitline[2]);
 
 				//calculate the frequency from the letter and octave
 				freq = freqmap.getFreq(note_name) * Math.pow(2,octave);

@@ -73,9 +73,6 @@ public class ADSREnvelopedContinuousSound extends EnvelopedSound{
     }
 
 
-
-
-
     /**
      * executes the program
      */

@@ -75,14 +75,12 @@ public class FrequencyMap{
 	{
 		double keyNum = ((Double)map.get(note)).doubleValue();
 		double freq = (Math.pow(2.0, ((keyNum-49)/12.0))) * 440;
-		System.out.println(note + ": " + freq);
 		return freq;
 	}
 	public double getFreq(double midi)
 	{
 		double keyNum = midi - 20;
 		double freq = (Math.pow(2.0, ((keyNum-49)/12.0))) * 440;
-		System.out.println(note + ": " + freq);
 		return freq;
 	}
 }

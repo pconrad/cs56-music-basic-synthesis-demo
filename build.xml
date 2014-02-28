@@ -26,7 +26,48 @@
   </target>
 
 
-  <target name="melody" depends="compile" description="run melody">
+  <target name="melodyADSR_Options" depends="compile" description="run melody with customizable ADSR">
+    <java fork="true" classpathref="project.class.path" classname="${mainPackage}.Melody_Code.Melody">
+	  <arg value="${arg0}"/> <!--attack -->
+	  <arg value="${arg1}"/> <!-- decay -->
+	  <arg value="${arg2}"/> <!-- sustain amp -->
+	  <arg value="${arg3}"/> <!-- sustain time -->
+	  <arg value="${arg4}"/> <!-- release -->
+	  <arg value="1"/> <!-- # of files -->
+	  <arg value="${arg6}"/> <!-- file1 -->
+	</java>
+  </target>
+
+
+  <target name="melodyAll" depends="compile" description="run YellowSub, MaryHadALittleLamb, Default">
+    <java fork="true" classpathref="project.class.path" classname="${mainPackage}.Melody_Code.Melody">
+	  <arg value="0.1"/> <!--attack -->
+	  <arg value="0.2"/> <!-- decay -->
+	  <arg value="0.6"/> <!-- sustain amp -->
+	  <arg value="1.0"/> <!-- sustain time -->
+	  <arg value="0.2"/> <!-- release -->
+	  <arg value="3"/> <!-- # of files -->
+	  <arg value="YellowSub.txt"/> <!-- file1 -->
+	  <arg value="MaryHadALittleLamb.txt"/> <!-- file2 -->
+	  <arg value="Default.txt"/> <!-- file3 -->
+	</java>
+  </target>
+
+
+  <target name="melody" depends="compile" description="run choice of file">
+    <java fork="true" classpathref="project.class.path" classname="${mainPackage}.Melody_Code.Melody">
+	  <arg value="0.1"/> <!--attack -->
+	  <arg value="0.2"/> <!-- decay -->
+	  <arg value="0.6"/> <!-- sustain amp -->
+	  <arg value="1.0"/> <!-- sustain time -->
+	  <arg value="0.2"/> <!-- release -->
+	  <arg value="1"/> <!-- # of files -->
+	  <arg value="${arg6}"/> <!-- file1 -->
+	</java>
+  </target>
+
+
+  <target name="ADSREnvelopedContinuousSound" depends="compile" description="run ADSREnvelopedContinuousSoung with -Darg">
     <java fork="true" classpathref="project.class.path" classname="${mainPackage}.Melody_Code.ADSREnvelopedContinuousSound">
 	  <arg value="${arg0}"/> <!--frequency -->
 	  <arg value="${arg1}"/> <!-- amp -->
@@ -37,7 +78,6 @@
 	  <arg value="${arg6}"/> <!-- release -->
 	</java>
   </target>
-
 
   <target name="melodyGUI" depends="compile" description="run melodyGUI">
     <java fork="true" classpathref="project.class.path" classname="${mainPackage}.MelodyGui" />

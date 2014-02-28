@@ -14,15 +14,30 @@ A basic demo of some simple synthesis starting with sine waves
 		
 GUI is simply a skeleton, and is not functional
 
-# Melody Example Run
-	java -cp build edu.ucsb.cs56.projects.music.basic_synthesis_demo.Melody_Code.Melody 0.1 0.2 0.6 1.0 0.2
-	-OR-
-	ant melody
+# Melody With Full ASR Options (Single Melody File)
+	 ant melodyADSR_Options -Darg0=[attack] -Darg1=[decay] -Darg2=[sustain amp] -Darg3=[sustain time] -Darg4=[release] -Darg6=[filename.txt]
+	
+Replace each component of -Darg with the desired value. Ex:
 
-This will play the Melody contained in the file Default.txt (found in the resources folder) with
+	 ant melodyADSR_Options -Darg0=0.1 -Darg1=0.2 -Darg2=0.3 -Darg3=0.4 -Darg4=0.5 -Darg6=YellowSub.txt
 
-attack: 0.1 // decay: 0.2 // sustain amplitude: 0.6 // sustain time 1.0 // release 0.2
+Note that -Darg5 is skipped, as it is set to '1' in build.xml
 
+# Melody Run of YellowSub, MaryHadALittleLamb, and Default
+	 ant melodyAll
+
+This uses ADSR presets: attack: 0.1 // decay: 0.2 // sustain amplitude: 0.6 // sustain time 1.0 // release 0.2
+
+# Melody of Specific File	
+	 ant melody -Darg6=[filename]
+
+Replace [filename] with any text file in build/resources. Ex:
+
+	 ant melody -Darg6=YellowSub.txt
+
+This uses ADSR presets: attack: 0.1 // decay: 0.2 // sustain amplitude: 0.6 // sustain time 1.0 // release 0.2
+
+# More Options With Full Classpath
 To play more than one melody in a row, use 
 
 	java -cp build edu.ucsb.cs56.projects.music.basic_synthesis_demo.Melody_Code.Melody 0.1 0.2 0.6 1.0 0.1 3 YellowSub.txt MaryHadALittleLamb.txt Default.txt 

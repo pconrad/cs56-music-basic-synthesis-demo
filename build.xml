@@ -1,127 +1,140 @@
-<?xml version="1.0" encoding="utf-8"?>
 <project default="compile">
   
-
   <!-- build.xml for music.basic_synthesis_demo
        name: P. Conrad
        name: Chris Atanasian and Marc Lindsay for CS56, S13
-       name: Brownyn Perry-Huston for CS56, S13 -->
+       name: Brownyn Perry-Huston for CS56, S13
+	   name: Richard Waltman and Dalin Wang for CS56, W14 -->
 
   <property environment="env"/> <!-- load the environment variables -->
-  <property name="webRoot" value="${env.HOME}/public_html" />
-  <property name="webBaseUrl" value="http://www.cs.ucsb.edu/~${env.USER}"/>
-  <property name="course" value="cs56" />
+  <property name="webRoot" value="${env.HOME}/public_html/cs56" />
+  <property name="webBaseUrl" value="http://www.cs.ucsb.edu/~${env.USER}/cs56"/>
 
   <property name="categoryName" value="music" />
   <property name="repoName" value="basic_synthesis_demo" />
-  <property name="mainClass" value="edu.ucsb.cs56.projects.${categoryName}.${repoName}.view.BasicGuiForSynth" />
-  <property name="melodyClass" value="edu.ucsb.cs56.projects.${catergoryName}.${repoName}.Melody_Code.Melody"/>
-  <property name="projectName" value="${course}_projects__${categoryName}_${repoName}" />
-  <property name="projectPath" value="${course}/projects/${categoryName}/${repoName}" />
-  <property name="javadocDest" value="${webRoot}/cs56/13S/${env.USER}/${course}-${categoryName}-${repoName}" />
-  <property name="javadocURL" value="${webBaseUrl}/cs56/13S/${env.USER}/${course}-${categoryName}-${repoName}" />
-  <property name="csil.junit.path" value="lib/junit-4.8.2.jar" />
-  <property name="local.junit.path" value="lib/junit-4.8.2.jar" />
-  <property name="csil.junit.URL" value="lib/junit-4.8.2.jar" />
+  <property name="mainPackage" value="edu.ucsb.cs56.projects.${categoryName}.${repoName}" />
+  <property name="javadocDest" value="${webRoot}/W14/${env.USER}/${course}-${categoryName}-${repoName}" />
+  <property name="javadocURL" value="${webBaseUrl}/W14/${env.USER}/${course}-${categoryName}-${repoName}" />
+  <path id="project.class.path">
+    <pathelement location="build"/>
+	<pathelement location="lib/junit-4.8.2.jar"/>
+  </path>
 
 
-  <target name="junit.available">
-    <available property="csil.junit.available" file="${csil.junit.path}"/>
-    <available property="local.junit.available" file="${local.junit.path}"/>
+  <target name="basicGUI" depends="compile" description="run basicGUI">
+    <java fork="true" classpathref="project.class.path" classname="${mainPackage}.BasicGuiForSynth" />
   </target>
 
-  <target name="get.local.junit" 
-          depends="junit.available" 
-          unless="csil.junit.available" >
-     <mkdir dir="lib" />
-     <get src="${csil.junit.URL}" dest="${local.junit.path}" />
+
+  <target name="melodyADSR_Options" depends="compile" description="run melody with customizable ADSR">
+    <java fork="true" classpathref="project.class.path" classname="${mainPackage}.Melody_Code.Melody">
+	  <arg value="${arg0}"/> <!--attack -->
+	  <arg value="${arg1}"/> <!-- decay -->
+	  <arg value="${arg2}"/> <!-- sustain amp -->
+	  <arg value="${arg3}"/> <!-- sustain time -->
+	  <arg value="${arg4}"/> <!-- release -->
+	  <arg value="1"/> <!-- # of files -->
+	  <arg value="${arg6}"/> <!-- file1 -->
+	</java>
   </target>
 
-	<copy todir="build/resources" > 
-      <fileset dir="resources"/> 
-    </copy> 
-  
-  <target name="compile" depends="get.local.junit" >
+
+  <target name="melodyAll" depends="compile" description="run YellowSub, MaryHadALittleLamb, Default">
+    <java fork="true" classpathref="project.class.path" classname="${mainPackage}.Melody_Code.Melody">
+	  <arg value="0.1"/> <!--attack -->
+	  <arg value="0.2"/> <!-- decay -->
+	  <arg value="0.6"/> <!-- sustain amp -->
+	  <arg value="1.0"/> <!-- sustain time -->
+	  <arg value="0.2"/> <!-- release -->
+	  <arg value="3"/> <!-- # of files -->
+	  <arg value="YellowSub.txt"/> <!-- file1 -->
+	  <arg value="MaryHadALittleLamb.txt"/> <!-- file2 -->
+	  <arg value="Default.txt"/> <!-- file3 -->
+	</java>
+  </target>
+
+
+  <target name="melody" depends="compile" description="run choice of file">
+    <java fork="true" classpathref="project.class.path" classname="${mainPackage}.Melody_Code.Melody">
+	  <arg value="0.1"/> <!--attack -->
+	  <arg value="0.2"/> <!-- decay -->
+	  <arg value="0.6"/> <!-- sustain amp -->
+	  <arg value="1.0"/> <!-- sustain time -->
+	  <arg value="0.2"/> <!-- release -->
+	  <arg value="1"/> <!-- # of files -->
+	  <arg value="${arg6}"/> <!-- file1 -->
+	</java>
+  </target>
+
+
+  <target name="ADSREnvelopedContinuousSound" depends="compile" description="run ADSREnvelopedContinuousSoung with -Darg">
+    <java fork="true" classpathref="project.class.path" classname="${mainPackage}.Melody_Code.ADSREnvelopedContinuousSound">
+	  <arg value="${arg0}"/> <!--frequency -->
+	  <arg value="${arg1}"/> <!-- amp -->
+	  <arg value="${arg2}"/> <!-- attack -->
+	  <arg value="${arg3}"/> <!-- decay -->
+	  <arg value="${arg4}"/> <!-- sustain amp -->
+	  <arg value="${arg5}"/> <!-- sustain time -->
+	  <arg value="${arg6}"/> <!-- release -->
+	</java>
+  </target>
+
+  <target name="melodyGUI" depends="compile" description="run melodyGUI">
+    <java fork="true" classpathref="project.class.path" classname="${mainPackage}.MelodyGui" />
+  </target>
+
+
+  <target name="compile" description="compiles all .java files in src/ and places .class in /build" >
     <mkdir dir="build" />
     <javac srcdir="src" destdir="build" debug="true" includeantruntime="false" debuglevel="lines,source">
-      
-      <classpath>
-	<pathelement location="build"/>
-	<pathelement location="${local.junit.path}"/>
-        <pathelement location="${csil.junit.path}"/>
-      </classpath>
+      <classpath refid="project.class.path"/>
     </javac>
   </target>
+
+
   <target name="run" depends="compile">
- 	<!--<java classname="${mainClass}" classpath="build">
-	 <classpath>
-	 <pathelement location="build"/>
-	 <pathelement location="lib/junit-4.8.2.jar"/>
-	 </classpath>
-    	</java>-->
-    <echo>To run basic GUI: java -cp build edu.ucsb.cs56.projects.${categoryName}.${repoName}.BasicGuiForSynth
-To run melody: java -cp build edu.ucsb.cs56.projects.${categoryName}.${repoName}.Melody_Code.ADSREnvelopedContinuousSound 
-To run melody GUI: java -cp build edu.ucsb.cs56.projects.${categoryName}.${repoName}.MelodyGui</echo>
+    <echo>
+		To run basic GUI: ant basicGUI
+		To run melody: ant melody 
+		To run melody GUI: ant melodyGUI
+		To see all targets: ant -p
+	</echo>
   </target>
 
-  <target name="clean" >
-    <delete failonerror="false" verbose="true">
-      <fileset dir="build" includes="**/*.class"/>
-	  <fileset dir="build" includes="**/*.txt"/>
-    </delete>
-    <delete dir="javadoc" quiet="true" />
-    <delete dir="dist" quiet="true" />
-    <delete dir="temp" quiet="true" />
+
+  <target name="clean" description="delete unnecessary files and directories">
+    <delete dir="build" failonerror="false" verbose="true" />
+	<mkdir dir="build" />
+    <delete dir="javadoc" failonerror="false" verbose="true" />
+  	<mkdir dir="javadoc" />
   </target>
+
   
-<target name="test" depends="compile">
-
+  <target name="test" depends="compile" description="run JUnit tests">
     <junit haltonerror="no" haltonfailure="no">
-      <classpath>
-	<pathelement location="lib/junit-4.8.2.jar"/>
-	<pathelement location="build" />
-      </classpath>
-      
+      <classpath refid="project.class.path" />
       <batchtest fork="yes">
-	<fileset dir="src">
-	  <!-- this will pick up every class with a name ending in Test -->
-	  <include name="**/*Test.java"/>
-	</fileset>
+	    <fileset dir="src">
+	      <!-- this will pick up every class with a name ending in Test -->
+	      <include name="**/*Test.java"/>
+	    </fileset>
       </batchtest>
-      
       <formatter type="plain" usefile="false" />
-    	 <classpath>
-	 <pathelement location="build"/>
-         <pathelement location="lib/junit-4.8.2.jar"/>
-       </classpath>
-
-       <batchtest fork="yes">
-          <fileset dir="src">
-            <!-- this will pick up every class with a name ending in Test -->
-            <include name="**/*Test.java"/>
-          </fileset>
-       </batchtest>
-
-        <formatter type="plain" usefile="false" /> 
-	      
-	 </junit>
+	</junit>
   </target> 
 
-  <target name="javadoc" depends="compile">
-    
+
+  <target name="javadoc" depends="compile" description="Generates Javadoc"> 
     <delete dir="javadoc" quiet="true" />
     <javadoc  destdir="javadoc" author="true" version="true" use="true" >
       <fileset dir="src" includes="**/*.java"/>
-      <classpath>
-	<pathelement location="lib/junit-4.8.2.jar"/>
-      </classpath>
+      <classpath refid="project.class.path"/>
     </javadoc>
-    
+
     <!-- delete the old javadoc -->
     <delete quiet="true" dir="${javadocDest}" />
     
-    <!-- copy everything you just made to the javadoc destination, and then make it readable -->
-    
+	<!-- copy everything you just made to the javadoc destination, and then make it readable -->
     <copy todir="${javadocDest}" >
       <fileset dir="javadoc"/>
     </copy>
@@ -134,14 +147,6 @@ To run melody GUI: java -cp build edu.ucsb.cs56.projects.${categoryName}.${repoN
     <chmod dir="${javadocDest}" perm="755"  type="dir" includes="**" />
     <chmod dir="${javadocDest}" perm="755"  type="file" includes="**/*" />
     <echo>Javadoc deployed to ${javadocURL}</echo>
-    
-  </target>
-
-  <target name="linenumbers" description="Creates a file containing all source files with line numbers">
-    <exec executable="bash">
-      <arg value="-c" />
-      <arg value='tree -ifQ src | grep \.java\"$ | xargs pr -n > numberedsource.txt' />
-    </exec>
   </target>
 
 </project>

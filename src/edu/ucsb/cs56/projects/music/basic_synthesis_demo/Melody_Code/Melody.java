@@ -29,7 +29,6 @@ public class Melody extends ArrayList<Note>{
 	* void method to create a Melody from a text file
 	*/
 	public Melody createMelodyFromFile(String filename) throws IOException, FileNotFoundException{
-		
 			//acccess the file with the Melody
 			InputStream melodyFile = Melody.class.getResourceAsStream("/resources/"+ filename);
 			BufferedReader reader = new BufferedReader(new InputStreamReader(melodyFile));
@@ -41,21 +40,35 @@ public class Melody extends ArrayList<Note>{
 			double volume;
 			double freq;
 			
-			Melody m = new Melody();
-
+			Melody m = new Melody();	
 			//read in the file one line at a time
 			line = reader.readLine();
 			while(line != null)
-			{
+			{   
+				line = line.toUpperCase();
 				//parse each line
 				String[] splitline = line.split("\\s+");
 				note_name = splitline[0];
-				octave = Integer.parseInt(splitline[1]);
-				duration = Double.parseDouble(splitline[2]);
-				volume = Double.parseDouble(splitline[3]);
-
-				//calculate the frequency from the letter and octave
-				freq = freqmap.getFreq(note_name) * Math.pow(2,octave);
+				char firstLetter = note_name.charAt(0);
+				//checks to see if the first letter is a number, it is is, it's a freq
+				if(firstLetter >= 48 && firstLetter <= 57){ 
+					freq = Double.parseDouble(note_name);
+				}
+				else //else, we're given a string of either midi or scientific name
+				{
+					if(note_name.startsWith("M"))
+					{
+						//gets just the number from the midi and sends it to have a frequency built
+						double midiNum = Double.parseDouble(note_name.substring(1)); 
+						freq = freqmap.getFreq(midiNum);
+					}
+					else
+					{
+						freq = freqmap.getFreq(note_name);
+					}
+				}
+				duration = Double.parseDouble(splitline[1]);
+				volume = Double.parseDouble(splitline[2]);
 
 				//create the note and add it to the melody
 				m.add(new Note(freq,duration,volume));
@@ -63,7 +76,6 @@ public class Melody extends ArrayList<Note>{
 				line = reader.readLine();
 
 			}
-
 			reader.close();
 			return m;
 		
@@ -182,8 +194,8 @@ public class Melody extends ArrayList<Note>{
 
 			//try to open the file and create the melody
 			try{
-				m = m.createMelodyFromFile("Default.txt");
-			
+				//m = m.createMelodyFromFile("Default.txt");
+				//@@@@ TODO: old format!!! 
 			}
 			catch(Exception ex)
 			{	

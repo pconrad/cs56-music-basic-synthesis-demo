@@ -40,7 +40,7 @@ public class MelodyGui extends BasicGuiForSynth
 	// entire melody area JPanel
 	JPanel melodyGrid = new JPanel();
 	melodyGrid.setLayout(new GridLayout(3,1));
-
+	
 	// Melody
 	JPanel topRow = new JPanel();
 	topRow.setLayout(new GridLayout(1,2));
@@ -56,7 +56,8 @@ public class MelodyGui extends BasicGuiForSynth
 	// save button / clear button
 	JPanel midRowButtons = new JPanel();	
 	midRowButtons.setLayout(new GridLayout(1,2));
-	
+		
+	//Adding the Melody label at top right
 	JLabel noteLabel = new JLabel("Melody", JLabel.CENTER);
 	topRow.add(noteLabel);
 	melodyGrid.add(topRow);
@@ -82,7 +83,7 @@ public class MelodyGui extends BasicGuiForSynth
 
 	frame.add(buttonRow, BorderLayout.SOUTH);
 	frame.add(melodyGrid, BorderLayout.EAST);
-
+    	
 	frame.setVisible(true);
     }
 	

@@ -39,7 +39,8 @@ public class Note{
 		else{
 			this.frequency = frequency;
 			this.duration = duration;
-			this.volume = volume;
+			this.volume = (volume * Global.masterVolume);//multiplies each note by master volume
+			System.out.println("Input Vol: " + volume + ", Master Vol: " + Global.masterVolume + " => Note volume: " + this.volume);
 		}
     }
 
@@ -110,7 +111,7 @@ public class Note{
        if( volume < 0 || volume > 1)
 			throw new IllegalArgumentException("Volume must be between 0 and 1 inclusive");
 		else
-			this.volume = volume;
+			this.volume = volume * Global.masterVolume;
     }
 
     /** format Note as String, in an expression like:

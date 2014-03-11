@@ -4,7 +4,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.SourceDataLine;
 
 /**
-*	A bit of code which generates an adsr envolope wrapped frequency. 
+*	A bit of code which generates an adsr envelope wrapped frequency. 
 *	The code first creates a linear climb based on a time ammount specifice in  attackTime,	followed by an exponential decay, at *which point it will maintain the sustain volume. it extends the basic framework for making enveloped sounds presented in *EnvelopedSound
 *
 *@author Bronwyn Perry-Huston
@@ -46,8 +46,6 @@ public class ADSREnvelopedContinuousSound extends EnvelopedSound{
     }
 
 
-
-
     protected double generateAmplitude(double time, double amplitude){
 	    double amp = amplitude;
 	    if(time<adsr.getAttackTime()){
@@ -71,9 +69,6 @@ public class ADSREnvelopedContinuousSound extends EnvelopedSound{
 	        return amplitude+k*amplitude;
 	    }
     }
-
-
-
 
 
     /**

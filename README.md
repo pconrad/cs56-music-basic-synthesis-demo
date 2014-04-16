@@ -6,6 +6,12 @@ A basic demo of some simple synthesis starting with sine waves
 
 ![](http://i.imgur.com/xk4Nk1c.png)
 
+project history
+===============
+```
+ W14 | bronhuston 5pm | rtwaltman, dwang68 | A basic demo of some simple synthesis starting with sine waves
+```
+
 # Melody GUI Example
 	ant melodyGUI
 

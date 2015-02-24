@@ -22,26 +22,49 @@ import javax.sound.sampled.SourceDataLine;
    There is a play sound button that plays the sound with the parameters set.
 */
 public class BasicGuiForSynth implements ChangeListener {
-    private JFormattedTextField field_freq = 
+    public JFormattedTextField field_freq = 
 	new JFormattedTextField("220");
-    private JFormattedTextField field_amp = 
+    public JFormattedTextField field_amp = 
 	new JFormattedTextField("0.9");
-    private JFormattedTextField field_attack = 
+    public JFormattedTextField field_attack = 
 	new JFormattedTextField("0.1");
-    private JFormattedTextField field_decay = 
+    public JFormattedTextField field_decay = 
 	new JFormattedTextField("0.2");
-    private JFormattedTextField field_sustainAmp = 
+    public JFormattedTextField field_sustainAmp = 
 	new JFormattedTextField("0.6");
-    private JFormattedTextField field_sustainTime = 
-	new JFormattedTextField("1.0");
-    private JFormattedTextField field_release = 
+    public JFormattedTextField field_sustainTime = 
+	new JFormattedTextField("0.5");
+    public JFormattedTextField field_release = 
 	new JFormattedTextField("0.2");
-    private JFormattedTextField field_volume = 
+    public JFormattedTextField field_volume = 
 	new JFormattedTextField("100");
 
     protected JButton playButton = new JButton("Play Sound!");
     protected JButton randomizer = new JButton("Random Note!");
 
+    public class Graph extends JPanel{
+	public void paintComponent(Graphics g){
+		Graphics2D g2 = (Graphics2D)g;
+		int width = getWidth();
+		int height = getHeight();
+		int attack = (int)(Double.parseDouble(field_attack.getText())*width);
+		int amp = (int)((1-Double.parseDouble(field_amp.getText()))*height);
+		int decay = (int)(Double.parseDouble(field_decay.getText())*width);
+		int sustainAmp = (int)((1-Double.parseDouble(field_sustainAmp.getText()))*height);
+		int sustainTime = (int)(Double.parseDouble(field_sustainTime.getText())*width);
+		int release = (int)(Double.parseDouble(field_release.getText())*width);
+
+		for( int i =0;i<10;i++){
+			g.drawLine(i*width/10,0, i*width/10, height);
+			g.drawLine(0,i*height/10,width,i*height/10);
+		}
+		g2.setStroke(new BasicStroke (5));
+		g2.drawLine(0,height,attack,amp);
+		g2.drawLine(attack,amp, attack+decay,sustainAmp);
+		g2.drawLine(attack+decay,sustainAmp,attack+decay+sustainTime,sustainAmp);
+		g2.drawLine(attack+decay+sustainTime,sustainAmp,attack+decay+sustainTime+release,height);
+	}
+    }
     /**
        creates the GUI
     */
@@ -55,7 +78,7 @@ public class BasicGuiForSynth implements ChangeListener {
 	JPanel textFields = new JPanel();
 	JPanel sliders = new JPanel();
 	JPanel center = new JPanel();
-
+	JPanel graph = new Graph();
 	// create JLabels for each parameter
 	JLabel label1 = new JLabel("<html>Frequency<br>(0 - 1,000.0)</html>", 
 				   JLabel.CENTER);
@@ -74,7 +97,7 @@ public class BasicGuiForSynth implements ChangeListener {
 	JLabel label8 = new JLabel("<html>Volume<br<(0 - 100%)</html>",
 				   JLabel.CENTER);
 
-	labels.setLayout(new GridLayout(1,8));
+	labels.setLayout(new GridLayout(1,9));
 	labels.add(label1);
 	labels.add(label2);
 	labels.add(label3);
@@ -177,8 +200,8 @@ public class BasicGuiForSynth implements ChangeListener {
 	center.add(textFields);
 	center.add(sliders);	
 
-	center.add(playButton);	
-	frame.add(center,BorderLayout.CENTER);
+	center.add(playButton);
+	frame.add(center,BorderLayout.NORTH);
 
 	if (isBasic) {
 	    JPanel row = new JPanel(new GridLayout(1,2));
@@ -186,8 +209,8 @@ public class BasicGuiForSynth implements ChangeListener {
 	    row.add(randomizer);
 	    frame.add(row,BorderLayout.SOUTH);
 	}
-	
-	frame.setSize(1000,250);
+	frame.add(graph, BorderLayout.CENTER);
+	frame.setSize(1000,500);
 	frame.setVisible(true);
     }
 
@@ -258,7 +281,6 @@ public class BasicGuiForSynth implements ChangeListener {
 		SourceDataLine d = AudioSystem.getSourceDataLine(f);
 
 		ADSREnvelopedContinuousSound env = getNote(d);
-
 		d.open(f);
 		d.start();
 		env.load();

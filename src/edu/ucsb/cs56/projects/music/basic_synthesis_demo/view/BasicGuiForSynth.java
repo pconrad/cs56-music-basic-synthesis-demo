@@ -33,7 +33,7 @@ public class BasicGuiForSynth implements ChangeListener {
     public JFormattedTextField field_sustainAmp = 
 	new JFormattedTextField("0.6");
     public JFormattedTextField field_sustainTime = 
-	new JFormattedTextField("0.5");
+	new JFormattedTextField("1.0");
     public JFormattedTextField field_release = 
 	new JFormattedTextField("0.2");
     public JFormattedTextField field_volume = 
@@ -53,16 +53,18 @@ public class BasicGuiForSynth implements ChangeListener {
 		int sustainAmp = (int)((1-Double.parseDouble(field_sustainAmp.getText()))*height);
 		int sustainTime = (int)(Double.parseDouble(field_sustainTime.getText())*width);
 		int release = (int)(Double.parseDouble(field_release.getText())*width);
-
+		//int timestandard = (attack+decay+sustainTime+release)
+		//want to normalize attributes so graph fits screen properly
+		//with different length notes
 		for( int i =0;i<10;i++){
 			g.drawLine(i*width/10,0, i*width/10, height);
 			g.drawLine(0,i*height/10,width,i*height/10);
 		}
 		g2.setStroke(new BasicStroke (5));
-		g2.drawLine(0,height,attack,amp);
-		g2.drawLine(attack,amp, attack+decay,sustainAmp);
-		g2.drawLine(attack+decay,sustainAmp,attack+decay+sustainTime,sustainAmp);
-		g2.drawLine(attack+decay+sustainTime,sustainAmp,attack+decay+sustainTime+release,height);
+		g2.drawLine(0,height,attack/timestandard,amp);
+		g2.drawLine(attack,amp, (attack+decay)/timestandard,sustainAmp);
+		g2.drawLine((attack+decay)/timestandard,sustainAmp,(attack+decay+sustainTime)/timestandard,sustainAmp);
+		g2.drawLine((attack+decay+sustainTime)/timestandard,sustainAmp,(attack+decay+sustainTime+release)/timestandard,height);
 	}
     }
     /**

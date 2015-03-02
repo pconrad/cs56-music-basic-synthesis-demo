@@ -42,7 +42,7 @@ public class BasicGuiForSynth implements ChangeListener {
     protected JButton playButton = new JButton("Play Sound!");
     protected JButton randomizer = new JButton("Random Note!");
 
-    public class Graph extends JPanel{
+    public class Graph extends JPanel {
 	public void paintComponent(Graphics g){
 		Graphics2D g2 = (Graphics2D)g;
 		int width = getWidth();
@@ -61,10 +61,10 @@ public class BasicGuiForSynth implements ChangeListener {
 			g.drawLine(0,i*height/10,width,i*height/10);
 		}
 		g2.setStroke(new BasicStroke (5));
-		g2.drawLine(0,height,attack/timestandard,amp);
-		g2.drawLine(attack,amp, (attack+decay)/timestandard,sustainAmp);
-		g2.drawLine((attack+decay)/timestandard,sustainAmp,(attack+decay+sustainTime)/timestandard,sustainAmp);
-		g2.drawLine((attack+decay+sustainTime)/timestandard,sustainAmp,(attack+decay+sustainTime+release)/timestandard,height);
+		g2.drawLine(0,height,attack,amp);
+		g2.drawLine(attack,amp, (attack+decay),sustainAmp);
+		g2.drawLine((attack+decay),sustainAmp,(attack+decay+sustainTime),sustainAmp);
+		g2.drawLine((attack+decay+sustainTime),sustainAmp,(attack+decay+sustainTime+release),height);
 	}
     }
     /**
@@ -80,7 +80,7 @@ public class BasicGuiForSynth implements ChangeListener {
 	JPanel textFields = new JPanel();
 	JPanel sliders = new JPanel();
 	JPanel center = new JPanel();
-	JPanel graph = new Graph();
+	Graph graph = new Graph();
 	// create JLabels for each parameter
 	JLabel label1 = new JLabel("<html>Frequency<br>(0 - 1,000.0)</html>", 
 				   JLabel.CENTER);

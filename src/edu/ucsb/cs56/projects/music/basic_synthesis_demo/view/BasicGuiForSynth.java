@@ -42,33 +42,60 @@ public class BasicGuiForSynth implements ChangeListener {
     protected JButton playButton = new JButton("Play Sound!");
     protected JButton randomizer = new JButton("Random Note!");
 
+    protected JFrame mFrame = null;
+
     public class Graph extends JPanel{
 	public void paintComponent(Graphics g){
 		Graphics2D g2 = (Graphics2D)g;
+		
 		int width = getWidth();
 		int height = getHeight();
-		int attack = (int)(Double.parseDouble(field_attack.getText())*width);
-		int amp = (int)((1-Double.parseDouble(field_amp.getText()))*height);
-		int decay = (int)(Double.parseDouble(field_decay.getText())*width);
-		int sustainAmp = (int)((1-Double.parseDouble(field_sustainAmp.getText()))*height);
-		int sustainTime = (int)(Double.parseDouble(field_sustainTime.getText())*width);
-		int release = (int)(Double.parseDouble(field_release.getText())*width);
+		double attack = (Double.parseDouble(field_attack.getText()));
+		double amp = (1-Double.parseDouble(field_amp.getText()));
+		double decay = Double.parseDouble(field_decay.getText());
+		double sustainAmp =( 1-Double.parseDouble(field_sustainAmp.getText()));
+		double sustainTime = Double.parseDouble(field_sustainTime.getText());
+		double release = Double.parseDouble(field_release.getText());
+		
+		double totalTime = attack + decay + sustainTime + release;
+		
+ 		// draw horizontal home 			
+	        for ( double i = 0 ; i < totalTime ; i+=0.1 )
+		    {		  
+	         	g.drawLine( ( int) ( i*width/totalTime) , 0 ,(int) ( i*width /totalTime) , (int)( height) );
+			}
 
-		for( int i =0;i<10;i++){
-			g.drawLine(i*width/10,0, i*width/10, height);
-			g.drawLine(0,i*height/10,width,i*height/10);
-		}
+		// draw vertical line
+		for( int  i =0 ; i < 10 ; i++)
+	           {
+			g.drawLine(0,(int)(  i*height/10)  , (int) (width) ,(int) ( i*height/10)   );
+	       	   }
+		
+		int nAttack = (int) ( attack/totalTime* width );
+		int nDecay = (int) ( decay/ totalTime *width);
+		int nSustainTime =( int) ( sustainTime/ totalTime * width );
+		int nRelease = (int) ( release/ totalTime *width );
+
 		g2.setStroke(new BasicStroke (5));
-		g2.drawLine(0,height,attack,amp);
-		g2.drawLine(attack,amp, attack+decay,sustainAmp);
-		g2.drawLine(attack+decay,sustainAmp,attack+decay+sustainTime,sustainAmp);
-		g2.drawLine(attack+decay+sustainTime,sustainAmp,attack+decay+sustainTime+release,height);
+		g2.drawLine(0,height,nAttack,(int) (amp*height) );
+		g2.drawLine( nAttack, (int)( amp* height) , nAttack + nDecay, (int) (sustainAmp * height));
+		g2.drawLine( nAttack + nDecay , (int)(sustainAmp*height) , nAttack+ nDecay+ nSustainTime, (int)(sustainAmp* height)  );
+		g2.drawLine( nAttack+nDecay+nSustainTime,(int)(sustainAmp*height) , nAttack+nDecay+nSustainTime+nRelease,height);
+		
+		g.drawString("Attack:"+ attack , nAttack/2 , 25 );
+		g.drawString("Decay:"+ decay , nAttack + nDecay/2 , 25 );
+		g.drawString("Sustain:"+ sustainTime , nAttack + nDecay + nSustainTime/2 , 25 );
+		g.drawString("Release:" + release , nAttack + nDecay + nSustainTime + nRelease/2  , 25 );
+
+		
 	}
+
     }
     /**
        creates the GUI
     */
     public void go(JFrame frame) {
+	mFrame = frame; 
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	    
 	
 	boolean isBasic = true;
@@ -212,6 +239,8 @@ public class BasicGuiForSynth implements ChangeListener {
 	frame.add(graph, BorderLayout.CENTER);
 	frame.setSize(1000,500);
 	frame.setVisible(true);
+	frame.getContentPane().validate();
+        frame.getContentPane().repaint();
     }
 
     /**
@@ -233,6 +262,7 @@ public class BasicGuiForSynth implements ChangeListener {
 		Global.masterVolume = (Global.masterVolume/100.0)*.95;
 		System.out.println("Master Vol: " + Global.masterVolume);
 	}
+	mFrame.repaint();
 	}
 
         /**

@@ -41,20 +41,13 @@ public class BasicGuiForSynth implements ChangeListener {
 
     protected JButton playButton = new JButton("Play Sound!");
     protected JButton randomizer = new JButton("Random Note!");
-
-<<<<<<< HEAD
     protected JFrame mFrame = null;
-
-    public class Graph extends JPanel{
-=======
     public class Graph extends JPanel {
->>>>>>> f7603ee00d7c424c3bb7ed73d95e9ed643510f59
 	public void paintComponent(Graphics g){
 		Graphics2D g2 = (Graphics2D)g;
 		
 		int width = getWidth();
 		int height = getHeight();
-<<<<<<< HEAD
 		double attack = (Double.parseDouble(field_attack.getText()));
 		double amp = (1-Double.parseDouble(field_amp.getText()));
 		double decay = Double.parseDouble(field_decay.getText());
@@ -90,30 +83,7 @@ public class BasicGuiForSynth implements ChangeListener {
 		g.drawString("Attack:"+ attack , nAttack/2 , 25 );
 		g.drawString("Decay:"+ decay , nAttack + nDecay/2 , 25 );
 		g.drawString("Sustain:"+ sustainTime , nAttack + nDecay + nSustainTime/2 , 25 );
-		g.drawString("Release:" + release , nAttack + nDecay + nSustainTime + nRelease/2  , 25 );
-
-		
-=======
-		int attack = (int)(Double.parseDouble(field_attack.getText())*width);
-		int amp = (int)((1-Double.parseDouble(field_amp.getText()))*height);
-		int decay = (int)(Double.parseDouble(field_decay.getText())*width);
-		int sustainAmp = (int)((1-Double.parseDouble(field_sustainAmp.getText()))*height);
-		int sustainTime = (int)(Double.parseDouble(field_sustainTime.getText())*width);
-		int release = (int)(Double.parseDouble(field_release.getText())*width);
-		//int timestandard = (attack+decay+sustainTime+release)
-		//want to normalize attributes so graph fits screen properly
-		//with different length notes
-		for( int i =0;i<10;i++){
-			g.drawLine(i*width/10,0, i*width/10, height);
-			g.drawLine(0,i*height/10,width,i*height/10);
-		}
-		g2.setStroke(new BasicStroke (5));
-		g2.drawLine(0,height,attack,amp);
-		g2.drawLine(attack,amp, (attack+decay),sustainAmp);
-		g2.drawLine((attack+decay),sustainAmp,(attack+decay+sustainTime),sustainAmp);
-		g2.drawLine((attack+decay+sustainTime),sustainAmp,(attack+decay+sustainTime+release),height);
->>>>>>> f7603ee00d7c424c3bb7ed73d95e9ed643510f59
-	}
+		g.drawString("Release:" + release , nAttack + nDecay + nSustainTime + nRelease/2  , 25);}
 
     }
     /**

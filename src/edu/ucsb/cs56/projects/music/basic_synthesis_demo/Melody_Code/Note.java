@@ -44,8 +44,7 @@ public class Note{
      * 
      * @return the Frequency of the Note
      */
-    public double getFrequency()
-    {	
+    public double getFrequency() {	
         return this.frequency;
     }
 
@@ -54,8 +53,7 @@ public class Note{
      * 
      * @return the duration of the Note
      */
-    public double getDuration()
-    {
+    public double getDuration() {
         return this.duration;
     }
 
@@ -64,8 +62,7 @@ public class Note{
      * 
      * @return the volume of the Note
      */
-    public double getVolume()
-    {
+    public double getVolume() {
         return this.volume;
     }
 
@@ -74,12 +71,11 @@ public class Note{
      * 
      * @param frequency the new frequency of the Note
      */
-    public void setFrequency(double frequency)
-    {
+    public void setFrequency(double frequency) {
         if( frequency < 0)
-			throw new IllegalArgumentException("Frequency must be greater than or equal to 0");
-		else
-			this.frequency = frequency;
+	    throw new IllegalArgumentException("Frequency must be greater than or equal to 0");
+	else
+	    this.frequency = frequency;
     }
 
     /**
@@ -87,52 +83,48 @@ public class Note{
      * 
      * @param duration the new duration of the Note
      */
-    public void setDuration(double duration)
-    {
+    public void setDuration(double duration)    {
         if( duration <= 0)
-			throw new IllegalArgumentException("Duration must be greater than 0");
-		else
-			this.duration = duration;
+	    throw new IllegalArgumentException("Duration must be greater than 0");
+	else
+	    this.duration = duration;
     }
-
+    
     /**
      * set the volume of the Note
      * 
      * @param volume the new volume of the Note
      */
-    public void setVolume(double volume)
-    {
-       if( volume < 0 || volume > 1)
-			throw new IllegalArgumentException("Volume must be between 0 and 1 inclusive");
-		else
-			this.volume = volume * Global.masterVolume;
+    public void setVolume(double volume) {
+	if( volume < 0 || volume > 1)
+	    throw new IllegalArgumentException("Volume must be between 0 and 1 inclusive");
+	else
+	    this.volume = volume * Global.masterVolume;
     }
-
+    
     /** format Note as String, in an expression like:
      *  "Frequency:1.0, Duration:1/2.0 beats, Volume:0.1"
      *  
      *  @return formatted Note
      */
-    public String toString()
-    {
+    public String toString() {
         return "Frequency:"+ this.frequency + ", Duration:1/"+this.duration+ " beats, Volume:" + this.volume;
     }
-
+    
     /**
        Check if the Notes are equal
        @param o another object to compare 
        @return true if this object is the same Note as o
      */
-    public boolean equals(Object o)
-    {
-		double tol = 0.01;
-	    if (! (o instanceof Note) )
-	        return false;
-	    Note other = (Note) o;
-	    return (Math.abs(other.getFrequency() - this.getFrequency()) < tol &
-	            Math.abs(other.getDuration() - this.getDuration()) < tol &
+    public boolean equals(Object o) {
+	double tol = 0.01;
+	if (! (o instanceof Note) )
+	    return false;
+	Note other = (Note) o;
+	return (Math.abs(other.getFrequency() - this.getFrequency()) < tol &
+		Math.abs(other.getDuration() - this.getDuration()) < tol &
                 Math.abs(other.getVolume() - this.getVolume()) < tol ); 
     }  
-
-
+    
+    
 }

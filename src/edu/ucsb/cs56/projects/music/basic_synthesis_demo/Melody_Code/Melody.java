@@ -148,9 +148,9 @@ public class Melody extends ArrayList<Note>{
 		
 		//load the ADSREnveloped note to the audioLine
 		env.load();
-		d.drain();				
+
 	    }
-	    
+	    d.drain();					    
 	    d.close();
 	} catch(Exception ex) {	    
 	    ex.printStackTrace();

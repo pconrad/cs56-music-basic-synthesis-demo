@@ -1,47 +1,41 @@
 package edu.ucsb.cs56.projects.music.basic_synthesis_demo.Melody_Code;
 
 /**
-    A Class that represents a Note.
-    
-    
-    @author Bronwyn Perry-Huston
-    @version CS56 S13 
+   A Class that represents a Note.
+   @author Bronwyn Perry-Huston
+   @version CS56 S13 
 */
 
 public class Note{
-
+    
     private double frequency;
     private double duration;
     private double volume;
 
-
-
     /**
        no-arg constructor of class Note
      */
-    public Note()
-    {
+    public Note()    {
         this.frequency = 0;
-		this.duration = 1;
-		this.volume= 0;
+	this.duration = 1;
+	this.volume= 0;
     }
-
+    
     /**
      * Three-arg Constructor for objects of class Note
      * @param frequency
      * @param duration
      * @param volume
      */
-    public Note(double frequency, double duration, double volume)
-    {
-		if( frequency < 0 || duration<= 0 || volume < 0 || volume > 1)
-			throw new IllegalArgumentException("Invalid Input");
-		else{
-			this.frequency = frequency;
-			this.duration = duration;
-			this.volume = (volume * Global.masterVolume);//multiplies each note by master volume
-			System.out.println("Input Vol: " + volume + ", Master Vol: " + Global.masterVolume + " => Note volume: " + this.volume);
-		}
+    public Note(double frequency, double duration, double volume) {
+	if( frequency < 0 || duration<= 0 || volume < 0 || volume > 1)
+	    throw new IllegalArgumentException("Invalid Input");
+	this.frequency = frequency;
+	this.duration = duration;
+	this.volume = (volume * Global.masterVolume); //multiplies each note by master volume
+	System.err.println("Input Vol: " + volume
+			   + ", Master Vol: " + Global.masterVolume
+			   + " => Note volume: " + this.volume);
     }
 
 

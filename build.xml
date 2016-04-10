@@ -1,4 +1,4 @@
-<project default="compile">
+<project default="help">
   
   <!-- build.xml for music.basic_synthesis_demo
        name: P. Conrad
@@ -17,10 +17,17 @@
   <property name="javadocURL" value="${webBaseUrl}/W14/${env.USER}/${course}-${categoryName}-${repoName}" />
   <path id="project.class.path">
     <pathelement location="build"/>
-	<pathelement location="lib/junit-4.8.2.jar"/>
+    <pathelement location="lib/junit-4.8.2.jar"/>
   </path>
 
-
+  <target name="help">
+    <echo>
+      Type "ant -p" for a complete list of targets
+      "ant melodyGUI" is the best thing to type to get started.
+      Also, check out README.md for more information
+    </echo>
+  </target>
+  
   <target name="basicGUI" depends="compile" description="run basicGUI">
     <java fork="true" classpathref="project.class.path" classname="${mainPackage}.BasicGuiForSynth" />
   </target>
@@ -47,9 +54,19 @@
 	  <arg value="1.0"/> <!-- sustain time -->
 	  <arg value="0.2"/> <!-- release -->
 	  <arg value="3"/> <!-- # of files -->
-	  <arg value="YellowSub.txt"/> <!-- file1 -->
-	  <arg value="MaryHadALittleLamb.txt"/> <!-- file2 -->
-	  <arg value="Default.txt"/> <!-- file3 -->
+	  <arg value="resources/YellowSub.txt"/> <!-- file1 -->
+	  <arg value="resources/MaryHadALittleLamb.txt"/> <!-- file2 -->
+	  <arg value="resources/Default.txt"/> <!-- file3 -->
+	</java>
+  </target>
+
+    <target name="melodyDefault" depends="compile" description="run with Default.txt melody">
+    <java fork="true" classpathref="project.class.path" classname="${mainPackage}.Melody_Code.Melody">
+	  <arg value="0.1"/> <!--attack -->
+	  <arg value="0.2"/> <!-- decay -->
+	  <arg value="0.6"/> <!-- sustain amp -->
+	  <arg value="1.0"/> <!-- sustain time -->
+	  <arg value="0.2"/> <!-- release -->
 	</java>
   </target>
 
